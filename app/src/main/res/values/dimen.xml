@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--dimens-->
     <dimen name="standard_margin_padding">15dp</dimen>
     <dimen name="medium_margin_padding">12dp</dimen>
     <dimen name="small_margin_padding">10dp</dimen>
     <dimen name="tiny_margin_padding">8dp</dimen>
-    <dimen name="toolbar_vertical_bias">0.0</dimen>
-    <dimen name="definition_text_size">15</dimen>
-    <dimen name="word_text_size">25</dimen>
+
+    <!--other-->
+    <integer name="word_text_size">25</integer>
+    <integer name="definition_text_size">15</integer>
 
 </resources>

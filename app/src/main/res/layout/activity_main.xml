@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="@dimen/toolbar_vertical_bias" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ScrollView
         android:id="@+id/result_scroll_view"

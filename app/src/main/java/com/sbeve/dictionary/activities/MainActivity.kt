@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return true
+                return false
             }
         })
 
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         newLayoutParams.topMargin = resources.getDimension(R.dimen.standard_margin_padding).toInt()
         newLayoutParams.bottomMargin = resources.getDimension(R.dimen.small_margin_padding).toInt()
         tV.layoutParams = newLayoutParams
-        tV.textSize = resources.getDimension(R.dimen.word_text_size)
+        tV.textSize = resources.getInteger(R.integer.word_text_size).toFloat()
         return tV
     }
 
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         newLayoutParams.bottomMargin =
             resources.getDimension(R.dimen.standard_margin_padding).toInt()
         tV.layoutParams = newLayoutParams
-        tV.textSize = resources.getDimension(R.dimen.definition_text_size)
+        tV.textSize = resources.getInteger(R.integer.definition_text_size).toFloat()
         return tV
     }
 
