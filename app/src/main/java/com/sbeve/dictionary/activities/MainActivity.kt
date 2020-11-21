@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(activity_toolbar)
 
+        //update the UI if a new response has been output by enqueueCall()
         viewModel.outputResponse.observe(this) { it: Response<List<Word>>? ->
             updateUI(it)
         }
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                //call enqueue call when the user submits a query in the search bar
                 viewModel.enqueueCall(query)
                 return true
             }
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    //get a text view with large font size for showing the word
     private fun getWordTextView(): TextView {
         val tV = TextView(this)
         val newLayoutParams = RelativeLayout.LayoutParams(
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         return tV
     }
 
+    //get a text view with small font size for showing definitions
     private fun getDefTextView(): TextView {
         val tV = TextView(this)
         val newLayoutParams = RelativeLayout.LayoutParams(
@@ -78,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         //remove all the views added to the linear layout by the previous search
         result_linear_layout.removeAllViews()
 
+        //show a message informing the user that their query didn't hit a match
         if (response == null) {
             val tV = getWordTextView()
             tV.text = "No such word was found"
@@ -96,12 +101,15 @@ class MainActivity : AppCompatActivity() {
             for ((b, j) in i.meanings.withIndex()) {
                 val meaning = getDefTextView()
 
-                meaning.append("${b + 1}. \n")
+                //don't add numbering if there is only meaning
+                if (i.meanings.size != 1) meaning.append("${b + 1}. \n")
 
                 //append each definition for the current to the text view created for the current meaning
                 for ((it, a) in j.definitions.zip('a'..'z')) {
+
+                    //don't add numbering if there is only meaning
                     if (a != 'a') meaning.append("\n")
-                    meaning.append("\t $a)  ")
+                    if (j.definitions.size != 1) meaning.append("\t $a)  ")
                     meaning.append(it.definition)
                 }
                 result_linear_layout.addView(meaning)

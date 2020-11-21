@@ -2,6 +2,7 @@ package com.sbeve.dictionary.retrofit_files
 
 import com.google.gson.annotations.SerializedName
 
+//class to be used by gson to deserialize the json output recieved from the server
 data class Word(
     @SerializedName("word")
     val word: String,

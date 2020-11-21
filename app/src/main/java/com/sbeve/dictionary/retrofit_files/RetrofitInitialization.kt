@@ -3,6 +3,7 @@ package com.sbeve.dictionary.retrofit_files
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+//initialize a retrofit access api
 class RetrofitInitialization(val language: String) {
 
     val accessApiObject: AccessApi = Retrofit
