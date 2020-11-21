@@ -5,7 +5,7 @@ plugins {
 }
 
 def retrofit_version = "2.9.0"
-def nav_version = "2.3.1"
+//def nav_version = "2.3.1"
 def lifecycle_version = "2.2.0"
 
 android {
@@ -51,8 +51,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     //navigation components
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+/*  implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"*/
 
     //architecture components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"

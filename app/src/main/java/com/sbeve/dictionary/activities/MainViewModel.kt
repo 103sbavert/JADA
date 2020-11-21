@@ -13,14 +13,15 @@ class MainViewModel : ViewModel() {
 
     private val accessApiObject = RetrofitInitialization("hi").accessApiObject
 
-    val queriedWord = MutableLiveData<String>()
-    var outputResponse = MutableLiveData<Response<List<Word>>>()
+    val outputResponse = MutableLiveData<Response<List<Word>>>()
+
 
     fun enqueueCall(query: String) {
         getRetrofitCall(query).enqueue(object : Callback<List<Word>> {
             override fun onResponse(call: Call<List<Word>>, response: Response<List<Word>>) {
                 if (!response.isSuccessful) {
                     Log.e("dictionary_api_access", "failed with error: ${response.code()}")
+                    outputResponse.value = null
                     return
                 }
                 outputResponse.value = response
@@ -33,6 +34,5 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getRetrofitCall(query: String) = accessApiObject.getDefinitions(query)
-
 
 }
