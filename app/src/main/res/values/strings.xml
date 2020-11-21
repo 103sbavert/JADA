@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Hi Dictionary</string>
     <string name="search_title">Search for a word</string>
+    <string name="no_results_found">The word you are looking for was not found</string>
 </resources>
