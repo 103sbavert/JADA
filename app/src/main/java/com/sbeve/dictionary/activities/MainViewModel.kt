@@ -1,6 +1,10 @@
 package com.sbeve.dictionary.activities
 
+import android.app.Activity
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sbeve.dictionary.retrofit_files.RetrofitInitialization
@@ -40,5 +44,20 @@ class MainViewModel : ViewModel() {
 
     //returns a new call object to use for a new request to the server
     private fun getRetrofitCall(query: String) = accessApiObject.getDefinitions(query)
+
+    //hides the keyboard
+    fun hideKeyboard(activity: Activity) {
+        val imm: InputMethodManager =
+            activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = activity.currentFocus
+
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 
 }

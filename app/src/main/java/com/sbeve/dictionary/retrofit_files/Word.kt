@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class Word(
     @SerializedName("word")
     val word: String,
-    @SerializedName("phonetics")
-    val phonetics: List<Phonetics>,
+    @SerializedName("origin")
+    val origin: String,
     @SerializedName("meanings")
     val meanings: List<Meaning>
 )

@@ -9,5 +9,6 @@
     <!--other-->
     <integer name="word_text_size">25</integer>
     <integer name="definition_text_size">15</integer>
+    <integer name="org_text_size">12</integer>
 
 </resources>

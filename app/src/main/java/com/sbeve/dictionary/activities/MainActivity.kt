@@ -14,6 +14,7 @@ import com.sbeve.dictionary.retrofit_files.Word
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Response
 
+
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
 
@@ -23,9 +24,12 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(activity_toolbar)
 
         //update the UI if a new response has been output by enqueueCall()
-        viewModel.outputResponse.observe(this) { it: Response<List<Word>>? ->
+        viewModel.outputResponse.observe(this) {
             updateUI(it)
+            loading_anim.visibility = View.INVISIBLE
+
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 //call enqueue call when the user submits a query in the search bar
                 viewModel.enqueueCall(query)
+                loading_anim.visibility = View.VISIBLE
                 return true
             }
 
@@ -77,6 +82,20 @@ class MainActivity : AppCompatActivity() {
         return tV
     }
 
+    //get a text view with smaller font for origin related
+    private fun getOrgTextView(): TextView {
+        val tV = TextView(this)
+        val newLayoutParams = RelativeLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+        )
+        newLayoutParams.bottomMargin =
+            resources.getDimension(R.dimen.standard_margin_padding).toInt()
+        tV.layoutParams = newLayoutParams
+        tV.textSize = resources.getInteger(R.integer.org_text_size).toFloat()
+        return tV
+    }
+
     private fun updateUI(response: Response<List<Word>>?) {
         //make the card view visible
         result_scroll_view.visibility = View.VISIBLE
@@ -85,37 +104,57 @@ class MainActivity : AppCompatActivity() {
 
         //show a message informing the user that their query didn't hit a match
         if (response == null) {
-            val tV = getWordTextView()
-            tV.text = getString(R.string.no_results_found)
-            result_linear_layout.addView(tV)
+            showWordNotFoundMessage()
             return
         }
+        //hide the keyboard once the result is visible on the screen, don't hide it if a word couldn't be found
+        viewModel.hideKeyboard(this)
 
         // make a text view inside the linear layout for each word item included in the Json array
         for (i in response.body()!!) {
-            getWordTextView().apply {
-                text = i.word
-                result_linear_layout.addView(this)
-            }
+            val wordTv = getWordTextView()
+            //add the word to the word text view
+            wordTv.text = i.word
+            result_linear_layout.addView(wordTv)
 
-            // make a new text view for each meaning of the word
-            for ((b, j) in i.meanings.withIndex()) {
-                val meaning = getDefTextView()
+            showOrgInfo(i)
+
+            // make a text view to show the meanings of the word
+            val meaningTv = getDefTextView()
+
+            for ((index, j) in i.meanings.withIndex()) {
 
                 //don't add numbering if there is only meaning
-                if (i.meanings.size != 1) meaning.append("${b + 1}. \n")
+                if (i.meanings.size != 1) meaningTv.append("${index + 1}. \n")
 
-                //append each definition for the current to the text view created for the current meaning
-                for ((it, a) in j.definitions.zip('a'..'z')) {
+                //append each definition provided for the current meaning
+                for ((k, numbering) in j.definitions.zip('a'..'z')) {
 
-                    //don't add numbering if there is only meaning
-                    if (a != 'a') meaning.append("\n")
-                    if (j.definitions.size != 1) meaning.append("\t $a)  ")
-                    meaning.append(it.definition)
+                    //don't add alphabet numbering if there is only definition
+                    if (j.definitions.size != 1) meaningTv.append("\t $numbering)  ")
+                    meaningTv.append(k.definition + "\n")
                 }
-                result_linear_layout.addView(meaning)
+                if (index != i.meanings.lastIndex) meaningTv.append("\n")
             }
+            result_linear_layout.addView(meaningTv)
         }
+    }
+
+    private fun showOrgInfo(word: Word) {
+        //check if the API has provided info about the word's origin
+        if (!word.origin.isNullOrEmpty()) {
+            val originTv = getOrgTextView()
+            //add the information about the origin to the origin text view
+            originTv.text = "origin: ${word.origin}"
+            result_linear_layout.addView(originTv)
+        }
+    }
+
+    private fun showWordNotFoundMessage() {
+        val tV = getWordTextView()
+        tV.textSize = 20F
+        tV.text = getString(R.string.no_results_found)
+        result_linear_layout.addView(tV)
     }
 
 }

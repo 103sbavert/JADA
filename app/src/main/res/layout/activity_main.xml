@@ -16,6 +16,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <ProgressBar
+        android:id="@+id/loading_anim"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_toolbar"
+        app:layout_constraintVertical_bias="0.25" />
+
     <ScrollView
         android:id="@+id/result_scroll_view"
         android:layout_width="match_parent"
@@ -26,8 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_toolbar"
-        tools:visibility="visible">
+        app:layout_constraintTop_toBottomOf="@+id/activity_toolbar">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

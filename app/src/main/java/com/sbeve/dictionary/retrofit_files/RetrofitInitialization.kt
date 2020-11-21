@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 //initialize a retrofit access api
-class RetrofitInitialization(val language: String) {
+class RetrofitInitialization(language: String) {
 
     val accessApiObject: AccessApi = Retrofit
         .Builder()
