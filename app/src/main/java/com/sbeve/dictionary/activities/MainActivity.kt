@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT,
         )
-        newLayoutParams.topMargin = 15
-        newLayoutParams.bottomMargin = 10
+        newLayoutParams.topMargin = resources.getDimension(R.dimen.standard_margin_padding).toInt()
+        newLayoutParams.bottomMargin = resources.getDimension(R.dimen.small_margin_padding).toInt()
         tV.layoutParams = newLayoutParams
-        tV.textSize = 25F
+        tV.textSize = resources.getDimension(R.dimen.word_text_size)
         return tV
     }
 
@@ -70,9 +70,10 @@ class MainActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT,
         )
-        newLayoutParams.bottomMargin = 15
+        newLayoutParams.bottomMargin =
+            resources.getDimension(R.dimen.standard_margin_padding).toInt()
         tV.layoutParams = newLayoutParams
-        tV.textSize = 15F
+        tV.textSize = resources.getDimension(R.dimen.definition_text_size)
         return tV
     }
 
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         //show a message informing the user that their query didn't hit a match
         if (response == null) {
             val tV = getWordTextView()
-            tV.text = "No such word was found"
+            tV.text = getString(R.string.no_results_found)
             result_linear_layout.addView(tV)
             return
         }
