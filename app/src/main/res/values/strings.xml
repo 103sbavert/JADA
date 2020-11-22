@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Hi Dictionary</string>
     <string name="search_title">Search for a word</string>
-    <string name="no_results_found">The word you are looking for was not found</string>
+    <string name="no_match">The word you are looking for was not found</string>
+    <string name="call_failed">A request to the server could not be made. Please, check your internet connection.</string>
+    <string name="originInfo">origin: %1$s</string>
 </resources>

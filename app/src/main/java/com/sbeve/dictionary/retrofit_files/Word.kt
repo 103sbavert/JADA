@@ -7,7 +7,7 @@ data class Word(
     @SerializedName("word")
     val word: String,
     @SerializedName("origin")
-    val origin: String,
+    val origin: String?,
     @SerializedName("meanings")
     val meanings: List<Meaning>
 )

@@ -25,9 +25,13 @@ class MainActivity : AppCompatActivity() {
 
         //update the UI if a new response has been output by enqueueCall()
         viewModel.outputResponse.observe(this) {
-            updateUI(it)
-            loading_anim.visibility = View.INVISIBLE
+            if (it != null) updateUI(it)
+            loading_anim.visibility = View.GONE
+        }
 
+        viewModel.failType.observe(this) {
+            if (it != null) showError(it)
+            loading_anim.visibility = View.GONE
         }
 
     }
@@ -40,9 +44,10 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                loading_anim.visibility = View.VISIBLE
+
                 //call enqueue call when the user submits a query in the search bar
                 viewModel.enqueueCall(query)
-                loading_anim.visibility = View.VISIBLE
                 return true
             }
 
@@ -96,32 +101,31 @@ class MainActivity : AppCompatActivity() {
         return tV
     }
 
-    private fun updateUI(response: Response<List<Word>>?) {
-        //make the card view visible
-        result_scroll_view.visibility = View.VISIBLE
-        //remove all the views added to the linear layout by the previous search
+    private fun updateUI(response: Response<List<Word>>) {
+
+        //make failType null so the observer doesn't call showError() if a configuration change
+        // happens while the results are being shown on the screen
+        viewModel.failType.value = null
+        //hide the error message to make room for the new results to be shown
+        if (errorMessage.visibility != View.GONE) errorMessage.visibility = View.GONE
+
+        //show the scroll view if its hidden and remove all the views added by the previous search
+        if (result_scroll_view.visibility != View.VISIBLE) result_scroll_view.visibility =
+            View.VISIBLE
         result_linear_layout.removeAllViews()
 
-        //show a message informing the user that their query didn't hit a match
-        if (response == null) {
-            showWordNotFoundMessage()
-            return
-        }
-        //hide the keyboard once the result is visible on the screen, don't hide it if a word couldn't be found
+        //hide the keyboard once the result is visible on the screen
         viewModel.hideKeyboard(this)
 
         // make a text view inside the linear layout for each word item included in the Json array
         for (i in response.body()!!) {
             val wordTv = getWordTextView()
-            //add the word to the word text view
-            wordTv.text = i.word
-            result_linear_layout.addView(wordTv)
-
-            showOrgInfo(i)
-
             // make a text view to show the meanings of the word
             val meaningTv = getDefTextView()
+            //add the word to the word text view
+            wordTv.text = i.word
 
+            //iterate over each meaning available for the current word
             for ((index, j) in i.meanings.withIndex()) {
 
                 //don't add numbering if there is only meaning
@@ -134,27 +138,45 @@ class MainActivity : AppCompatActivity() {
                     if (j.definitions.size != 1) meaningTv.append("\t $numbering)  ")
                     meaningTv.append(k.definition + "\n")
                 }
+
+                //if it's not the last meaning, leave an empty line for the next meaning to be
+                // added
                 if (index != i.meanings.lastIndex) meaningTv.append("\n")
             }
+
+            //add the meaning text views and the word text view to the result_linear_layout
+            result_linear_layout.addView(wordTv)
+            showOrgInfo(i)
             result_linear_layout.addView(meaningTv)
         }
+
     }
 
+    //show information about the origin of the word (if available)
     private fun showOrgInfo(word: Word) {
         //check if the API has provided info about the word's origin
         if (!word.origin.isNullOrEmpty()) {
             val originTv = getOrgTextView()
             //add the information about the origin to the origin text view
-            originTv.text = "origin: ${word.origin}"
+            originTv.text = getString(R.string.originInfo, word.origin)
             result_linear_layout.addView(originTv)
         }
     }
 
-    private fun showWordNotFoundMessage() {
-        val tV = getWordTextView()
-        tV.textSize = 20F
-        tV.text = getString(R.string.no_results_found)
-        result_linear_layout.addView(tV)
-    }
+    //show the right error message based on what went wrong
+    private fun showError(state: MainViewModel.State) {
+        //make outputResponse null so the observer doesn't call updateUI() if a configuration
+        // change happens while an error message is being shown on the screen
+        viewModel.outputResponse.value = null
+        //hide the scroll view if it is visible to make room for the error message
+        if (result_scroll_view.visibility != View.GONE) View.GONE
+        result_linear_layout.removeAllViews()
 
+        //make the error message text view visible if it's hidden
+        if (errorMessage.visibility != View.VISIBLE) errorMessage.visibility = View.VISIBLE
+        when (state) {
+            MainViewModel.State.CallFailed -> errorMessage.text = getString(R.string.call_failed)
+            MainViewModel.State.NoMatch -> errorMessage.text = getString(R.string.no_match)
+        }
+    }
 }

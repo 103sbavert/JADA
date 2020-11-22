@@ -15,8 +15,17 @@ import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
-    //make an instance of the retrofit api each time the viewmodel is instantiated (somewhat unncessary right now but will be useful later)
+    enum class State {
+        CallFailed,
+        NoMatch
+    }
+
+    //make an instance of the retrofit api each time the viewmodel is instantiated (somewhat
+    //unnecessary right now but will be useful later)
     private val accessApiObject = RetrofitInitialization("hi").accessApiObject
+
+    //tells the reason behind a result not being found (network fail or no match?)
+    val failType = MutableLiveData<State>()
 
     //store the response output by enqueue call, empty if the viewmodel has just been instantiated
     val outputResponse = MutableLiveData<Response<List<Word>>>()
@@ -28,8 +37,9 @@ class MainViewModel : ViewModel() {
             override fun onResponse(call: Call<List<Word>>, response: Response<List<Word>>) {
                 if (!response.isSuccessful) {
                     Log.e("dictionary_api_access", "failed with error: ${response.code()}")
-                    //set outputResponse to null since the search didn't hit a match. updateUI() will show an error message.
-                    outputResponse.value = null
+                    //set failType to NoMatch since the search didn't hit a match. showError() will
+                    // show the relevant error message.
+                    failType.value = State.NoMatch
                     return
                 }
                 //update outputResponse with a new value
@@ -38,6 +48,9 @@ class MainViewModel : ViewModel() {
 
             override fun onFailure(call: Call<List<Word>>, t: Throwable) {
                 Log.e("dictionary_api_access", "connection the server could not be established")
+                //set failType to CallFailed since the server couldn't be reached. showError() will
+                // show the relevant error message.
+                failType.value = State.CallFailed
             }
         })
     }
@@ -53,7 +66,8 @@ class MainViewModel : ViewModel() {
         //Find the currently focused view, so we can grab the correct window token from it.
         var view = activity.currentFocus
 
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        //If no view currently has focus, create a new one, just so we can grab a window token from
+        // it
         if (view == null) {
             view = View(activity)
         }
