@@ -25,13 +25,26 @@ class MainActivity : AppCompatActivity() {
 
         //update the UI if a new response has been output by enqueueCall()
         viewModel.outputResponse.observe(this) {
-            if (it != null) updateUI(it)
-            loading_anim.visibility = View.GONE
+            //only show the results if the content shown before the configuration change (if any)
+            //was indeed results from the server
+            if (viewModel.shownBeforeConfigurationChange == MainViewModel.ShownBeforeConfigurationChange.Result) {
+                updateUI(it)
+                //hide errorMessage if it is visible to make room for the new results
+                if (errorMessage.visibility != View.GONE) errorMessage.visibility = View.GONE
+                loading_anim.visibility = View.GONE
+            }
         }
 
         viewModel.failType.observe(this) {
-            if (it != null) showError(it)
-            loading_anim.visibility = View.GONE
+            //only show the error if the content shown before the configuration change (if any)
+            //was indeed an error message
+            if (viewModel.shownBeforeConfigurationChange == MainViewModel.ShownBeforeConfigurationChange.Error) {
+                showError(it)
+                //hide result_scroll_view if it is visible to make room for the error message
+                if (result_scroll_view.visibility != View.GONE) result_scroll_view.visibility =
+                    View.GONE
+                loading_anim.visibility = View.GONE
+            }
         }
 
     }
@@ -45,9 +58,10 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 loading_anim.visibility = View.VISIBLE
-
-                //call enqueue call when the user submits a query in the search bar
-                viewModel.enqueueCall(query)
+                //remove all the views added to the result_linear_view by the previous search
+                result_linear_layout.removeAllViews()
+                //fetch information about the word submitted by the user in the search bar
+                viewModel.fetchWordInformation(query)
                 return true
             }
 
@@ -102,20 +116,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUI(response: Response<List<Word>>) {
-
-        //make failType null so the observer doesn't call showError() if a configuration change
-        // happens while the results are being shown on the screen
-        viewModel.failType.value = null
-        //hide the error message to make room for the new results to be shown
-        if (errorMessage.visibility != View.GONE) errorMessage.visibility = View.GONE
-
-        //show the scroll view if its hidden and remove all the views added by the previous search
+        //make result_scroll_view visible if its not already
         if (result_scroll_view.visibility != View.VISIBLE) result_scroll_view.visibility =
             View.VISIBLE
-        result_linear_layout.removeAllViews()
-
-        //hide the keyboard once the result is visible on the screen
-        viewModel.hideKeyboard(this)
 
         // make a text view inside the linear layout for each word item included in the Json array
         for (i in response.body()!!) {
@@ -124,6 +127,9 @@ class MainActivity : AppCompatActivity() {
             val meaningTv = getDefTextView()
             //add the word to the word text view
             wordTv.text = i.word
+            //show the word text view on the screen
+            result_linear_layout.addView(wordTv)
+            showOrgInfo(i)
 
             //iterate over each meaning available for the current word
             for ((index, j) in i.meanings.withIndex()) {
@@ -145,9 +151,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             //add the meaning text views and the word text view to the result_linear_layout
-            result_linear_layout.addView(wordTv)
-            showOrgInfo(i)
             result_linear_layout.addView(meaningTv)
+
+            //hide the keyboard once the result is visible on the screen
+            viewModel.hideKeyboard(this)
         }
 
     }
@@ -165,14 +172,7 @@ class MainActivity : AppCompatActivity() {
 
     //show the right error message based on what went wrong
     private fun showError(state: MainViewModel.State) {
-        //make outputResponse null so the observer doesn't call updateUI() if a configuration
-        // change happens while an error message is being shown on the screen
-        viewModel.outputResponse.value = null
-        //hide the scroll view if it is visible to make room for the error message
-        if (result_scroll_view.visibility != View.GONE) View.GONE
-        result_linear_layout.removeAllViews()
-
-        //make the error message text view visible if it's hidden
+        //make errorMessage visible if it's not already
         if (errorMessage.visibility != View.VISIBLE) errorMessage.visibility = View.VISIBLE
         when (state) {
             MainViewModel.State.CallFailed -> errorMessage.text = getString(R.string.call_failed)

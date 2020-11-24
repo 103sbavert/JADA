@@ -20,6 +20,15 @@ class MainViewModel : ViewModel() {
         NoMatch
     }
 
+    //store whether the last shown content on the screen was an error message or results from the
+    //server to prevent the livedata observer from updating the UI when it should not
+    enum class ShownBeforeConfigurationChange {
+        Result,
+        Error
+    }
+
+    var shownBeforeConfigurationChange: ShownBeforeConfigurationChange? = null
+
     //make an instance of the retrofit api each time the viewmodel is instantiated (somewhat
     //unnecessary right now but will be useful later)
     private val accessApiObject = RetrofitInitialization("hi").accessApiObject
@@ -31,23 +40,26 @@ class MainViewModel : ViewModel() {
     val outputResponse = MutableLiveData<Response<List<Word>>>()
 
     //make a call to the server
-    fun enqueueCall(query: String) {
+    fun fetchWordInformation(query: String) {
         //retrieve a new call object to make a request to the server
         getRetrofitCall(query).enqueue(object : Callback<List<Word>> {
             override fun onResponse(call: Call<List<Word>>, response: Response<List<Word>>) {
                 if (!response.isSuccessful) {
                     Log.e("dictionary_api_access", "failed with error: ${response.code()}")
+                    shownBeforeConfigurationChange = ShownBeforeConfigurationChange.Error
                     //set failType to NoMatch since the search didn't hit a match. showError() will
                     // show the relevant error message.
                     failType.value = State.NoMatch
                     return
                 }
+                shownBeforeConfigurationChange = ShownBeforeConfigurationChange.Result
                 //update outputResponse with a new value
                 outputResponse.value = response
             }
 
             override fun onFailure(call: Call<List<Word>>, t: Throwable) {
                 Log.e("dictionary_api_access", "connection the server could not be established")
+                shownBeforeConfigurationChange = ShownBeforeConfigurationChange.Error
                 //set failType to CallFailed since the server couldn't be reached. showError() will
                 // show the relevant error message.
                 failType.value = State.CallFailed
