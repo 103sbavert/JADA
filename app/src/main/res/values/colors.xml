@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="orange_200">#4D2718</color>
-    <color name="orange_500">#ED680E</color>
-    <color name="orange_700">#F8B888</color>
-    <color name="green_200">#156827</color>
-    <color name="green_700">#7FD076</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="orange_dark">#875641</color>
+    <color name="orange_light">#D18347</color>
+    <color name="green_dark">#166F22</color>
+    <color name="green_light">#70C35C</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>

@@ -2,11 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'androidx.navigation.safeargs.kotlin'
 }
-
-def retrofit_version = "2.9.0"
-//def nav_version = "2.3.1"
-def lifecycle_version = "2.2.0"
 
 android {
     compileSdkVersion 30
@@ -16,8 +13,8 @@ android {
         applicationId "com.sbeve.dictionary"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
-        versionName "1.5"
+        versionCode 4
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -51,11 +48,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     //navigation components
-/*  implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"*/
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     //architecture components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.fragment:fragment-ktx:1.2.5"
 }

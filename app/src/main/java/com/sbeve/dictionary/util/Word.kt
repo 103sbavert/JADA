@@ -1,4 +1,4 @@
-package com.sbeve.dictionary.retrofit_files
+package com.sbeve.dictionary.util
 
 import com.google.gson.annotations.SerializedName
 

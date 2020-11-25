@@ -1,4 +1,4 @@
-package com.sbeve.dictionary.retrofit_files
+package com.sbeve.dictionary.util
 
 import retrofit2.Call
 import retrofit2.Retrofit

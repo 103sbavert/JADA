@@ -6,6 +6,7 @@
     <dimen name="medium_margin_padding">12dp</dimen>
     <dimen name="small_margin_padding">10dp</dimen>
     <dimen name="tiny_margin_padding">8dp</dimen>
+    <dimen name="result_scroll_view_margin">68dp</dimen>
 
     <!--other-->
     <integer name="word_text_size">25</integer>
