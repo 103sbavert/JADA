@@ -25,6 +25,7 @@ class ResultFragment : Fragment() {
         setHasOptionsMenu(true)
 
         viewModel.fetchResult.observe(this.viewLifecycleOwner) {
+            loading_anim.visibility = View.GONE
             when (it) {
                 //the value of fetchResult is null right when the viewModel is created and we only
                 //wanna call fetchWordInformation() with the args when the fragment
@@ -33,23 +34,11 @@ class ResultFragment : Fragment() {
                 //FetchResult was failed (this logic is included in fetchWordInformation()) and now
                 //we wanna show an error message now and every time a configuration change happens
                 //until fetchWordInformation() is called again
-                ResultViewModel.FetchResult.Failure -> {
-                    showError(viewModel.errorType)
-                    //hide the information about the word if it is visible to make room for the
-                    //error message
-                    if (result_scroll_view.visibility != View.GONE) result_scroll_view.visibility =
-                        View.GONE
-                    loading_anim.visibility = View.GONE
-                }
+                ResultViewModel.FetchResult.Failure -> showError(viewModel.errorType)
                 //FetchResult was successful and now we wanna show the result fetched from the
                 //server now and every time a configuration change happens until
                 //fetchWordInformation() is called again
-                ResultViewModel.FetchResult.Success -> {
-                    updateUI(viewModel.outputResponse)
-                    //hide errorMessage if it is visible to make room for the result
-                    if (errorMessage.visibility != View.GONE) errorMessage.visibility = View.GONE
-                    loading_anim.visibility = View.GONE
-                }
+                ResultViewModel.FetchResult.Success -> updateUI(viewModel.outputResponse)
             }
         }
 
@@ -59,23 +48,29 @@ class ResultFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.toolbar, menu)
-
         val searchView =
             menu.findItem(R.id.search).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextSubmit(query: String): Boolean {
-                loading_anim.visibility = View.VISIBLE
+                //hide the information about the word if it is visible to make room for the
+                //error message
+                if (result_scroll_view.visibility != View.GONE) result_scroll_view.visibility =
+                    View.GONE
+                //hide errorMessage if it is visible to make room for the result
+                if (errorMessage.visibility != View.GONE) errorMessage.visibility = View.GONE
                 //remove all the views added to the result_linear_view by the previous search
                 result_linear_layout.removeAllViews()
+                loading_anim.visibility = View.VISIBLE
                 //fetch information about the word submitted by the user in the search bar
                 viewModel.fetchWordInformation(query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?) = false
+
         })
     }
-
 
     //get a text view with large font size for showing the word
     private fun getWordTextView(): TextView {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--dimens-->
+    <dimen name="gigantic_margin_padding">100dp</dimen>
     <dimen name="large_margin_padding">25dp</dimen>
     <dimen name="standard_margin_padding">15dp</dimen>
     <dimen name="medium_margin_padding">12dp</dimen>
