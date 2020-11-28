@@ -6,7 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sbeve.dictionary.util.RetrofitInitialization
+import com.sbeve.dictionary.util.RetrofitInit.accessApiObject
 import com.sbeve.dictionary.util.Word
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,6 +14,7 @@ import retrofit2.Response
 
 class ResultViewModel : ViewModel() {
 
+    //type of failure that occurred while looking for a definition for the submitted query
     enum class ErrorType {
         CallFailed,
         NoMatch
@@ -25,6 +26,12 @@ class ResultViewModel : ViewModel() {
         Failure
     }
 
+    //tells the reason behind a result not being found (network fail or no match?)
+    lateinit var errorType: ErrorType
+
+    //store the response output by enqueue call, empty if the viewmodel has just been instantiated
+    lateinit var outputResponse: Response<List<Word>>
+
     //store information about the kind of content (error or word result) to be shown on the screen
     //next time the fragment is created. Also call the appropriate methods to finish the task
     //using the observer
@@ -32,52 +39,44 @@ class ResultViewModel : ViewModel() {
 
     //make an instance of the retrofit api each time the viewmodel is instantiated (somewhat
     //unnecessary right now but will be useful later)
-    private val accessApiObject = RetrofitInitialization("hi").accessApiObject
-
-    //tells the reason behind a result not being found (network fail or no match?)
-    lateinit var errorType: ErrorType
-
-    //store the response output by enqueue call, empty if the viewmodel has just been instantiated
-    lateinit var outputResponse: Response<List<Word>>
-
     //make a call to the server
     fun fetchWordInformation(query: String) {
         //retrieve a new call object to make a request to the server
-        getRetrofitCall(query).enqueue(object : Callback<List<Word>> {
-            override fun onResponse(call: Call<List<Word>>, response: Response<List<Word>>) {
-                if (!response.isSuccessful) {
-                    //set the type of error to NoMatch since a connection to the server was
-                    //successful it's just that the entered word wasn't found in the database
-                    errorType = ErrorType.NoMatch
+
+        accessApiObject
+            .getDefinitions(query)
+            .enqueue(object : Callback<List<Word>> {
+                override fun onResponse(call: Call<List<Word>>, response: Response<List<Word>>) {
+                    if (!response.isSuccessful) {
+                        //set the type of error to NoMatch since a connection to the server was
+                        //successful it's just that the entered word wasn't found in the database
+                        errorType = ErrorType.NoMatch
+                        //since the fragment has to shown an error message now and on every
+                        //configuration from now until fetchWordInformation() is called again, set
+                        //fetchResult to Failure
+                        fetchResult.value = FetchResult.Failure
+                        return
+                    }
+                    //pass the response body to outputResponse to be used by updateUI() to show the
+                    //result on the screen
+                    outputResponse = response
+                    //set fetchResult to Success so the fragment shows the result fetched from the
+                    //server now and on every configuration change from now until fetchWordInformation
+                    //is called again
+                    fetchResult.value = FetchResult.Success
+                }
+
+                override fun onFailure(call: Call<List<Word>>, t: Throwable) {
+                    //set the type of error to CallFailed since a request to the server could not be
+                    //made
+                    errorType = ErrorType.CallFailed
                     //since the fragment has to shown an error message now and on every
                     //configuration from now until fetchWordInformation() is called again, set
                     //fetchResult to Failure
                     fetchResult.value = FetchResult.Failure
-                    return
                 }
-                //pass the response body to outputResponse to be used by updateUI() to show the
-                //result on the screen
-                outputResponse = response
-                //set fetchResult to Success so the fragment shows the result fetched from the
-                //server now and on every configuration change from now until fetchWordInformation
-                //is called again
-                fetchResult.value = FetchResult.Success
-            }
-
-            override fun onFailure(call: Call<List<Word>>, t: Throwable) {
-                //set the type of error to CallFailed since a request to the server could not be
-                //made
-                errorType = ErrorType.CallFailed
-                //since the fragment has to shown an error message now and on every
-                //configuration from now until fetchWordInformation() is called again, set
-                //fetchResult to Failure
-                fetchResult.value = FetchResult.Failure
-            }
-        })
+            })
     }
-
-    //returns a new call object to use for a new request to the server
-    private fun getRetrofitCall(query: String) = accessApiObject.getDefinitions(query)
 
     //hides the keyboard
     fun hideKeyboard(activity: Activity) {

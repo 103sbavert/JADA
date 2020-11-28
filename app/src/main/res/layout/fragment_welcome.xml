@@ -7,24 +7,16 @@
 
 
     <TextView
-        android:id="@+id/welcome_title"
+        android:id="@+id/welcome_text"
         style="@style/basic_text_view"
-        android:text="@string/welcome_text_title"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/welcome_content"
-        style="@style/basic_text_view"
-        android:layout_marginTop="@dimen/tiny_margin_padding"
-        android:layout_marginBottom="@dimen/standard_margin_padding"
-        android:text="@string/welcome_text_content" />
+        android:paddingVertical="@dimen/tiny_margin_padding"
+        android:text="@string/welcome_text" />
 
     <Button
-        android:id="@+id/activate_search"
+        android:id="@+id/change_language_button"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/search_button_hint" />
+        android:text="@string/change_language_button_hint" />
 
 </LinearLayout>

@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="boxStrokeColor">@color/stroke_light</item>
     </style>
 </resources>

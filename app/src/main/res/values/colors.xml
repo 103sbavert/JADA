@@ -6,4 +6,6 @@
     <color name="green_light">#70C35C</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="stroke_light">#cfcfcf</color>
+    <color name="stroke_dark">#323232</color>
 </resources>

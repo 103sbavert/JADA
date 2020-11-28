@@ -25,7 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentPaddingLeft="@dimen/standard_margin_padding"
-            app:contentPaddingRight="@dimen/standard_margin_padding">
+            app:cardElevation="0dp"
+            app:contentPaddingRight="@dimen/standard_margin_padding"
+            app:strokeColor="?attr/boxStrokeColor"
+            app:strokeWidth="2dp">
 
             <LinearLayout
                 android:id="@+id/result_linear_layout"

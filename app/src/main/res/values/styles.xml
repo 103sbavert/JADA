@@ -4,9 +4,9 @@
     <style name="basic_text_view">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/large_margin_padding</item>
-        <item name="android:layout_marginEnd">@dimen/large_margin_padding</item>
+        <item name="android:layout_marginStart">@dimen/medium_margin_padding</item>
+        <item name="android:layout_marginEnd">@dimen/medium_margin_padding</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>

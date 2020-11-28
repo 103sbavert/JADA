@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.sbeve.dictionary.R
+import com.sbeve.dictionary.activities.MainActivity
 import com.sbeve.dictionary.util.Word
 import kotlinx.android.synthetic.main.fragment_result.*
 import retrofit2.Response
@@ -17,15 +18,31 @@ class ResultFragment : Fragment() {
     private val viewModel: ResultViewModel by viewModels()
     private val args: ResultFragmentArgs by navArgs()
 
+    //the currently running instance of the activity
+    private val mainActivityContext: MainActivity by lazy {
+        activity as MainActivity
+    }
+
+    /*
+        private val sharedPreferences: SharedPreferences by lazy {
+            mainActivityContext.activitySharedPreferences
+        }
+    */
+
+    //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
+    private val inflatedMenu: Menu by lazy {
+        mainActivityContext.activityMenu
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_result, container, false)
-        setHasOptionsMenu(true)
+    ): View? = inflater.inflate(R.layout.fragment_result, container, false)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         viewModel.fetchResult.observe(this.viewLifecycleOwner) {
-            loading_anim.visibility = View.GONE
             when (it) {
                 //the value of fetchResult is null right when the viewModel is created and we only
                 //wanna call fetchWordInformation() with the args when the fragment
@@ -40,16 +57,14 @@ class ResultFragment : Fragment() {
                 //fetchWordInformation() is called again
                 ResultViewModel.FetchResult.Success -> updateUI(viewModel.outputResponse)
             }
-        }
 
-        return view
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.toolbar, menu)
-        val searchView =
-            menu.findItem(R.id.search).actionView as SearchView
+        //get the search view widget from the menu that was inflated inside the activity
+        val searchView = inflatedMenu.findItem(R.id.search).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -71,6 +86,7 @@ class ResultFragment : Fragment() {
 
         })
     }
+
 
     //get a text view with large font size for showing the word
     private fun getWordTextView(): TextView {
@@ -117,6 +133,7 @@ class ResultFragment : Fragment() {
     }
 
     private fun updateUI(response: Response<List<Word>>) {
+        loading_anim.visibility = View.GONE
         //make result_scroll_view visible if it's not already
         if (result_scroll_view.visibility != View.VISIBLE) result_scroll_view.visibility =
             View.VISIBLE
@@ -154,7 +171,7 @@ class ResultFragment : Fragment() {
             result_linear_layout.addView(meaningTv)
 
             //hide the keyboard once the result is visible on the screen
-            viewModel.hideKeyboard(requireActivity())
+            viewModel.hideKeyboard(mainActivityContext)
         }
 
     }
@@ -172,12 +189,14 @@ class ResultFragment : Fragment() {
 
     //show the right error message based on what went wrong
     private fun showError(state: ResultViewModel.ErrorType) {
+        loading_anim.visibility = View.GONE
         //make errorMessage visible if it's not already
         if (errorMessage.visibility != View.VISIBLE) errorMessage.visibility = View.VISIBLE
         when (state) {
             ResultViewModel.ErrorType.CallFailed -> errorMessage.text =
                 getString(R.string.call_failed)
-            ResultViewModel.ErrorType.NoMatch -> errorMessage.text = getString(R.string.no_match)
+            ResultViewModel.ErrorType.NoMatch -> errorMessage.text =
+                getString(R.string.no_match)
         }
     }
 }
