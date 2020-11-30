@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
                     .apply()
                 dialogInterface.dismiss()
             }
-            .create()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(activity_toolbar)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         activity_toolbar.setupWithNavController(navController, appBarConfiguration)
+        changeLanguageDialog.create()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
