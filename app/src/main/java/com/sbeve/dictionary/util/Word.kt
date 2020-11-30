@@ -2,7 +2,7 @@ package com.sbeve.dictionary.util
 
 import com.google.gson.annotations.SerializedName
 
-//class to be used by gson to deserialize the json output recieved from the server
+//class to be used by gson to deserialize the json output received from the server
 data class Word(
     @SerializedName("word")
     val word: String,

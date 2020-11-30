@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -11,7 +12,8 @@
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/gigantic_margin_padding" />
+        android:layout_marginBottom="@dimen/gigantic_margin_padding"
+        tools:visibility="gone" />
 
     <ScrollView
         android:id="@+id/result_scroll_view"
@@ -24,11 +26,11 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentPaddingLeft="@dimen/standard_margin_padding"
             app:cardElevation="0dp"
+            app:contentPaddingLeft="@dimen/standard_margin_padding"
             app:contentPaddingRight="@dimen/standard_margin_padding"
             app:strokeColor="?attr/boxStrokeColor"
-            app:strokeWidth="2dp">
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:id="@+id/result_linear_layout"
@@ -38,6 +40,7 @@
                 android:orientation="vertical" />
         </com.google.android.material.card.MaterialCardView>
     </ScrollView>
+
 
     <TextView
         android:id="@+id/errorMessage"
