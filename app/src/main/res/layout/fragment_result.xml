@@ -1,51 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ProgressBar
         android:id="@+id/loading_anim"
+        android:layout_gravity="center"
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/gigantic_margin_padding"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
-    <ScrollView
-        android:id="@+id/result_scroll_view"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/result_card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/medium_margin_padding"
-        android:layout_marginTop="@dimen/medium_margin_padding"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginHorizontal="@dimen/small_margin_padding"
+        android:layout_marginTop="@dimen/small_margin_padding"
         android:visibility="gone">
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/result_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="0dp"
-            app:contentPaddingLeft="@dimen/standard_margin_padding"
-            app:contentPaddingRight="@dimen/standard_margin_padding"
-            app:strokeColor="?attr/boxStrokeColor"
-            app:strokeWidth="1dp">
+            android:layout_height="match_parent"
+            tools:listitem="@layout/word_item_layout" />
 
-            <LinearLayout
-                android:id="@+id/result_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical" />
-        </com.google.android.material.card.MaterialCardView>
-    </ScrollView>
-
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
+        android:layout_gravity="center_vertical"
         android:id="@+id/errorMessage"
         style="@style/basic_text_view"
         android:layout_marginBottom="@dimen/gigantic_margin_padding"
         android:visibility="gone" />
 
-</LinearLayout>
+</FrameLayout>

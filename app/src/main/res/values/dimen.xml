@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--dimens-->
     <dimen name="gigantic_margin_padding">100dp</dimen>
     <dimen name="large_margin_padding">25dp</dimen>
     <dimen name="standard_margin_padding">15dp</dimen>
@@ -8,10 +7,7 @@
     <dimen name="small_margin_padding">10dp</dimen>
     <dimen name="tiny_margin_padding">8dp</dimen>
     <dimen name="result_scroll_view_margin">68dp</dimen>
-
-    <!--other-->
-    <integer name="word_text_size">25</integer>
-    <integer name="definition_text_size">15</integer>
-    <integer name="org_text_size">12</integer>
-
+    <dimen name="word_text_size">25sp</dimen>
+    <dimen name="def_text_size">15sp</dimen>
+    <dimen name="org_text_size">12sp</dimen>
 </resources>

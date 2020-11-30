@@ -22,9 +22,9 @@ class WelcomeFragment : Fragment() {
     }
 
     /*
-        private val sharedPreferences: SharedPreferences by lazy {
-            mainActivityContext.activitySharedPreferences
-        }
+    private val sharedPreferences: SharedPreferences by lazy {
+        mainActivityContext.activitySharedPreferences
+    }
     */
 
     //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
