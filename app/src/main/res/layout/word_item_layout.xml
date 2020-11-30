@@ -27,5 +27,6 @@
         android:layout_below="@+id/origin_textview"
         android:layout_marginTop="@dimen/standard_margin_padding"
         android:textSize="@dimen/def_text_size"
+        android:lineSpacingExtra="1dp"
         tools:text="a single distinct meaningful element of speech or writing, used with others (or sometimes alone) to form a sentence and typically shown with a space on either side when written or printed." />
 </RelativeLayout>

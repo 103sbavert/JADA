@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -31,13 +32,19 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var activityMenu: Menu
 
-    val changeLanguageDialog by lazy {
-        val savedSetting: Int = activitySharedPreferences.getInt("language_setting_key", 0)
-        MaterialAlertDialogBuilder(this)
+    lateinit var changeLanguageDialog: AlertDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(activity_toolbar)
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
+        activity_toolbar.setupWithNavController(navController, appBarConfiguration)
+        changeLanguageDialog = MaterialAlertDialogBuilder(this)
             .setTitle("Choose a language")
             .setSingleChoiceItems(
                 RetrofitInit.supportedLanguages.first,
-                savedSetting
+                activitySharedPreferences.getInt("language_setting_key", 0)
             ) { dialogInterface, i ->
                 RetrofitInit.changeLanguage(i)
                 activitySharedPreferences
@@ -46,15 +53,7 @@ class MainActivity : AppCompatActivity() {
                     .apply()
                 dialogInterface.dismiss()
             }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(activity_toolbar)
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
-        activity_toolbar.setupWithNavController(navController, appBarConfiguration)
-        changeLanguageDialog.create()
+            .create()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

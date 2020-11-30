@@ -2,7 +2,6 @@ package com.sbeve.dictionary.fragments
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -12,7 +11,7 @@ import com.sbeve.dictionary.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
 class WelcomeFragment : Fragment() {
-    val navController: NavController by lazy {
+    private val navController: NavController by lazy {
         this.findNavController()
     }
 
@@ -21,21 +20,17 @@ class WelcomeFragment : Fragment() {
         activity as MainActivity
     }
 
+    //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
+    private val inflatedMenu: Menu by lazy {
+        mainActivityContext.activityMenu
+    }
+
     /*
     private val sharedPreferences: SharedPreferences by lazy {
         mainActivityContext.activitySharedPreferences
     }
     */
 
-    //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
-    private val inflatedMenu: Menu by lazy {
-        mainActivityContext.activityMenu
-    }
-
-    //get the dialog created inside the activity to be used for change_language_button
-    private val changeLanguageDialog: AlertDialog by lazy {
-        mainActivityContext.changeLanguageDialog
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +42,7 @@ class WelcomeFragment : Fragment() {
         setHasOptionsMenu(true)
         //set on click listener to let the user change the language
         change_language_button.setOnClickListener {
-            changeLanguageDialog.show()
+            mainActivityContext.changeLanguageDialog.show()
         }
     }
 

@@ -26,16 +26,16 @@ class ResultFragment : Fragment() {
         activity as MainActivity
     }
 
+    //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
+    private val inflatedMenu: Menu by lazy {
+        mainActivityContext.activityMenu
+    }
+
     /*
     private val sharedPreferences: SharedPreferences by lazy {
         mainActivityContext.activitySharedPreferences
     }
     */
-
-    //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
-    private val inflatedMenu: Menu by lazy {
-        mainActivityContext.activityMenu
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
