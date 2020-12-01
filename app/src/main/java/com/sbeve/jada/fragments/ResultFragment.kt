@@ -1,5 +1,6 @@
 package com.sbeve.jada.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -31,11 +32,9 @@ class ResultFragment : Fragment() {
         mainActivityContext.mainActivityMenu
     }
 
-    /*
     private val sharedPreferences: SharedPreferences by lazy {
-        mainActivityContext.activitySharedPreferences
+        mainActivityContext.applicationSharedPreferences
     }
-    */
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,9 +49,13 @@ class ResultFragment : Fragment() {
         viewModel.fetchWordInfoResult.observe(this.viewLifecycleOwner) {
             when (it) {
                 //the value of fetchResult is null right when the viewModel is created and we only
-                //wanna call fetchWordInformation() with the args when the fragment
-                // is created for the first time (or when the viewmodel is instantiated)
-                null -> viewModel.fetchWordInfo(args.query)
+                //wanna call fetchWordInformation() with the args and the name of the selected
+                // language when the fragment is created for the first time (or when the viewmodel
+                // is instantiated)
+                null -> viewModel.fetchWordInfo(
+                    sharedPreferences.getInt(getString(R.string.language_setting_key), 0),
+                    args.query
+                )
                 //FetchResult was failed (this logic is included in fetchWordInformation()) and now
                 //we wanna show an error message now and every time a configuration change happens
                 //until fetchWordInformation() is called again
@@ -79,8 +82,12 @@ class ResultFragment : Fragment() {
                 //hide errorMessage if it is visible to make room for the result
                 if (!errorMessage.isGone) errorMessage.visibility = View.GONE
                 loading_anim.visibility = View.VISIBLE
-                //fetch information about the word submitted by the user in the search bar
-                viewModel.fetchWordInfo(query)
+                //fetch information about the word submitted by the user in the search bar and the
+                //language to be used
+                viewModel.fetchWordInfo(
+                    sharedPreferences.getInt(getString(R.string.language_setting_key), 0),
+                    query
+                )
                 return true
             }
 

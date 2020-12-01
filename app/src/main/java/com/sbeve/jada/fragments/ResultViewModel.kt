@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.sbeve.jada.util.RetrofitInit
 import com.sbeve.jada.util.RetrofitInit.accessApiObject
 import com.sbeve.jada.util.Word
 import retrofit2.Call
@@ -40,11 +41,11 @@ class ResultViewModel : ViewModel() {
     //make an instance of the retrofit api each time the viewmodel is instantiated (somewhat
     //unnecessary right now but will be useful later)
     //make a call to the server
-    fun fetchWordInfo(query: String) {
+    fun fetchWordInfo(languageIndex: Int, query: String) {
+        val languageSelected = RetrofitInit.supportedLanguages.second[languageIndex]
         //retrieve a new call object to make a request to the server
-
         accessApiObject
-            .getDefinitions(query)
+            .getDefinitions(languageSelected, query)
             .enqueue(object : Callback<List<Word>> {
                 override fun onResponse(call: Call<List<Word>>, response: Response<List<Word>>) {
                     if (!response.isSuccessful) {
@@ -54,7 +55,7 @@ class ResultViewModel : ViewModel() {
                         //since the fragment has to shown an error message now and on every
                         //configuration from now until fetchWordInformation() is called again, set
                         //fetchResult to Failure
-                        fetchWordInfoResult.value = ResultViewModel.FetchWordInfoResult.Failure
+                        fetchWordInfoResult.value = FetchWordInfoResult.Failure
                         return
                     }
                     //pass the response body to outputResponse to be used by updateUI() to show the
@@ -63,7 +64,7 @@ class ResultViewModel : ViewModel() {
                     //set fetchResult to Success so the fragment shows the result fetched from the
                     //server now and on every configuration change from now until fetchWordInformation
                     //is called again
-                    fetchWordInfoResult.value = ResultViewModel.FetchWordInfoResult.Success
+                    fetchWordInfoResult.value = FetchWordInfoResult.Success
                 }
 
                 override fun onFailure(call: Call<List<Word>>, t: Throwable) {

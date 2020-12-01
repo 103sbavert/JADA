@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         AppBarConfiguration(navController.graph)
     }
 
-    private val applicationSharedPreferences: SharedPreferences by lazy {
+    val applicationSharedPreferences: SharedPreferences by lazy {
         this.getSharedPreferences("application", Context.MODE_PRIVATE)
     }
 
@@ -44,12 +44,14 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Choose a language")
             .setSingleChoiceItems(
                 RetrofitInit.supportedLanguages.first,
-                applicationSharedPreferences.getInt("language_setting_key", 0)
+                applicationSharedPreferences.getInt(
+                    getString(R.string.language_setting_key),
+                    0
+                )
             ) { dialogInterface, i ->
-                RetrofitInit.changeLanguage(i)
                 applicationSharedPreferences
                     .edit()
-                    .putInt("language_setting_key", i)
+                    .putInt(getString(R.string.language_setting_key), i)
                     .apply()
                 dialogInterface.dismiss()
             }
