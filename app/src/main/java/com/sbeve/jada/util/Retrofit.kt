@@ -18,8 +18,8 @@ object RetrofitInit {
             "Russian",
             "German",
             "Italian",
-            "Brazilian Portuguese",
             "Korean",
+            "Brazilian Portuguese",
             "Turkish"
         ),
         arrayOf(
