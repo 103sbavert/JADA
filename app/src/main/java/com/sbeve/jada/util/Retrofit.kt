@@ -18,6 +18,7 @@ object RetrofitInit {
             "Russian",
             "German",
             "Italian",
+            "Brazilian Portuguese",
             "Korean",
             "Turkish"
         ),
@@ -31,6 +32,7 @@ object RetrofitInit {
             "de",
             "it",
             "ko",
+            "pt - BR",
             "tr",
         )
     )
