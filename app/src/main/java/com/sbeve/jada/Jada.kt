@@ -1,9 +1,9 @@
-package com.sbeve.dictionary
+package com.sbeve.jada
 
 import android.app.Application
 import android.content.Context
 
-class HiDictionary : Application() {
+class Jada : Application() {
 
     override fun onCreate() {
         super.onCreate()

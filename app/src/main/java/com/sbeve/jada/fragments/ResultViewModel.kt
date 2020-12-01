@@ -1,4 +1,4 @@
-package com.sbeve.dictionary.fragments
+package com.sbeve.jada.fragments
 
 import android.app.Activity
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sbeve.dictionary.util.RetrofitInit.accessApiObject
-import com.sbeve.dictionary.util.Word
+import com.sbeve.jada.util.RetrofitInit.accessApiObject
+import com.sbeve.jada.util.Word
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +21,7 @@ class ResultViewModel : ViewModel() {
     }
 
     //type of content to be shown on the screen when the fragment is recreated
-    enum class FetchResult {
+    enum class FetchWordInfoResult {
         Success,
         Failure
     }
@@ -30,17 +30,17 @@ class ResultViewModel : ViewModel() {
     lateinit var errorType: ErrorType
 
     //store the response output by enqueue call, empty if the viewmodel has just been instantiated
-    lateinit var outputResponse: Response<List<Word>>
+    lateinit var wordInfo: Response<List<Word>>
 
     //store information about the kind of content (error or word result) to be shown on the screen
     //next time the fragment is created. Also call the appropriate methods to finish the task
     //using the observer
-    val fetchResult = MutableLiveData<FetchResult>(null)
+    val fetchWordInfoResult = MutableLiveData<FetchWordInfoResult>(null)
 
     //make an instance of the retrofit api each time the viewmodel is instantiated (somewhat
     //unnecessary right now but will be useful later)
     //make a call to the server
-    fun fetchWordInformation(query: String) {
+    fun fetchWordInfo(query: String) {
         //retrieve a new call object to make a request to the server
 
         accessApiObject
@@ -54,16 +54,16 @@ class ResultViewModel : ViewModel() {
                         //since the fragment has to shown an error message now and on every
                         //configuration from now until fetchWordInformation() is called again, set
                         //fetchResult to Failure
-                        fetchResult.value = FetchResult.Failure
+                        fetchWordInfoResult.value = ResultViewModel.FetchWordInfoResult.Failure
                         return
                     }
                     //pass the response body to outputResponse to be used by updateUI() to show the
                     //result on the screen
-                    outputResponse = response
+                    wordInfo = response
                     //set fetchResult to Success so the fragment shows the result fetched from the
                     //server now and on every configuration change from now until fetchWordInformation
                     //is called again
-                    fetchResult.value = FetchResult.Success
+                    fetchWordInfoResult.value = ResultViewModel.FetchWordInfoResult.Success
                 }
 
                 override fun onFailure(call: Call<List<Word>>, t: Throwable) {
@@ -73,7 +73,7 @@ class ResultViewModel : ViewModel() {
                     //since the fragment has to shown an error message now and on every
                     //configuration from now until fetchWordInformation() is called again, set
                     //fetchResult to Failure
-                    fetchResult.value = FetchResult.Failure
+                    fetchWordInfoResult.value = FetchWordInfoResult.Failure
                 }
             })
     }

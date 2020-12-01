@@ -1,7 +1,7 @@
-package com.sbeve.dictionary.util
+package com.sbeve.jada.util
 
 import android.content.Context
-import com.sbeve.dictionary.HiDictionary
+import com.sbeve.jada.Jada
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,7 +10,7 @@ import retrofit2.http.Path
 
 object RetrofitInit {
 
-    var appContext: Context = HiDictionary.mContext
+    var appContext: Context = Jada.mContext
 
     val supportedLanguages = Pair(
         arrayOf(

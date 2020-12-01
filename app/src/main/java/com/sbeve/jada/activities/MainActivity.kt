@@ -1,4 +1,4 @@
-package com.sbeve.dictionary.activities
+package com.sbeve.jada.activities
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,8 +13,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.sbeve.dictionary.R
-import com.sbeve.dictionary.util.RetrofitInit
+import com.sbeve.jada.R
+import com.sbeve.jada.util.RetrofitInit
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -26,11 +26,11 @@ class MainActivity : AppCompatActivity() {
         AppBarConfiguration(navController.graph)
     }
 
-    private val activitySharedPreferences: SharedPreferences by lazy {
+    private val applicationSharedPreferences: SharedPreferences by lazy {
         this.getSharedPreferences("application", Context.MODE_PRIVATE)
     }
 
-    lateinit var activityMenu: Menu
+    lateinit var mainActivityMenu: Menu
 
     lateinit var changeLanguageDialog: AlertDialog
 
@@ -44,10 +44,10 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Choose a language")
             .setSingleChoiceItems(
                 RetrofitInit.supportedLanguages.first,
-                activitySharedPreferences.getInt("language_setting_key", 0)
+                applicationSharedPreferences.getInt("language_setting_key", 0)
             ) { dialogInterface, i ->
                 RetrofitInit.changeLanguage(i)
-                activitySharedPreferences
+                applicationSharedPreferences
                     .edit()
                     .putInt("language_setting_key", i)
                     .apply()
@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar, menu)
-        activityMenu = menu!!
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        mainActivityMenu = menu!!
         return true
     }
 

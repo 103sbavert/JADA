@@ -1,4 +1,4 @@
-package com.sbeve.dictionary.util
+package com.sbeve.jada.util
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,8 +1,7 @@
-package com.sbeve.dictionary
-
-import org.junit.Test
+package com.sbeve.jada
 
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).

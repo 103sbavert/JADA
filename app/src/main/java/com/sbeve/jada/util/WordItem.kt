@@ -1,4 +1,4 @@
-package com.sbeve.dictionary.util
+package com.sbeve.jada.util
 
 data class WordItem(
     val wordTitleItem: String,

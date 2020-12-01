@@ -1,4 +1,4 @@
-package com.sbeve.dictionary.fragments
+package com.sbeve.jada.fragments
 
 import android.os.Bundle
 import android.view.*
@@ -6,8 +6,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.sbeve.dictionary.R
-import com.sbeve.dictionary.activities.MainActivity
+import com.sbeve.jada.R
+import com.sbeve.jada.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
 class WelcomeFragment : Fragment() {
@@ -22,7 +22,7 @@ class WelcomeFragment : Fragment() {
 
     //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
     private val inflatedMenu: Menu by lazy {
-        mainActivityContext.activityMenu
+        mainActivityContext.mainActivityMenu
     }
 
     /*

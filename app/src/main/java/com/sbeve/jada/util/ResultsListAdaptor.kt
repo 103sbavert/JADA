@@ -1,11 +1,11 @@
-package com.sbeve.dictionary.util
+package com.sbeve.jada.util
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sbeve.dictionary.R
+import com.sbeve.jada.R
 import kotlinx.android.synthetic.main.word_item_layout.view.*
 
 class ResultsListAdaptor(private val wordsItemList: List<WordItem>) :
@@ -29,6 +29,7 @@ class ResultsListAdaptor(private val wordsItemList: List<WordItem>) :
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val wordTitle: TextView = itemView.word_title_textview
+        private val origin: TextView = itemView.origin_textview
         var originText: String? = null
             //custom setter to update the origin_textview manually inside the viewholder
             set(value) {
@@ -37,7 +38,6 @@ class ResultsListAdaptor(private val wordsItemList: List<WordItem>) :
                 if (value.isNullOrEmpty()) origin.visibility = View.GONE
                 else origin.text = itemView.context.getString(R.string.origin_info, value)
             }
-        private val origin: TextView = itemView.origin_textview
         val content: TextView = itemView.content_textview
 
     }
