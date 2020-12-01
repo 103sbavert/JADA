@@ -2,7 +2,7 @@
 
 A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode.
 
-##Multi Language support
+## Multi Language support
 
 This dictionary supports multiple language as the API I am using does too. The languages supported are the following
 
