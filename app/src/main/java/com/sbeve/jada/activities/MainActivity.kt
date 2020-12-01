@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     val applicationSharedPreferences: SharedPreferences by lazy {
-        this.getSharedPreferences("application", Context.MODE_PRIVATE)
+        this.getPreferences(Context.MODE_PRIVATE)
     }
 
     lateinit var mainActivityMenu: Menu
