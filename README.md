@@ -1,4 +1,5 @@
-# JADA (Just Another Dictionary App)  
+# JADA (Just Another Dictionary App) 
+(Liscensed under the MIT Liscense)
 
 A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode.
 
@@ -26,9 +27,9 @@ The dictionary was made with clean architecture practices and ease of reading th
 
 It uses Kotlin entirely and it uses Navigation Components and parts of the MVVM architecture pattern.
 
-It uses Retrofit2 to access a webserver that uses the API mentioned above to retrieve information about the word entered by the user in the search bar and to show the results it uses a scroll view.
+It uses Retrofit2 to access a webserver that uses the API mentioned above to retrieve information about the word entered by the user in the search bar and to show the results it uses a scroll view. It also uses Material Components throughout the app wherever possible.
 
-It also uses Material Components throughout the app wherever possible. This app can be used by absolute beginners as a way to learn some basic things like using ViewModels or LiveData or Material Components.
+This app can be used by absolute beginners as a way to learn some basic things like using ViewModels or LiveData or Material Components.
 
 I have commented every piece of code that I believed was not part of common things you do in Android Development. All the logic and operations done by me that are not common practices and unique to this particular app were explained with comments. 
 
