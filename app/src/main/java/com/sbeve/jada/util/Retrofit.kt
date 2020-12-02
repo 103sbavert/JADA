@@ -32,7 +32,7 @@ object RetrofitInit {
             "de",
             "it",
             "ko",
-            "pt - BR",
+            "pt-BR",
             "tr",
         )
     )

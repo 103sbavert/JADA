@@ -20,17 +20,6 @@ class WelcomeFragment : Fragment() {
         activity as MainActivity
     }
 
-    //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
-    private val inflatedMenu: Menu by lazy {
-        mainActivityContext.mainActivityMenu
-    }
-
-    /*
-    private val sharedPreferences: SharedPreferences by lazy {
-        mainActivityContext.activitySharedPreferences
-    }
-    */
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +36,8 @@ class WelcomeFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        val searchView = inflatedMenu.findItem(R.id.search).actionView as SearchView
+        val searchView =
+            mainActivityContext.mainActivityMenu.findItem(R.id.search).actionView as SearchView
         searchView
             .setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {

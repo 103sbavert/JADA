@@ -41,11 +41,11 @@ class ResultViewModel : ViewModel() {
     //make an instance of the retrofit api each time the viewmodel is instantiated (somewhat
     //unnecessary right now but will be useful later)
     //make a call to the server
-    fun fetchWordInfo(languageIndex: Int, query: String) {
-        val languageSelected = RetrofitInit.supportedLanguages.second[languageIndex]
+    fun fetchWordInfo(savedLanguageIndex: Int, queriedWord: String) {
+        val savedLanguageCode = RetrofitInit.supportedLanguages.second[savedLanguageIndex]
         //retrieve a new call object to make a request to the server
         accessApiObject
-            .getDefinitions(languageSelected, query)
+            .getDefinitions(savedLanguageCode, queriedWord)
             .enqueue(object : Callback<List<Word>> {
                 override fun onResponse(call: Call<List<Word>>, response: Response<List<Word>>) {
                     if (!response.isSuccessful) {
@@ -80,7 +80,7 @@ class ResultViewModel : ViewModel() {
     }
 
     //hides the keyboard
-    fun hideKeyboard(activity: Activity) {
+    fun hideSoftKeyboard(activity: Activity) {
         val imm: InputMethodManager =
             activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
 

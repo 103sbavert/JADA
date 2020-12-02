@@ -8,4 +8,5 @@
     <dimen name="word_text_size">25sp</dimen>
     <dimen name="def_text_size">15sp</dimen>
     <dimen name="org_text_size">12sp</dimen>
+    <dimen name="standard_line_spacing">1dp</dimen>
 </resources>

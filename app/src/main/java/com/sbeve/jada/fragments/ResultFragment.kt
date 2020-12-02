@@ -1,6 +1,5 @@
 package com.sbeve.jada.fragments
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -27,13 +26,12 @@ class ResultFragment : Fragment() {
         activity as MainActivity
     }
 
-    //get the menu inflated in the activity from it to use the menu in onCreateOptionsMenu later
-    private val inflatedMenu: Menu by lazy {
-        mainActivityContext.mainActivityMenu
-    }
-
-    private val sharedPreferences: SharedPreferences by lazy {
-        mainActivityContext.applicationSharedPreferences
+    //the language selected by the user for searches
+    private val savedLanguageIndex: Int by lazy {
+        mainActivityContext.applicationSharedPreferences.getInt(
+            getString(R.string.language_setting_key),
+            0
+        )
     }
 
     override fun onCreateView(
@@ -52,10 +50,7 @@ class ResultFragment : Fragment() {
                 //wanna call fetchWordInformation() with the args and the name of the selected
                 // language when the fragment is created for the first time (or when the viewmodel
                 // is instantiated)
-                null -> viewModel.fetchWordInfo(
-                    sharedPreferences.getInt(getString(R.string.language_setting_key), 0),
-                    args.query
-                )
+                null -> viewModel.fetchWordInfo(savedLanguageIndex, args.queryFromWelcomeFragment)
                 //FetchResult was failed (this logic is included in fetchWordInformation()) and now
                 //we wanna show an error message now and every time a configuration change happens
                 //until fetchWordInformation() is called again
@@ -72,7 +67,8 @@ class ResultFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         //get the search view widget from the menu that was inflated inside the activity
-        val searchView = inflatedMenu.findItem(R.id.search).actionView as SearchView
+        val searchView =
+            mainActivityContext.mainActivityMenu.findItem(R.id.search).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -84,10 +80,7 @@ class ResultFragment : Fragment() {
                 loading_anim.visibility = View.VISIBLE
                 //fetch information about the word submitted by the user in the search bar and the
                 //language to be used
-                viewModel.fetchWordInfo(
-                    sharedPreferences.getInt(getString(R.string.language_setting_key), 0),
-                    query
-                )
+                viewModel.fetchWordInfo(savedLanguageIndex, query)
                 return true
             }
 
@@ -141,7 +134,7 @@ class ResultFragment : Fragment() {
             result_recycler_view.adapter = ResultsListAdaptor(words)
 
             //hide the keyboard once the result is visible on the screen
-            viewModel.hideKeyboard(mainActivityContext)
+            viewModel.hideSoftKeyboard(mainActivityContext)
         }
 
     }

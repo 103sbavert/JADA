@@ -17,13 +17,13 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_nav_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_toolbar"
-        app:navGraph="@navigation/main_navigation" />
+        app:navGraph="@navigation/main_nav_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

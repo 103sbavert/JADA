@@ -20,7 +20,7 @@
         android:label="Result"
         tools:layout="@layout/fragment_result">
         <argument
-            android:name="query"
+            android:name="queryFromWelcomeFragment"
             app:argType="string" />
     </fragment>
 </navigation>
