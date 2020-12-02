@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     //public reference to the sharedPreferences for access in children fragments
     val applicationSharedPreferences: SharedPreferences by lazy {
-        this.getPreferences(Context.MODE_PRIVATE)
+        this.getSharedPreferences("main_shared_preferences", Context.MODE_PRIVATE)
     }
 
     //public reference to the inflated menu in the toolbar for access in children fragments

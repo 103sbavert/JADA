@@ -27,12 +27,11 @@ class ResultFragment : Fragment() {
     }
 
     //the language selected by the user for searches
-    private val savedLanguageIndex: Int by lazy {
-        mainActivityContext.applicationSharedPreferences.getInt(
-            getString(R.string.language_setting_key),
-            0
-        )
-    }
+    private val savedLanguageIndex: Int
+        get() = mainActivityContext
+            .applicationSharedPreferences
+            .getInt(getString(R.string.language_setting_key), 0)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -109,9 +108,9 @@ class ResultFragment : Fragment() {
             //iterate over each meaning available for the current word
             for ((index, j) in i.meanings.withIndex()) {
 
-                //don't add numbering if there is only meaning (MTOne = more than one)
-                val isMeaningsMTOne = i.meanings.size > 1
-                if (isMeaningsMTOne) contentBody += ("${index + 1}. ")
+                //don't add numbering if there is only meaning
+                val hasMoreThanOneMeaning = i.meanings.size > 1
+                if (hasMoreThanOneMeaning) contentBody += ("${index + 1}. ")
                 //add information about the part of speech of the current meaning for the word
                 contentBody += "(${j.partOfSpeech})\n"
 
@@ -119,7 +118,7 @@ class ResultFragment : Fragment() {
                 for ((k, numbering) in j.definitions.zip('a'..'z')) {
                     //add tap spacing if there are multiple meanings for the current word and
                     //serialization has been done
-                    if (isMeaningsMTOne) contentBody += "\t"
+                    if (hasMoreThanOneMeaning) contentBody += "\t"
                     //don't add alphabet numbering if there is only definition
                     if (j.definitions.size > 1) contentBody += ("$numbering) ")
                     contentBody += (k.definition + "\n")
