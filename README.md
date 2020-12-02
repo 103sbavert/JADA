@@ -19,7 +19,7 @@ This dictionary supports multiple language as the API I am using does too. The l
 * Brazilian Portuguese
 * Turkish
 
-**This dictionary does not support Arabic even though the API supports the dictionary as there seems to be some issues with arabic side of the API. I have tested it with different arabic words and it never returns an input. I will add support for Arabic if I figure out the reason it isn't behaving like it should.**
+**This dictionary does not support Arabic even though the API supports the language as there seems to be some issues with arabic side of the API. I have tested it with different arabic words and it never returns an input. I will add support for Arabic if I figure out the reason it isn't behaving like it should.**
 
 ## What's special
 
