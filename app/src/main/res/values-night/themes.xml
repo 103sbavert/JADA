@@ -4,16 +4,17 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange_dark</item>
         <item name="colorPrimaryVariant">@color/orange_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/on_primary_light</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green_light</item>
         <item name="colorSecondaryVariant">@color/green_light</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/on_primary_dark</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
-        <item name="boxStrokeColor">@color/stroke_dark</item>
+        <item name="actionOverflowButtonStyle">@style/overflow_icon</item>
     </style>
 </resources>
+

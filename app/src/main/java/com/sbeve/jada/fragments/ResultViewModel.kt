@@ -1,14 +1,12 @@
 package com.sbeve.jada.fragments
 
-import android.app.Activity
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.sbeve.jada.util.Meaning
 import com.sbeve.jada.util.RetrofitInit
 import com.sbeve.jada.util.RetrofitInit.accessApiObject
 import com.sbeve.jada.util.Word
+import com.sbeve.jada.util.WordItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,8 +36,6 @@ class ResultViewModel : ViewModel() {
     //using the observer
     val fetchWordInfoResult = MutableLiveData<FetchWordInfoResult>(null)
 
-    //make an instance of the retrofit api each time the viewmodel is instantiated (somewhat
-    //unnecessary right now but will be useful later)
     //make a call to the server
     fun fetchWordInfo(savedLanguageIndex: Int, queriedWord: String) {
         val savedLanguageCode = RetrofitInit.supportedLanguages.second[savedLanguageIndex]
@@ -79,19 +75,57 @@ class ResultViewModel : ViewModel() {
             })
     }
 
-    //hides the keyboard
-    fun hideSoftKeyboard(activity: Activity) {
-        val imm: InputMethodManager =
-            activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+    fun getWordsItemsList(words: List<Word>): MutableList<WordItem> {
 
-        //Find the currently focused view, so we can grab the correct window token from it.
-        var view = activity.currentFocus
+        //make the list of words to be passed to the recycler view adapter
+        val wordsItems = mutableListOf<WordItem>()
+        for (i in words) {
 
-        //If no view currently has focus, create a new one, just so we can grab a window token from
-        // it
-        if (view == null) {
-            view = View(activity)
+            //for some weird cases, the database does get a hit for the query but there is no
+            //available meanings for the matched word. We're going to skip such cases.
+            if (i.meanings.isEmpty()) continue
+
+            //information about the current for it to be added to the wordList
+            wordsItems.add(WordItem(i.word, i.origin, getContentText(i.meanings)))
         }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        return wordsItems
+    }
+
+    private fun getContentText(meanings: List<Meaning>): String {
+        var contentBody = ""
+
+        //don't add numbering if there is only meaning
+        val hasMoreThanOneMeaning = meanings.size > 1
+        for ((index, meaning) in meanings.withIndex()) {
+            if (hasMoreThanOneMeaning) contentBody += ("${index + 1}. ")
+
+            //add information about the part of speech of the current meaning for the word
+            //(don't add anything if part of speech says "undefined")
+            contentBody += if (meaning.partOfSpeech != "undefined") "(${meaning.partOfSpeech})\n" else ""
+            contentBody += getDefinitionText(meaning, hasMoreThanOneMeaning)
+
+            //if it's not the last meaning, leave an empty line for the next meaning to be
+            //added
+            if (index < meanings.lastIndex) contentBody += ("\n")
+        }
+        return contentBody
+    }
+
+    private fun getDefinitionText(meaning: Meaning, hasMoreThanOneMeaning: Boolean): String {
+        var subContentBody = ""
+
+        //append each definition provided for the current meaning
+        for ((_definitionObject, numbering) in meaning.definitions.zip('a'..'z')) {
+            val definition = _definitionObject.definition
+
+            //add tap spacing if there are multiple meanings for the current word and
+            //serialization has been done
+            if (hasMoreThanOneMeaning) subContentBody += "\t"
+
+            //don't add alphabet numbering if there is only definition
+            if (meaning.definitions.size > 1) subContentBody += ("$numbering) ")
+            subContentBody += (definition + "\n")
+        }
+        return subContentBody
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="orange_dark">#875641</color>
-    <color name="orange_light">#D18347</color>
+    <color name="orange_dark">#6F4C45</color>
+    <color name="orange_light">#9B6D5A</color>
     <color name="green_dark">#166F22</color>
     <color name="green_light">#70C35C</color>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-    <color name="stroke_light">#e0e0e0</color>
-    <color name="stroke_dark">#2f2f2f</color>
+    <color name="on_primary_dark">#000</color>
+    <color name="on_primary_light">#FFF</color>
+    <color name="dark_background">#151515</color>
+    <color name="light_background">#ffffff</color>
 </resources>
