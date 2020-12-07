@@ -64,14 +64,16 @@ class MainActivity : AppCompatActivity() {
             .create()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
+
         //setting a reference to the toolbar menu to the public variable declared above
-        mainActivityMenu = menu!!
+        mainActivityMenu = menu
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         //invoke the changeLanguageDialog when the user selects the change_language menu item
         when (item.itemId) {
             R.id.change_language -> changeLanguageDialog.show()

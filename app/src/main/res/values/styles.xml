@@ -11,7 +11,12 @@
         <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
     </style>
 
-    <style name="overflow_icon" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">?attr/colorOnPrimary</item>
+
+    <style name="custom_toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">?attr/secondary_elements_color</item>
+        <item name="titleTextColor">?attr/colorControlNormal</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="android:elevation">4dp</item>
     </style>
+
 </resources>

@@ -1,20 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <attr name="secondary_elements_color" format="color|reference" />
     <!-- Base application theme. -->
     <style name="hi_dictionary_theme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/orange_light</item>
-        <item name="colorPrimaryVariant">@color/orange_light</item>
+        <item name="colorPrimary">@color/orange_dark</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
         <item name="colorOnPrimary">@color/on_primary_dark</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green_dark</item>
         <item name="colorSecondaryVariant">@color/green_dark</item>
         <item name="colorOnSecondary">@color/on_primary_light</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+        <!--System UI Elements color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/secondary_elements_color
+        </item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
-        <item name="actionOverflowButtonStyle">@style/overflow_icon</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <!-- Customize your theme here. -->
+        <item name="toolbarStyle">@style/custom_toolbar</item>
+        <item name="secondary_elements_color">@color/white</item>
+        <item name="colorControlNormal">?colorPrimary</item>
     </style>
 </resources>
 

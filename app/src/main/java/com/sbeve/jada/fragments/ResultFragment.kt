@@ -65,7 +65,6 @@ class ResultFragment : Fragment() {
                 //fetchWordInformation() is called again
                 ResultViewModel.FetchWordInfoResult.Success -> updateRecyclerView(viewModel.wordInfo)
             }
-
         }
     }
 
@@ -74,7 +73,10 @@ class ResultFragment : Fragment() {
 
         //get the search view widget from the menu that was inflated inside the activity
         val searchView =
-            mainActivityContext.mainActivityMenu.findItem(R.id.search).actionView as SearchView
+            mainActivityContext
+                .mainActivityMenu
+                .findItem(R.id.search)
+                .actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {

@@ -28,6 +28,7 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+
         //set on click listener to let the user change the language
         change_language_button.setOnClickListener {
             mainActivityContext.changeLanguageDialog.show()
@@ -37,10 +38,14 @@ class WelcomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         val searchView =
-            mainActivityContext.mainActivityMenu.findItem(R.id.search).actionView as SearchView
+            mainActivityContext
+                .mainActivityMenu
+                .findItem(R.id.search)
+                .actionView as SearchView
         searchView
             .setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
+
                     //pass the query entered by the user to ResultFragment
                     navController.navigate(
                         WelcomeFragmentDirections.actionWelcomeFragmentToResultFragment(query)
