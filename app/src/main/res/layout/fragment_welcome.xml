@@ -7,10 +7,24 @@
 
 
     <TextView
-        android:id="@+id/welcome_text"
-        style="@style/body_text_view"
-        android:paddingVertical="@dimen/tiny_margin_padding"
-        android:text="@string/welcome_text" />
+        android:id="@+id/welcome_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/standard_margin_padding"
+        android:text="@string/welcome_title"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="@dimen/standard_title_text_size" />
+
+    <TextView
+        android:id="@+id/welcome_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/standard_margin_padding"
+        android:layout_marginBottom="@dimen/medium_margin_padding"
+        android:text="@string/welcome_content"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceBody1" />
 
     <Button
         android:id="@+id/change_language_button"

@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <attr name="secondary_elements_color" format="color|reference" />
     <!-- Base application theme. -->
     <style name="hi_dictionary_theme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
@@ -28,8 +27,11 @@
         <item name="textAppearanceHeadline5">@style/Headline5</item>
         <item name="textAppearanceHeadline6">@style/Headline6</item>
         <item name="textAppearanceSubtitle1">@style/Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/Subtitle2</item>
+        <item name="textAppearanceBody1">@style/Body1</item>
+        <item name="textAppearanceBody2">@style/Body2</item>
+        <item name="textAppearanceCaption">@style/Caption</item>
         <item name="textAppearanceButton">@style/textAppearanceButton</item>
-        <item name="titleTextAppearance">@style/Headline5</item>
     </style>
 </resources>
 
