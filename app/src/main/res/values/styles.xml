@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="basic_text_view">
+    <style name="body_text_view">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/medium_margin_padding</item>
@@ -11,7 +10,6 @@
         <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
     </style>
 
-
     <style name="custom_toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="android:background">?attr/secondary_elements_color</item>
         <item name="titleTextColor">?attr/colorControlNormal</item>
@@ -19,4 +17,46 @@
         <item name="android:elevation">4dp</item>
     </style>
 
+    <style name="Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="fontFamily">@font/work_sans</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="android:textSize">102sp</item>
+        <item name="android:elegantTextHeight">true</item>
+    </style>
+
+    <style name="Headline2" parent="Headline1">
+        <item name="android:textSize">64sp</item>
+    </style>
+
+    <style name="Headline3" parent="Headline2">
+        <item name="android:textSize">51sp</item>
+    </style>
+
+    <style name="Headline4" parent="Headline3">
+        <item name="android:textSize">36sp</item>
+    </style>
+
+    <style name="Headline5" parent="Headline4">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Headline6" parent="Headline5">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/work_sans</item>
+        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:elegantTextHeight">true</item>
+    </style>
+
+    <style name="textAppearanceButton" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/work_sans</item>
+        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:elegantTextHeight">true</item>
+    </style>
 </resources>

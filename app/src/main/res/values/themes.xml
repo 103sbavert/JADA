@@ -18,8 +18,18 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/custom_toolbar</item>
+        <item name="actionBarSize">60dp</item>
         <item name="secondary_elements_color">@color/white</item>
         <item name="colorControlNormal">?colorPrimary</item>
+        <item name="textAppearanceHeadline1">@style/Headline1</item>
+        <item name="textAppearanceHeadline2">@style/Headline2</item>
+        <item name="textAppearanceHeadline3">@style/Headline3</item>
+        <item name="textAppearanceHeadline4">@style/Headline4</item>
+        <item name="textAppearanceHeadline5">@style/Headline5</item>
+        <item name="textAppearanceHeadline6">@style/Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/Subtitle1</item>
+        <item name="textAppearanceButton">@style/textAppearanceButton</item>
+        <item name="titleTextAppearance">@style/Headline5</item>
     </style>
 </resources>
 

@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/welcome_text"
-        style="@style/basic_text_view"
+        style="@style/body_text_view"
         android:paddingVertical="@dimen/tiny_margin_padding"
         android:text="@string/welcome_text" />
 

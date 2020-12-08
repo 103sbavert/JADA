@@ -34,7 +34,7 @@
     <TextView
         android:layout_gravity="center_vertical"
         android:id="@+id/errorMessage"
-        style="@style/basic_text_view"
+        style="@style/body_text_view"
         android:layout_marginBottom="@dimen/gigantic_margin_padding"
         android:visibility="gone" />
 
