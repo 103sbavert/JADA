@@ -19,11 +19,11 @@ This dictionary supports multiple language as the API I am using does too. The l
 * Brazilian Portuguese
 * Turkish
 
-**This dictionary does not support Arabic even though the API supports the language as there seems to be some issues with arabic side of the API. I have tested it with different arabic words and it never returns an output. I will add support for Arabic if I figure out the reason it isn't behaving like it should.**
+*This dictionary does not support Arabic even though the API supports the language as there seems to be some issues with arabic side of the API. I have tested it with different arabic words and it never returns an output. I will add support for Arabic if I figure out the reason it isn't behaving like it should.* ***I encourage people who know Arabic to help me figure out the issue***
 
 ## What's special
 
-The dictionary was made with clean architecture practices and ease of reading the code in mind.
+The dictionary was made with clean architecture practices and ease of reading of the code in mind.
 
 It uses Kotlin entirely and it uses Navigation Components and parts of the MVVM architecture pattern.
 
@@ -33,4 +33,4 @@ This app can be used by absolute beginners as a way to learn some basic things l
 
 I have commented every piece of code that I believed was not part of common things you do in Android Development. All the logic and operations done by me that are not common practices and unique to this particular app were explained with comments.
 
-There can be parts that could use some improvement since I by no means claim to be a perfectly skilled or experienced developer, in fact, relative to so many awesome developers out there, I am very much new. I would like to get suggestions to improve my code or app from other experiened developers.
+There can be found many parts that could use some improvement since I by no means claim to be a perfectly skilled or experienced developer, in fact, relative to so many awesome developers out there, I am very much new. I would like to get suggestions to improve my code or app from other experiened developers.
