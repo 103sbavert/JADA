@@ -47,17 +47,17 @@
     </style>
 
     <style name="Headline5" parent="Headline4">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">33sp</item>
     </style>
 
     <style name="Headline6" parent="Headline5">
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="Subtitle1" parent="Headline6">
+    <style name="Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="fontFamily">@font/work_sans</item>
         <item name="android:fontFamily">@font/work_sans</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
         <item name="android:elegantTextHeight">true</item>
@@ -77,7 +77,7 @@
     </style>
 
     <style name="Body2" parent="Body1">
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Caption" parent="TextAppearance.MaterialComponents.Caption">
@@ -96,4 +96,19 @@
         <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
         <item name="android:elegantTextHeight">true</item>
     </style>
+
+    <style name="alert_dialog_title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="alert_dialog_body" parent="Body1">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/alert_dialog_title</item>
+        <item name="textAppearanceBody1">@style/alert_dialog_body</item>
+    </style>
+
 </resources>

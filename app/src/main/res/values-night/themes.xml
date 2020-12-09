@@ -32,6 +32,7 @@
         <item name="textAppearanceBody2">@style/Body2</item>
         <item name="textAppearanceCaption">@style/Caption</item>
         <item name="textAppearanceButton">@style/textAppearanceButton</item>
+        <item name="materialAlertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 </resources>
 
