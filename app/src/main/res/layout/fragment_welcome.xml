@@ -11,10 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/standard_margin_padding"
-        android:text="@string/welcome_title"
         android:textAlignment="center"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textSize="@dimen/standard_title_text_size" />
+        android:text="@string/welcome_title"
+        android:textAppearance="?attr/textAppearanceHeadline7" />
 
     <TextView
         android:id="@+id/welcome_content"

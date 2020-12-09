@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--
-    &lt;!&ndash;Text Views&ndash;&gt;
-    <style name="body_text_view" parent="Widget.MaterialComponents.TextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:layout_marginStart">@dimen/medium_margin_padding</item>
-        <item name="android:layout_marginEnd">@dimen/medium_margin_padding</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-    </style>
-
-    <style name="title_text_view" parent="body_text_view">
-        <item name="android:textSize">18sp</item>
-    </style>
--->
-
     <!--Toolbar-->
     <style name="custom_toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="android:background">?attr/secondary_elements_color</item>
@@ -26,32 +10,60 @@
 
     <!--Text Appearance Styles-->
     <style name="Headline1" parent="TextAppearance.MaterialComponents.Headline1">
-        <item name="fontFamily">@font/work_sans</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/work_sans</item>
-        <item name="android:textSize">102sp</item>
+        <item name="fontFamily">@font/work_sans_light</item>
+        <item name="android:fontFamily">@font/work_sans_light</item>
+        <item name="android:textSize">80sp</item>
         <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
         <item name="android:elegantTextHeight">true</item>
     </style>
 
-    <style name="Headline2" parent="Headline1">
-        <item name="android:textSize">64sp</item>
+    <style name="Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="fontFamily">@font/work_sans_light</item>
+        <item name="android:fontFamily">@font/work_sans_light</item>
+        <item name="android:textSize">46sp</item>
+        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
+        <item name="android:elegantTextHeight">true</item>
     </style>
 
-    <style name="Headline3" parent="Headline2">
-        <item name="android:textSize">51sp</item>
+    <style name="Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">@font/work_sans_light</item>
+        <item name="android:fontFamily">@font/work_sans_light</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
+        <item name="android:elegantTextHeight">true</item>
     </style>
 
-    <style name="Headline4" parent="Headline3">
-        <item name="android:textSize">36sp</item>
+    <style name="Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/work_sans</item>
+        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
+        <item name="android:elegantTextHeight">true</item>
     </style>
 
-    <style name="Headline5" parent="Headline4">
-        <item name="android:textSize">33sp</item>
+    <style name="Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/work_sans</item>
+        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
+        <item name="android:elegantTextHeight">true</item>
     </style>
 
-    <style name="Headline6" parent="Headline5">
-        <item name="android:textSize">22sp</item>
+    <style name="Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/work_sans_semibold</item>
+        <item name="android:fontFamily">@font/work_sans_semibold</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
+        <item name="android:elegantTextHeight">true</item>
+    </style>
+
+    <style name="Headline7" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/work_sans_medium</item>
+        <item name="android:fontFamily">@font/work_sans_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
+        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <style name="Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
@@ -67,13 +79,11 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-
     <style name="Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="fontFamily">@font/work_sans</item>
-        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="fontFamily">@font/nunito</item>
+        <item name="android:fontFamily">@font/nunito</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
+        <item name="android:lineSpacingExtra">2.5dp</item>
     </style>
 
     <style name="Body2" parent="Body1">
@@ -81,34 +91,32 @@
     </style>
 
     <style name="Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="fontFamily">@font/work_sans</item>
-        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="fontFamily">@font/nunito</item>
+        <item name="android:fontFamily">@font/nunito</item>
         <item name="android:textSize">12sp</item>
         <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <style name="textAppearanceButton" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/work_sans</item>
-        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="fontFamily">@font/work_sans_medium</item>
+        <item name="android:fontFamily">@font/work_sans_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">15sp</item>
         <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
         <item name="android:elegantTextHeight">true</item>
     </style>
 
+    <!--Alert Dialog Theme-->
     <style name="alert_dialog_title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:fontFamily">@font/work_sans_medium</item>
+        <item name="fontFamily">@font/work_sans_medium</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
-    <style name="alert_dialog_body" parent="Body1">
-        <item name="android:textSize">15sp</item>
-    </style>
-
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:background">?attr/secondary_elements_color</item>
         <item name="materialAlertDialogTitleTextStyle">@style/alert_dialog_title</item>
-        <item name="textAppearanceBody1">@style/alert_dialog_body</item>
     </style>
 
 </resources>
