@@ -115,7 +115,6 @@
     </style>
 
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="android:background">?attr/secondary_elements_color</item>
         <item name="materialAlertDialogTitleTextStyle">@style/alert_dialog_title</item>
     </style>
 
