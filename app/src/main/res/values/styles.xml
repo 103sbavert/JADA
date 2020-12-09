@@ -57,14 +57,14 @@
     <style name="Subtitle1" parent="Headline6">
         <item name="fontFamily">@font/work_sans</item>
         <item name="android:fontFamily">@font/work_sans</item>
-        <item name="android:textSize">17.5sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
         <item name="android:elegantTextHeight">true</item>
     </style>
 
     <style name="Subtitle2" parent="Subtitle1">
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
 
