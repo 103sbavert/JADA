@@ -4,9 +4,5 @@
     <dimen name="standard_margin_padding">15dp</dimen>
     <dimen name="medium_margin_padding">12dp</dimen>
     <dimen name="small_margin_padding">10dp</dimen>
-    <dimen name="tiny_margin_padding">8dp</dimen>
-    <dimen name="word_text_size">24sp</dimen>
-    <dimen name="org_text_size">12sp</dimen>
     <dimen name="standard_line_spacing">2dp</dimen>
-    <dimen name="standard_title_text_size">20sp</dimen>
 </resources>

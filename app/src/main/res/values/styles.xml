@@ -2,10 +2,15 @@
 <resources>
     <!--Toolbar-->
     <style name="custom_toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <item name="android:background">?attr/secondary_elements_color</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="background">?attr/colorPrimary</item>
         <item name="titleTextColor">?attr/colorControlNormal</item>
         <item name="elevationOverlayEnabled">false</item>
         <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="custom_button_outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
     <!--Text Appearance Styles-->
@@ -58,6 +63,7 @@
         <item name="android:elegantTextHeight">true</item>
     </style>
 
+    <attr name="textAppearanceHeadline7" format="reference" />
     <style name="Headline7" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/work_sans_medium</item>
         <item name="android:fontFamily">@font/work_sans_medium</item>
@@ -111,11 +117,10 @@
         <item name="android:fontFamily">@font/work_sans_medium</item>
         <item name="fontFamily">@font/work_sans_medium</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="custom_alert_dialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/alert_dialog_title</item>
     </style>
-
 </resources>

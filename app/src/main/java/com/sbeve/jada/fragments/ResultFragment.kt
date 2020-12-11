@@ -46,7 +46,7 @@ class ResultFragment : Fragment() {
 
         //setting a layout manager for the recycler view
         result_recycler_view.layoutManager = LinearLayoutManager(mainActivityContext)
-        viewModel.fetchWordInfoResult.observe(this.viewLifecycleOwner) {
+        viewModel.fetchWordInfoResult.observe(viewLifecycleOwner) {
             when (it) {
 
                 //the value of fetchResult is null right when the viewModel is created and we only
@@ -66,6 +66,7 @@ class ResultFragment : Fragment() {
                 ResultViewModel.FetchWordInfoResult.Success -> updateRecyclerView(viewModel.wordInfo)
             }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

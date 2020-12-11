@@ -25,8 +25,6 @@ class ResultViewModel : ViewModel() {
         Failure
     }
 
-    var query: String? = null
-
     //tells the reason behind a result not being found (network fail or no match?)
     lateinit var errorType: ErrorType
 
@@ -40,7 +38,6 @@ class ResultViewModel : ViewModel() {
 
     //make a call to the server
     fun fetchWordInfo(savedLanguageIndex: Int, queriedWord: String) {
-        query = queriedWord
         val savedLanguageCode = RetrofitInit.supportedLanguages.second[savedLanguageIndex]
 
         //retrieve a new call object to make a request to the server

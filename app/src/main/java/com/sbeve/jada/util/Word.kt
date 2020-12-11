@@ -15,10 +15,10 @@ data class Word(
 data class Definition(
     @SerializedName("definition")
     val definition: String,
-    @SerializedName("example")
-    val example: String,
-    @SerializedName("synonyms")
-    val synonyms: List<String>
+//    @SerializedName("example")
+//    val example: String,
+//    @SerializedName("synonyms")
+//    val synonyms: List<String>
 )
 
 data class Meaning(
@@ -28,9 +28,9 @@ data class Meaning(
     val definitions: List<Definition>
 )
 
-data class Phonetics(
+/*data class Phonetics(
     @SerializedName("text")
     val text: String,
     @SerializedName("audio")
     val audio: String
-)
+)*/

@@ -1,39 +1,14 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="hi_dictionary_theme" parent="Theme.MaterialComponents.NoActionBar">
+<resources>
+
+    <style name="app_theme" parent="base_app_theme">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/orange_light</item>
-        <item name="colorPrimaryVariant">@color/orange_light</item>
-        <item name="colorOnPrimary">@color/on_primary_light</item>
+        <item name="colorPrimary">@color/gray_dark</item>
+        <item name="colorPrimaryVariant">@color/gray_dark</item>
+        <item name="colorOnPrimary">@color/orange_light</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green_light</item>
         <item name="colorSecondaryVariant">@color/green_light</item>
-        <item name="colorOnSecondary">@color/on_primary_dark</item>
-        <!--System UI Elements color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/secondary_elements_color
-        </item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
-        <!-- Customize your theme here. -->
-        <item name="toolbarStyle">@style/custom_toolbar</item>
-        <item name="actionBarSize">60dp</item>
-        <item name="secondary_elements_color">@color/gray_800</item>
-        <item name="colorControlNormal">?colorPrimary</item>
-        <item name="textAppearanceHeadline1">@style/Headline1</item>
-        <item name="textAppearanceHeadline2">@style/Headline2</item>
-        <item name="textAppearanceHeadline3">@style/Headline3</item>
-        <item name="textAppearanceHeadline4">@style/Headline4</item>
-        <item name="textAppearanceHeadline5">@style/Headline5</item>
-        <item name="textAppearanceHeadline6">@style/Headline6</item>
-        <item name="textAppearanceHeadline7">@style/Headline7</item>
-        <item name="textAppearanceSubtitle1">@style/Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/Subtitle2</item>
-        <item name="textAppearanceBody1">@style/Body1</item>
-        <item name="textAppearanceBody2">@style/Body2</item>
-        <item name="textAppearanceCaption">@style/Caption</item>
-        <item name="textAppearanceButton">@style/textAppearanceButton</item>
-        <item name="materialAlertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="colorOnSecondary">@color/black</item>
     </style>
 </resources>
 

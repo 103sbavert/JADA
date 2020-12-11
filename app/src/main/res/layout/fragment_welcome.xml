@@ -27,7 +27,7 @@
 
     <Button
         android:id="@+id/change_language_button"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/change_language" />
