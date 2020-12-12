@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -6,6 +8,23 @@ plugins {
 }
 
 android {
+
+    ext {
+        json = new JsonSlurper().parseText(new File("/home/sbeve72/keystore/keystore_password.json").text)
+        keystore_path = json[0].keystore_path
+        keystore_password = json[0].keystore_password
+        key_alias = json[0].keys[0].key_alias
+        key_password = json[0].keys[0].key_password
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystore_path)
+            storePassword keystore_password
+            keyAlias key_alias
+            keyPassword key_password
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -20,6 +39,8 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
