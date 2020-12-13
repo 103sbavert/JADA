@@ -17,6 +17,6 @@
         android:id="@+id/definitions_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceBody1"
+        android:textAppearance="?attr/textAppearanceBody2"
         tools:text="a single distinct meaningful element of speech or writing, used with others (or sometimes alone) to form a sentence and typically shown with a space on either side when written or printed." />
 </LinearLayout>

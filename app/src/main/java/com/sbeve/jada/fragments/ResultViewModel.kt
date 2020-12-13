@@ -33,7 +33,7 @@ class ResultViewModel : ViewModel() {
     //using the observer
     val fetchWordInfoResult = MutableLiveData<FetchWordInfoResult>(null)
 
-    lateinit var query: String
+    private lateinit var query: String
 
     //make a call to the server
     fun fetchWordInfo(savedLanguageIndex: Int, queriedWord: String) {

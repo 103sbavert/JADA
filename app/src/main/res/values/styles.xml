@@ -93,7 +93,7 @@
     </style>
 
     <style name="Body2" parent="Body1">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="Caption" parent="TextAppearance.MaterialComponents.Caption">

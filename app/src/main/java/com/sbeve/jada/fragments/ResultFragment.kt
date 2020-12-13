@@ -33,7 +33,6 @@ class ResultFragment : Fragment() {
             .applicationSharedPreferences
             .getInt(getString(R.string.language_setting_key), 0)
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,19 +63,16 @@ class ResultFragment : Fragment() {
                 ResultViewModel.FetchWordInfoResult.Success -> updateScrollView(viewModel.wordInfo)
             }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
         //get the search view widget from the menu that was inflated inside the activity
-        val searchItem =
-            mainActivityContext
-                .mainActivityMenu
-                .findItem(R.id.search)
-                .actionView as SearchView
-        searchItem.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        val searchItem = mainActivityContext.mainActivityMenu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
 
@@ -122,16 +118,18 @@ class ResultFragment : Fragment() {
             if (each.originItem.isNullOrEmpty()) {
                 wordItemLayout.origin_textview.visibility = View.GONE
             } else {
-                wordItemLayout.origin_textview.text = each.originItem
+                wordItemLayout.origin_textview.text = getString(R.string.origin_info, each.originItem)
             }
 
             //add the wordItemLayout to the linear layout
             result_linear_layout.addView(wordItemLayout)
 
-            //iterate over each meaning and for each meaning add the definitions and the provided info about the partOfSpeech to separate textviews
+            //iterate over each meaning and for each meaning add the definitions and the provided info about
+            //the partOfSpeech to separate textviews
             for (every in each.meaningsListItem) {
 
-                //get the meaningLayout which contains two textviews one for the meaning's definition and another for the origin of the word
+                //get the meaningLayout which contains two textviews one for the meaning's definition and another for
+                // the origin of the word
                 val meaningLayout = layoutInflater.inflate(R.layout.meaning_layout, wordItemLayout.word_linear_layout, false)
 
                 //add the part of speech information
