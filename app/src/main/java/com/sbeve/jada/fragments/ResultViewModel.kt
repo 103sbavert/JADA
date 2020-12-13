@@ -2,11 +2,8 @@ package com.sbeve.jada.fragments
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sbeve.jada.util.Meaning
-import com.sbeve.jada.util.RetrofitInit
+import com.sbeve.jada.util.*
 import com.sbeve.jada.util.RetrofitInit.accessApiObject
-import com.sbeve.jada.util.Word
-import com.sbeve.jada.util.WordItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,10 +33,12 @@ class ResultViewModel : ViewModel() {
     //using the observer
     val fetchWordInfoResult = MutableLiveData<FetchWordInfoResult>(null)
 
+    lateinit var query: String
+
     //make a call to the server
     fun fetchWordInfo(savedLanguageIndex: Int, queriedWord: String) {
         val savedLanguageCode = RetrofitInit.supportedLanguages.second[savedLanguageIndex]
-
+        query = queriedWord
         //retrieve a new call object to make a request to the server
         accessApiObject
             .getDefinitions(savedLanguageCode, queriedWord)
@@ -93,45 +92,41 @@ class ResultViewModel : ViewModel() {
             if (i.meanings.isEmpty()) continue
 
             //information about the current for it to be added to the wordList
-            wordsItems.add(WordItem(i.word, i.origin, getContentText(i.meanings)))
+            wordsItems.add(WordItem(i.word, i.origin, getMeaningsList(i.meanings)))
         }
         return wordsItems
     }
 
-    private fun getContentText(meanings: List<Meaning>): String {
-        var contentBody = ""
+    private fun getMeaningsList(meanings: List<Meaning>): List<MeaningItem> {
 
-        //don't add numbering if there is only meaning
-        val hasMoreThanOneMeaning = meanings.size > 1
-        for ((index, meaning) in meanings.withIndex()) {
-            if (hasMoreThanOneMeaning) contentBody += ("${index + 1}. ")
-
+        val list: MutableList<MeaningItem> = mutableListOf()
+        for (meaning in meanings) {
+            var contentBody = ""
+            var partOfSpeech = ""
             //add information about the part of speech of the current meaning for the word
             //(don't add anything if part of speech says "undefined")
-            contentBody += if (meaning.partOfSpeech != "undefined") "(${meaning.partOfSpeech})\n" else ""
-            contentBody += getDefinitionText(meaning, hasMoreThanOneMeaning)
-
-            //if it's not the last meaning, leave an empty line for the next meaning to be
-            //added
-            if (index < meanings.lastIndex) contentBody += ("\n")
+            partOfSpeech += if (meaning.partOfSpeech != "undefined") meaning.partOfSpeech else null
+            contentBody += getDefinitionText(meaning)
+            list.add(MeaningItem(partOfSpeech, contentBody))
         }
-        return contentBody
+
+        return list
     }
 
-    private fun getDefinitionText(meaning: Meaning, hasMoreThanOneMeaning: Boolean): String {
+
+    private fun getDefinitionText(meaning: Meaning): String {
         var subContentBody = ""
 
         //append each definition provided for the current meaning
         for ((_definitionObject, numbering) in meaning.definitions.zip('a'..'z')) {
             val definition = _definitionObject.definition
-
-            //add tap spacing if there are multiple meanings for the current word and
-            //serialization has been done
-            if (hasMoreThanOneMeaning) subContentBody += "\t"
+            val example = _definitionObject.example
 
             //don't add alphabet numbering if there is only definition
             if (meaning.definitions.size > 1) subContentBody += ("$numbering) ")
             subContentBody += (definition + "\n")
+            if (!example.isNullOrEmpty()) subContentBody += "\t(Example: \"$example\")\n"
+            if (meaning.definitions.last() != _definitionObject) subContentBody += "\n"
         }
         return subContentBody
     }

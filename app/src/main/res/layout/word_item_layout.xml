@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="start|top"
-    android:padding="@dimen/small_margin_padding">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/word_title_textview"
@@ -17,16 +16,13 @@
         android:id="@+id/origin_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/word_title_textview"
         android:textAppearance="?attr/textAppearanceCaption"
         tools:text="origin:English" />
 
-    <TextView
-        android:id="@+id/content_textview"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/word_linear_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/origin_textview"
-        android:textAppearance="?attr/textAppearanceBody1"
-        android:layout_marginTop="@dimen/standard_margin_padding"
-        tools:text="a single distinct meaningful element of speech or writing, used with others (or sometimes alone) to form a sentence and typically shown with a space on either side when written or printed." />
-</RelativeLayout>
+        android:layout_marginTop="@dimen/medium_margin_padding"
+        android:orientation="vertical" />
+</LinearLayout>

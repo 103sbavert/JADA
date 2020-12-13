@@ -82,7 +82,7 @@
     </style>
 
     <style name="Subtitle2" parent="Subtitle1">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Body1" parent="TextAppearance.MaterialComponents.Body1">

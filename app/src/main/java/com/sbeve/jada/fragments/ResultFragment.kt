@@ -10,12 +10,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
-import com.sbeve.jada.util.ResultsListAdaptor
 import com.sbeve.jada.util.Word
 import kotlinx.android.synthetic.main.fragment_result.*
+import kotlinx.android.synthetic.main.meaning_layout.view.*
+import kotlinx.android.synthetic.main.word_item_layout.view.*
 import retrofit2.Response
 
 class ResultFragment : Fragment() {
@@ -44,8 +44,6 @@ class ResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        //setting a layout manager for the recycler view
-        result_recycler_view.layoutManager = LinearLayoutManager(mainActivityContext)
         viewModel.fetchWordInfoResult.observe(viewLifecycleOwner) {
             when (it) {
 
@@ -63,7 +61,7 @@ class ResultFragment : Fragment() {
                 //FetchResult was successful and now we wanna show the result fetched from the
                 //server now and every time a configuration change happens until
                 //fetchWordInformation() is called again
-                ResultViewModel.FetchWordInfoResult.Success -> updateRecyclerView(viewModel.wordInfo)
+                ResultViewModel.FetchWordInfoResult.Success -> updateScrollView(viewModel.wordInfo)
             }
         }
 
@@ -73,12 +71,12 @@ class ResultFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
 
         //get the search view widget from the menu that was inflated inside the activity
-        val searchView =
+        val searchItem =
             mainActivityContext
                 .mainActivityMenu
                 .findItem(R.id.search)
                 .actionView as SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchItem.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
 
@@ -101,13 +99,49 @@ class ResultFragment : Fragment() {
         })
     }
 
-    private fun updateRecyclerView(response: Response<List<Word>>) {
-        loading_anim.visibility = View.GONE
+    private fun updateScrollView(response: Response<List<Word>>) {
 
-        //make result_scroll_view visible if it's not already
+        //hide loading animation
+        loading_anim.visibility = View.GONE
+        val list = viewModel.getWordsItemsList(response.body()!!)
+
+        //make result_card_view visible if it's not already
         if (!result_card_view.isVisible) result_card_view.visibility = View.VISIBLE
-        result_recycler_view.adapter =
-            ResultsListAdaptor(viewModel.getWordsItemsList(response.body()!!))
+
+        //remove all the views from the linear layout that may have been added by the previous query
+        result_linear_layout.removeAllViews()
+        for (each in list) {
+
+            //get the word item layout to populate its textviews with appropriate data
+            val wordItemLayout = layoutInflater.inflate(R.layout.word_item_layout, result_linear_layout, false)
+
+            //add the title of the word to word_title_textview
+            wordItemLayout.word_title_textview.text = each.wordTitleItem
+
+            //hide the origin textview if origin info returns null, leave as is if no info provided
+            if (each.originItem.isNullOrEmpty()) {
+                wordItemLayout.origin_textview.visibility = View.GONE
+            } else {
+                wordItemLayout.origin_textview.text = each.originItem
+            }
+
+            //add the wordItemLayout to the linear layout
+            result_linear_layout.addView(wordItemLayout)
+
+            //iterate over each meaning and for each meaning add the definitions and the provided info about the partOfSpeech to separate textviews
+            for (every in each.meaningsListItem) {
+
+                //get the meaningLayout which contains two textviews one for the meaning's definition and another for the origin of the word
+                val meaningLayout = layoutInflater.inflate(R.layout.meaning_layout, wordItemLayout.word_linear_layout, false)
+
+                //add the part of speech information
+                meaningLayout.partofspeech_textview.text = every.partOfSpeechItem
+                meaningLayout.definitions_textview.text = every.definitions
+
+                //add the current meaning layout to wordItemLayout
+                wordItemLayout.word_linear_layout.addView(meaningLayout)
+            }
+        }
 
         //hide the keyboard once the result is visible on the screen
         hideSoftKeyboard()

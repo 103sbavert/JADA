@@ -8,9 +8,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
-import kotlinx.android.synthetic.main.fragment_welcome.*
+import kotlinx.android.synthetic.main.fragment_main.*
 
-class WelcomeFragment : Fragment() {
+class MainFragment : Fragment() {
     private val navController: NavController by lazy {
         this.findNavController()
     }
@@ -23,7 +23,7 @@ class WelcomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_welcome, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_main, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,7 +48,7 @@ class WelcomeFragment : Fragment() {
 
                     //pass the query entered by the user to ResultFragment
                     navController.navigate(
-                        WelcomeFragmentDirections.actionWelcomeFragmentToResultFragment(query)
+                        MainFragmentDirections.actionMainFragmentToResultFragment(query)
                     )
                     return true
                 }
