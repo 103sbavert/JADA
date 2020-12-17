@@ -1,14 +1,15 @@
 package com.sbeve.jada.fragments
 
 import android.os.Bundle
-import android.view.*
-import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.isGone
+import android.util.TypedValue
+import android.view.View
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+import androidx.core.text.HtmlCompat.fromHtml
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
@@ -18,8 +19,13 @@ import kotlinx.android.synthetic.main.meaning_layout.view.*
 import kotlinx.android.synthetic.main.word_item_layout.view.*
 import retrofit2.Response
 
-class ResultFragment : Fragment() {
+class ResultFragment : Fragment(R.layout.fragment_result) {
     private val viewModel: ResultViewModel by viewModels()
+
+    private val navController: NavController by lazy {
+        this.findNavController()
+    }
+
     private val args: ResultFragmentArgs by navArgs()
 
     //the currently running instance of the activity
@@ -27,139 +33,94 @@ class ResultFragment : Fragment() {
         activity as MainActivity
     }
 
-    //the language selected by the user for searches
-    private val savedLanguageIndex: Int
-        get() = mainActivityContext
-            .applicationSharedPreferences
-            .getInt(getString(R.string.language_setting_key), 0)
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_result, container, false)
+    private val examplesColor = TypedValue()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
 
-        viewModel.fetchWordInfoResult.observe(viewLifecycleOwner) {
-            when (it) {
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
+        toolbar.setNavigationOnClickListener {
+            navController.navigateUp()
+        }
 
-                //the value of fetchResult is null right when the viewModel is created and we only
-                //wanna call fetchWordInformation() with the args and the name of the selected
-                // language when the fragment is created for the first time (or when the viewmodel
-                // is instantiated)
-                null -> viewModel.fetchWordInfo(savedLanguageIndex, args.queryFromWelcomeFragment)
+        mainActivityContext.theme.resolveAttribute(R.attr.examples_color, examplesColor, true)
+        viewModel.fetchWordInfo(mainActivityContext.savedLanguageIndex, args.queryFromWelcomeFragment)
 
+        viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
+            when (it!!) {
                 //FetchResult was failed (this logic is included in fetchWordInformation()) and now
                 //we wanna show an error message now and every time a configuration change happens
                 //until fetchWordInformation() is called again
-                ResultViewModel.FetchWordInfoResult.Failure -> showError(viewModel.errorType)
+                ResultViewModel.FetchWordInfoResultType.Failure -> showError(viewModel.errorType)
 
                 //FetchResult was successful and now we wanna show the result fetched from the
                 //server now and every time a configuration change happens until
                 //fetchWordInformation() is called again
-                ResultViewModel.FetchWordInfoResult.Success -> updateScrollView(viewModel.wordInfo)
+                ResultViewModel.FetchWordInfoResultType.Success -> showResults(viewModel.wordInfo)
             }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        //get the search view widget from the menu that was inflated inside the activity
-        val searchItem = mainActivityContext.mainActivityMenu.findItem(R.id.search)
-        val searchView = searchItem.actionView as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-
-                //hide the information about the word if it is visible to make room for the
-                //error message
-                if (!result_card_view.isGone) result_card_view.visibility = View.GONE
-
-                //hide errorMessage if it is visible to make room for the result
-                if (!errorMessage.isGone) errorMessage.visibility = View.GONE
-                loading_anim.visibility = View.VISIBLE
-
-                //fetch information about the word submitted by the user in the search bar and the
-                //language to be used
-                viewModel.fetchWordInfo(savedLanguageIndex, query)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?) = false
-
-        })
-    }
-
-    private fun updateScrollView(response: Response<List<Word>>) {
-
-        //hide loading animation
+    private fun showResults(response: Response<List<Word>>) {
+        //hide the loading animation
         loading_anim.visibility = View.GONE
-        val list = viewModel.getWordsItemsList(response.body()!!)
 
-        //make result_card_view visible if it's not already
-        if (!result_card_view.isVisible) result_card_view.visibility = View.VISIBLE
+        //get the response output by the fetchWordInfo()
+        val wordsList = viewModel.getWordsItemsList(response.body()!!)
 
-        //remove all the views from the linear layout that may have been added by the previous query
-        result_linear_layout.removeAllViews()
-        for (each in list) {
+        for (i in wordsList) {
 
-            //get the word item layout to populate its textviews with appropriate data
+            //inflate word_item_layout to add information about the current word from the response
             val wordItemLayout = layoutInflater.inflate(R.layout.word_item_layout, result_linear_layout, false)
 
-            //add the title of the word to word_title_textview
-            wordItemLayout.word_title_textview.text = each.wordTitleItem
+            //add the the word to word_title_textview
+            wordItemLayout.word_title_textview.text = i.wordTitleItem
 
-            //hide the origin textview if origin info returns null, leave as is if no info provided
-            if (each.originItem.isNullOrEmpty()) {
-                wordItemLayout.origin_textview.visibility = View.GONE
-            } else {
-                wordItemLayout.origin_textview.text = getString(R.string.origin_info, each.originItem)
-            }
+            //if there is no provided information about the origin, don't add anything to the textview and set the textview to gone
+            if (i.originItem.isNullOrEmpty()) wordItemLayout.origin_textview.visibility = View.GONE
+            else wordItemLayout.origin_textview.text = getString(R.string.origin_info, i.originItem)
 
-            //add the wordItemLayout to the linear layout
-            result_linear_layout.addView(wordItemLayout)
 
-            //iterate over each meaning and for each meaning add the definitions and the provided info about
-            //the partOfSpeech to separate textviews
-            for (every in each.meaningsListItem) {
+            //iterate over each provided meaning for the word
+            for ((a, j) in i.meaningsListItem.withIndex()) {
 
-                //get the meaningLayout which contains two textviews one for the meaning's definition and another for
-                // the origin of the word
+                //add meanings_layout to add information about the current meanings of the current word
                 val meaningLayout = layoutInflater.inflate(R.layout.meaning_layout, wordItemLayout.word_linear_layout, false)
 
-                //add the part of speech information
-                meaningLayout.partofspeech_textview.text = every.partOfSpeechItem
-                meaningLayout.definitions_textview.text = every.definitions
+                //add information about the part of speech if provided, make the textview gone if not
+                if (j.partOfSpeechItem != null) meaningLayout.partofspeech_textview.text = j.partOfSpeechItem
+                else meaningLayout.partofspeech_textview.visibility = View.GONE
 
-                //add the current meaning layout to wordItemLayout
+                //string var to add all the definitions provided for the current meaning
+                var definitionsText = ""
+
+                //iterate over each given definition-example pair
+                for ((b, k) in j.definitions.withIndex()) {
+
+                    //add the definition
+                    definitionsText += getString(R.string.definition_text, b + 1, k.first)
+
+                    //add a line break and then add the example if one is provided for the current pair
+                    if (k.second.isNotEmpty()) {
+                        definitionsText += """<br/>"""
+                        definitionsText += getString(R.string.example_text, examplesColor.data.toString(), k.second)
+                    }
+
+                    //if it is not the last definition, add two line breaks to add the next. if it is, check if it the last meaning item and two line
+                    //if that condition is true to add spacing between the current and the next spacing
+                    if (b != j.definitions.lastIndex || a != i.meaningsListItem.lastIndex) definitionsText += """<br/><br/>"""
+                }
+
+                //add the definitions text to the textview
+                meaningLayout.definitions_textview.text = fromHtml(definitionsText, FROM_HTML_MODE_LEGACY)
+
+                //add the current meaning_layout to the current word_item_layout
                 wordItemLayout.word_linear_layout.addView(meaningLayout)
             }
+
+            //add the word_item_layout for the current word to results_linear_layout
+            result_linear_layout.addView(wordItemLayout)
         }
-
-        //hide the keyboard once the result is visible on the screen
-        hideSoftKeyboard()
-    }
-
-
-    //hides the keyboard
-    private fun hideSoftKeyboard() {
-        val imm: InputMethodManager =
-            mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        //Find the currently focused view, so we can grab the correct window token from it.
-        var view = mainActivityContext.currentFocus
-
-        //If no view currently has focus, create a new one, just so we can grab a window token from
-        // it
-        if (view == null) {
-            view = View(activity)
-        }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     //show the right error message based on what went wrong
@@ -167,11 +128,11 @@ class ResultFragment : Fragment() {
         loading_anim.visibility = View.GONE
 
         //make errorMessage visible if it's not already
-        if (!errorMessage.isVisible) errorMessage.visibility = View.VISIBLE
+        if (!error_message.isVisible) error_message.visibility = View.VISIBLE
         when (state) {
-            ResultViewModel.ErrorType.CallFailed -> errorMessage.text =
+            ResultViewModel.ErrorType.CallFailed -> error_message.text =
                 getString(R.string.call_failed)
-            ResultViewModel.ErrorType.NoMatch -> errorMessage.text =
+            ResultViewModel.ErrorType.NoMatch -> error_message.text =
                 getString(R.string.no_match)
         }
     }

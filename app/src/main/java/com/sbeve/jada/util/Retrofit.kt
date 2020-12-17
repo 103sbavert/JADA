@@ -19,7 +19,7 @@ object RetrofitInit {
             "German",
             "Italian",
             "Korean",
-            "Brazilian Portuguese",
+            "Br Portuguese",
             "Turkish"
         ),
         arrayOf(
@@ -42,13 +42,13 @@ object RetrofitInit {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(AccessApi::class.java)
-}
 
-//set up the interface to be implemented by retrofit to create an access api
-interface AccessApi {
-    @GET("{language_selected}/{word_to_query}")
-    fun getDefinitions(
-        @Path("language_selected") language: String,
-        @Path("word_to_query") word: String
-    ): Call<List<Word>>
+    //set up the interface to be implemented by retrofit to create an access api
+    interface AccessApi {
+        @GET("{language_selected}/{word_to_query}")
+        fun getDefinitions(
+            @Path("language_selected") language: String,
+            @Path("word_to_query") word: String
+        ): Call<List<Word>>
+    }
 }

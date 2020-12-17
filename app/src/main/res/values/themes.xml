@@ -1,25 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <style name="app_theme" parent="base_app_theme">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/orange_dark</item>
+        <item name="colorPrimary">@color/orange_dark</item>
+        <item name="colorPrimaryVariant">@color/orange_light</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimaryVariant">@color/translucent_white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green_dark</item>
         <item name="colorSecondaryVariant">@color/green_dark</item>
         <item name="colorOnSecondary">@color/white</item>
+        <!-- Others -->
+        <item name="examples_color">@color/gray</item>
+        <item name="colorOnPrimarySurfaceVariant">?attr/colorOnPrimaryVariant</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="colorOnBackground">@color/gray_darker</item>
     </style>
 
     <style name="base_app_theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!--System UI Elements. -->
-        <item name="android:windowLightStatusBar" tools:targetApi="23">?attr/isLightTheme</item>
+        <!-- System UI Elements. -->
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">?attr/isLightTheme</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-        <item name="android:navigationBarColor">?android:attr/background</item>
-        <!--Other UI Elements and Text Appearance-->
-        <item name="colorControlNormal">?attr/colorOnPrimary</item>
-        <item name="actionBarSize">60dp</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimarySurface</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <!-- Other UI Elements and Text Appearance -->
+        <item name="android:windowBackground">?attr/colorSurface</item>
+        <item name="colorControlNormal">?attr/colorPrimary</item>
         <item name="textAppearanceHeadline1">@style/Headline1</item>
         <item name="textAppearanceHeadline2">@style/Headline2</item>
         <item name="textAppearanceHeadline3">@style/Headline3</item>
@@ -34,8 +39,12 @@
         <item name="textAppearanceCaption">@style/Caption</item>
         <item name="textAppearanceButton">@style/textAppearanceButton</item>
         <item name="materialAlertDialogTheme">@style/custom_alert_dialog</item>
-        <item name="materialButtonOutlinedStyle">@style/custom_button_outlined</item>
         <item name="toolbarStyle">@style/custom_toolbar</item>
     </style>
+
+    <attr name="colorOnPrimaryVariant" format="color|reference" />
+    <attr name="examples_color" format="color|reference" />
+    <attr name="colorOnSurfaceVariant" format="color|reference" />
+    <attr name="colorOnPrimarySurfaceVariant" format="color|reference" />
 </resources>
 

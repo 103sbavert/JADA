@@ -3,20 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:orientation="vertical">
-
     <TextView
         android:id="@+id/partofspeech_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceSubtitle2"
+        android:textAppearance="?attr/textAppearanceHeadline7"
         tools:text="Verb" />
 
     <TextView
         android:id="@+id/definitions_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin_padding"
         android:textAppearance="?attr/textAppearanceBody2"
+        android:textIsSelectable="true"
         tools:text="a single distinct meaningful element of speech or writing, used with others (or sometimes alone) to form a sentence and typically shown with a space on either side when written or printed." />
 </LinearLayout>

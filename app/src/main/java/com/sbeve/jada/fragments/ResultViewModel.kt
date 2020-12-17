@@ -17,7 +17,7 @@ class ResultViewModel : ViewModel() {
     }
 
     //type of content to be shown on the screen when the fragment is recreated
-    enum class FetchWordInfoResult {
+    enum class FetchWordInfoResultType {
         Success,
         Failure
     }
@@ -31,8 +31,7 @@ class ResultViewModel : ViewModel() {
     //store information about the kind of content (error or word result) to be shown on the screen
     //next time the fragment is created. Also call the appropriate methods to finish the task
     //using the observer
-    val fetchWordInfoResult = MutableLiveData<FetchWordInfoResult>(null)
-
+    val fetchWordInfoResultType = MutableLiveData<FetchWordInfoResultType>()
     private lateinit var query: String
 
     //make a call to the server
@@ -53,7 +52,7 @@ class ResultViewModel : ViewModel() {
                         //since the fragment has to shown an error message now and on every
                         //configuration from now until fetchWordInformation() is called again, set
                         //fetchResult to Failure
-                        fetchWordInfoResult.value = FetchWordInfoResult.Failure
+                        fetchWordInfoResultType.value = FetchWordInfoResultType.Failure
                         return
                     }
 
@@ -64,7 +63,7 @@ class ResultViewModel : ViewModel() {
                     //set fetchResult to Success so the fragment shows the result fetched from the
                     //server now and on every configuration change from now until fetchWordInformation
                     //is called again
-                    fetchWordInfoResult.value = FetchWordInfoResult.Success
+                    fetchWordInfoResultType.value = FetchWordInfoResultType.Success
                 }
 
                 override fun onFailure(call: Call<List<Word>>, t: Throwable) {
@@ -76,7 +75,7 @@ class ResultViewModel : ViewModel() {
                     //since the fragment has to shown an error message now and on every
                     //configuration from now until fetchWordInformation() is called again, set
                     //fetchResult to Failure
-                    fetchWordInfoResult.value = FetchWordInfoResult.Failure
+                    fetchWordInfoResultType.value = FetchWordInfoResultType.Failure
                 }
             })
     }
@@ -101,33 +100,28 @@ class ResultViewModel : ViewModel() {
 
         val list: MutableList<MeaningItem> = mutableListOf()
         for (meaning in meanings) {
-            var contentBody = ""
             var partOfSpeech = ""
+
             //add information about the part of speech of the current meaning for the word
             //(don't add anything if part of speech says "undefined")
             partOfSpeech += if (meaning.partOfSpeech != "undefined") meaning.partOfSpeech else null
-            contentBody += getDefinitionText(meaning)
-            list.add(MeaningItem(partOfSpeech, contentBody))
+            list.add(MeaningItem(partOfSpeech, getDefinitionText(meaning)))
         }
-
         return list
     }
 
 
-    private fun getDefinitionText(meaning: Meaning): String {
-        var subContentBody = ""
+    private fun getDefinitionText(meaning: Meaning): MutableList<Pair<String, String>> {
+        val definitionsPairsList: MutableList<Pair<String, String>> = mutableListOf()
 
         //append each definition provided for the current meaning
-        for ((_definitionObject, numbering) in meaning.definitions.zip('a'..'z')) {
-            val definition = _definitionObject.definition
-            val example = _definitionObject.example
-
-            //don't add alphabet numbering if there is only definition
-            if (meaning.definitions.size > 1) subContentBody += ("$numbering) ")
-            subContentBody += (definition + "\n")
-            if (!example.isNullOrEmpty()) subContentBody += "\t(Example: \"$example\")\n"
-            if (meaning.definitions.last() != _definitionObject) subContentBody += "\n"
+        for (definitionObject in meaning.definitions) {
+            val defExPair =
+                if (definitionObject.example != null) Pair(definitionObject.definition, definitionObject.example)
+                else Pair(definitionObject.definition, "")
+            definitionsPairsList.add(defExPair)
         }
-        return subContentBody
+
+        return definitionsPairsList
     }
 }

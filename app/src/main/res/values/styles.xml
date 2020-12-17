@@ -2,94 +2,76 @@
 <resources>
     <!--Toolbar-->
     <style name="custom_toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimarySurface</item>
         <item name="background">?attr/colorPrimary</item>
         <item name="titleTextColor">?attr/colorControlNormal</item>
         <item name="elevationOverlayEnabled">false</item>
-        <item name="android:elevation">4dp</item>
-    </style>
-
-    <style name="custom_button_outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:elevation">0dp</item>
     </style>
 
     <!--Text Appearance Styles-->
     <style name="Headline1" parent="TextAppearance.MaterialComponents.Headline1">
-        <item name="fontFamily">@font/work_sans_light</item>
-        <item name="android:fontFamily">@font/work_sans_light</item>
+        <item name="fontFamily">@font/nunito_light</item>
+        <item name="android:fontFamily">@font/nunito_light</item>
         <item name="android:textSize">80sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <style name="Headline2" parent="TextAppearance.MaterialComponents.Headline2">
-        <item name="fontFamily">@font/work_sans_light</item>
-        <item name="android:fontFamily">@font/work_sans_light</item>
-        <item name="android:textSize">46sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
+        <item name="fontFamily">@font/nunito_light</item>
+        <item name="android:fontFamily">@font/nunito_light</item>
+        <item name="android:textSize">48sp</item>
     </style>
 
     <style name="Headline3" parent="TextAppearance.MaterialComponents.Headline3">
-        <item name="fontFamily">@font/work_sans_light</item>
-        <item name="android:fontFamily">@font/work_sans_light</item>
-        <item name="android:textSize">35sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
+        <item name="fontFamily">@font/nunito_light</item>
+        <item name="android:fontFamily">@font/nunito_light</item>
+        <item name="android:textSize">40sp</item>
     </style>
 
     <style name="Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="fontFamily">@font/work_sans</item>
-        <item name="android:fontFamily">@font/work_sans</item>
-        <item name="android:textSize">30sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
+        <item name="fontFamily">@font/nunito</item>
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:textSize">35sp</item>
     </style>
 
     <style name="Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="fontFamily">@font/work_sans</item>
-        <item name="android:fontFamily">@font/work_sans</item>
-        <item name="android:textSize">27sp</item>
+        <item name="fontFamily">@font/nunito</item>
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <style name="Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="fontFamily">@font/work_sans_semibold</item>
-        <item name="android:fontFamily">@font/work_sans_semibold</item>
+        <item name="fontFamily">@font/nunito_bold</item>
+        <item name="android:fontFamily">@font/nunito_bold</item>
         <item name="android:textSize">23sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <attr name="textAppearanceHeadline7" format="reference" />
+
     <style name="Headline7" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="fontFamily">@font/work_sans_medium</item>
-        <item name="android:fontFamily">@font/work_sans_medium</item>
+        <item name="fontFamily">@font/nunito_semibold</item>
+        <item name="android:fontFamily">@font/nunito_semibold</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <style name="Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="fontFamily">@font/work_sans</item>
-        <item name="android:fontFamily">@font/work_sans</item>
+        <item name="fontFamily">@font/nunito</item>
+        <item name="android:fontFamily">@font/nunito</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
     </style>
 
-    <style name="Subtitle2" parent="Subtitle1">
-        <item name="android:textSize">18sp</item>
+    <style name="Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/nunito_semibold</item>
+        <item name="android:fontFamily">@font/nunito</item>
     </style>
 
     <style name="Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">@font/nunito</item>
         <item name="android:fontFamily">@font/nunito</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:lineSpacingExtra">2.5dp</item>
     </style>
 
     <style name="Body2" parent="Body1">
@@ -100,27 +82,27 @@
         <item name="fontFamily">@font/nunito</item>
         <item name="android:fontFamily">@font/nunito</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
     </style>
 
     <style name="textAppearanceButton" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/work_sans_medium</item>
-        <item name="android:fontFamily">@font/work_sans_medium</item>
+        <item name="fontFamily">@font/nunito_semibold</item>
+        <item name="android:fontFamily">@font/nunito_semibold</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:lineSpacingExtra">@dimen/standard_line_spacing</item>
-        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <!--Alert Dialog Theme-->
     <style name="alert_dialog_title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:fontFamily">@font/work_sans_medium</item>
-        <item name="fontFamily">@font/work_sans_medium</item>
+        <item name="android:fontFamily">@font/nunito_semibold</item>
+        <item name="fontFamily">@font/nunito_semibold</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="custom_alert_dialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/alert_dialog_title</item>
+        <item name="colorSurface">?attr/backgroundColor</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="colorOnSurface">?attr/colorOnBackground</item>
     </style>
 </resources>

@@ -8,5 +8,5 @@ data class WordItem(
 
 data class MeaningItem(
     val partOfSpeechItem: String?,
-    val definitions: String
+    val definitions: MutableList<Pair<String, String>>
 )

@@ -1,14 +1,21 @@
 <resources>
-
     <style name="app_theme" parent="base_app_theme">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/gray_dark</item>
-        <item name="colorPrimaryVariant">@color/gray_dark</item>
-        <item name="colorOnPrimary">@color/orange_light</item>
+        <item name="colorPrimary">@color/orange_light</item>
+        <item name="colorPrimaryVariant">@color/orange_light_translucent</item>
+        <item name="colorOnPrimary">@color/gray_dark</item>
+        <item name="colorOnPrimaryVariant">@color/translucent_gray_dark</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green_light</item>
         <item name="colorSecondaryVariant">@color/green_light</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/gray_darker</item>
+        <!-- Others -->
+        <item name="examples_color">@color/gray_light</item>
+        <item name="colorSurface">@color/gray_darker</item>
+        <item name="colorOnSurface">?attr/colorPrimary</item>
+        <item name="colorOnSurfaceVariant">?attr/colorPrimaryVariant</item>
+        <item name="colorOnPrimarySurfaceVariant">?attr/colorOnSurfaceVariant</item>
+        <item name="backgroundColor">@color/gray_dark</item>
+        <item name="colorOnBackground">@color/white</item>
     </style>
 </resources>
-
