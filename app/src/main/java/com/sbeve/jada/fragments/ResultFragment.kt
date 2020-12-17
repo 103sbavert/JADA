@@ -21,19 +21,15 @@ import retrofit2.Response
 
 class ResultFragment : Fragment(R.layout.fragment_result) {
     private val viewModel: ResultViewModel by viewModels()
-
     private val navController: NavController by lazy {
         this.findNavController()
     }
-
     private val args: ResultFragmentArgs by navArgs()
 
     //the currently running instance of the activity
     private val mainActivityContext: MainActivity by lazy {
         activity as MainActivity
     }
-
-    private val examplesColor = TypedValue()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,7 +39,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
             navController.navigateUp()
         }
 
-        mainActivityContext.theme.resolveAttribute(R.attr.examples_color, examplesColor, true)
         viewModel.fetchWordInfo(mainActivityContext.savedLanguageIndex, args.queryFromWelcomeFragment)
 
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
@@ -61,9 +56,15 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         }
     }
 
+    //this function takes the output from fetchWordsInfo() and gets it in a structured manner back from the methods in the viewmodel then adds that
+    //info one by one to the result_linear_layout
     private fun showResults(response: Response<List<Word>>) {
         //hide the loading animation
         loading_anim.visibility = View.GONE
+
+        //getting the examples text color
+        val examplesColor = TypedValue()
+        mainActivityContext.theme.resolveAttribute(R.attr.examples_color, examplesColor, true)
 
         //get the response output by the fetchWordInfo()
         val wordsList = viewModel.getWordsItemsList(response.body()!!)
