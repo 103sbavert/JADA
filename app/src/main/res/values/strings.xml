@@ -6,12 +6,19 @@
     <string name="main_fragment_small_header">Search for words in</string>
     <string name="query_hint">"Try \"stocks\" or \"innovation\""</string>
     <string name="definition_text">
-        &lt;b>%1$d.&lt;/b> %2$s
+        &lt;b>
+            %1$d.
+        &lt;/b>
+        %2$s
     </string>
     <string name="example_text">
-        &lt;b>Example: &lt;/b>
+        &lt;b>
+        Example:
+        &lt;/b>
         &lt;i>
-            &lt;font color=\"%1$s\">%2$s&lt;/font>
+            &lt;font color=\"%1$s\">
+                %2$s
+            &lt;/font>
         &lt;/i>
     </string>
     <string name="change_language">Change Language</string>

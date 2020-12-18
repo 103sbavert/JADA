@@ -5,6 +5,5 @@
     <dimen name="medium_margin_padding">12dp</dimen>
     <dimen name="small_margin_padding">10dp</dimen>
     <dimen name="tiny_margin_padding">7dp</dimen>
-    <dimen name="standard_line_spacing">2dp</dimen>
     <dimen name="search_view_width">60dp</dimen>
 </resources>

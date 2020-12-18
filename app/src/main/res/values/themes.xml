@@ -2,7 +2,7 @@
     <style name="app_theme" parent="base_app_theme">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange_dark</item>
-        <item name="colorPrimaryVariant">@color/orange_light</item>
+        <item name="colorPrimaryVariant">@color/orange_dark_translucent</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnPrimaryVariant">@color/translucent_white</item>
         <!-- Secondary brand color. -->
@@ -23,7 +23,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimarySurface</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <!-- Other UI Elements and Text Appearance -->
-        <item name="android:windowBackground">?attr/colorSurface</item>
+        <item name="android:windowBackground">?attr/colorPrimarySurface</item>
         <item name="colorControlNormal">?attr/colorPrimary</item>
         <item name="textAppearanceHeadline1">@style/Headline1</item>
         <item name="textAppearanceHeadline2">@style/Headline2</item>

@@ -1,9 +1,10 @@
-package com.sbeve.jada.fragments
+package com.sbeve.jada.fragments.result
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sbeve.jada.util.*
-import com.sbeve.jada.util.RetrofitInit.accessApiObject
+import com.sbeve.jada.retrofit_utils.RetrofitInit
+import com.sbeve.jada.retrofit_utils.RetrofitInit.accessApiObject
+import com.sbeve.jada.retrofit_utils.Word
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -78,50 +79,5 @@ class ResultViewModel : ViewModel() {
                     fetchWordInfoResultType.value = FetchWordInfoResultType.Failure
                 }
             })
-    }
-
-    fun getWordsItemsList(words: List<Word>): MutableList<WordItem> {
-
-        //make the list of words to be passed to the recycler view adapter
-        val wordsItems = mutableListOf<WordItem>()
-        for (i in words) {
-
-            //for some weird cases, the database does get a hit for the query but there is no
-            //available meanings for the matched word. We're going to skip such cases.
-            if (i.meanings.isEmpty()) continue
-
-            //information about the current for it to be added to the wordList
-            wordsItems.add(WordItem(i.word, i.origin, getMeaningsList(i.meanings)))
-        }
-        return wordsItems
-    }
-
-    private fun getMeaningsList(meanings: List<Meaning>): List<MeaningItem> {
-
-        val list: MutableList<MeaningItem> = mutableListOf()
-        for (meaning in meanings) {
-            var partOfSpeech = ""
-
-            //add information about the part of speech of the current meaning for the word
-            //(don't add anything if part of speech says "undefined")
-            partOfSpeech += if (meaning.partOfSpeech != "undefined") meaning.partOfSpeech else null
-            list.add(MeaningItem(partOfSpeech, getDefinitionText(meaning)))
-        }
-        return list
-    }
-
-
-    private fun getDefinitionText(meaning: Meaning): MutableList<Pair<String, String>> {
-        val definitionsPairsList: MutableList<Pair<String, String>> = mutableListOf()
-
-        //append each definition provided for the current meaning
-        for (definitionObject in meaning.definitions) {
-            val defExPair =
-                if (definitionObject.example != null) Pair(definitionObject.definition, definitionObject.example)
-                else Pair(definitionObject.definition, "")
-            definitionsPairsList.add(defExPair)
-        }
-
-        return definitionsPairsList
     }
 }

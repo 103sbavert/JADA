@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.sbeve.jada.fragments.MainFragment"
+        android:name="com.sbeve.jada.fragments.main.MainFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_main">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
-        android:name="com.sbeve.jada.fragments.ResultFragment"
+        android:name="com.sbeve.jada.fragments.result.ResultFragment"
         android:label="Result"
         tools:layout="@layout/fragment_result">
         <argument

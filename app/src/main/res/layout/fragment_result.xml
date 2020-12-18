@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimarySurface">
+    android:backgroundTintMode="screen">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -52,8 +52,8 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/standard_margin_padding"
         android:textAlignment="center"
-        android:textColor="@color/white"
         android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

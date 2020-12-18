@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorPrimarySurface">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/title_text"
@@ -12,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/standard_margin_padding"
         android:text="@string/main_fragment_small_header"
-        android:textAppearance="?attr/textAppearanceSubtitle2"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
         android:textColor="?attr/colorOnPrimarySurfaceVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,9 +38,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/circle_button_with_ripple"
         android:contentDescription="@string/change_language"
+        android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="@+id/current_language"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/current_language"
         app:layout_constraintTop_toTopOf="@+id/current_language"
         app:srcCompat="@drawable/ic_settings_gear" />

@@ -1,4 +1,4 @@
-package com.sbeve.jada.fragments
+package com.sbeve.jada.fragments.main
 
 import android.os.Bundle
 import android.view.View
@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
-import com.sbeve.jada.util.RetrofitInit
+import com.sbeve.jada.retrofit_utils.RetrofitInit
 import kotlinx.android.synthetic.main.fragment_main.*
 
 

@@ -1,4 +1,4 @@
-package com.sbeve.jada.util
+package com.sbeve.jada.retrofit_utils
 
 import com.google.gson.annotations.SerializedName
 
@@ -23,7 +23,7 @@ data class Definition(
 
 data class Meaning(
     @SerializedName("partOfSpeech")
-    val partOfSpeech: String,
+    val partOfSpeech: String?,
     @SerializedName("definitions")
     val definitions: List<Definition>
 )

@@ -1,4 +1,4 @@
-package com.sbeve.jada.util
+package com.sbeve.jada.retrofit_utils
 
 import retrofit2.Call
 import retrofit2.Retrofit
