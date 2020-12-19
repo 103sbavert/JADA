@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
+import com.sbeve.jada.databinding.FragmentMainBinding
 import com.sbeve.jada.retrofit_utils.RetrofitInit
-import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -32,15 +32,18 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         anim
     }
 
+    lateinit var fragmentMainBinding: FragmentMainBinding
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        current_language.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
-        change_language_gear.setOnClickListener {
+        fragmentMainBinding = FragmentMainBinding.bind(view)
+
+        fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
+        fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
             createChangeLanguageDialog().show()
         }
-
-        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        fragmentMainBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query))
                 hideSoftKeyboard()
@@ -49,6 +52,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
             override fun onQueryTextChange(newText: String?) = false
         })
+
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) = stayInPlaceAnimation
@@ -58,7 +62,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             .setTitle(getString(R.string.choose_a_language))
             .setSingleChoiceItems(RetrofitInit.supportedLanguages.first, mainActivityContext.savedLanguageIndex)
             { dialogInterface, i ->
-                current_language.text = RetrofitInit.supportedLanguages.first[i]
+                fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[i]
                 mainActivityContext.applicationSharedPreferences
                     .edit()
                     .putInt(getString(R.string.language_setting_key), i)

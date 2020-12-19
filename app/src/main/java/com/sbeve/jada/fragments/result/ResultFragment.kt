@@ -3,7 +3,7 @@ package com.sbeve.jada.fragments.result
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.core.text.HtmlCompat.fromHtml
 import androidx.core.view.isVisible
@@ -14,11 +14,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
+import com.sbeve.jada.databinding.FragmentResultBinding
+import com.sbeve.jada.databinding.MeaningLayoutBinding
+import com.sbeve.jada.databinding.WordLayoutBinding
 import com.sbeve.jada.retrofit_utils.Meaning
 import com.sbeve.jada.retrofit_utils.Word
-import kotlinx.android.synthetic.main.fragment_result.*
-import kotlinx.android.synthetic.main.meaning_layout.view.*
-import kotlinx.android.synthetic.main.word_item_layout.view.*
 import retrofit2.Response
 
 class ResultFragment : Fragment(R.layout.fragment_result) {
@@ -34,16 +34,20 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     private val args: ResultFragmentArgs by navArgs()
     private val examplesTextColor = TypedValue()
 
+    private lateinit var fragmentResultBinding: FragmentResultBinding
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
-        toolbar.setNavigationOnClickListener {
+        fragmentResultBinding = FragmentResultBinding.bind(view)
+
+        fragmentResultBinding.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
+        fragmentResultBinding.toolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }
 
         //getting the examples text color
-        mainActivityContext.theme.resolveAttribute(R.attr.examples_color, examplesTextColor, true)
+        mainActivityContext.theme.resolveAttribute(R.attr.secondary_text_color, examplesTextColor, true)
 
         viewModel.fetchWordInfo(mainActivityContext.savedLanguageIndex, args.queryFromWelcomeFragment)
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
@@ -64,14 +68,14 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     //show the right error message based on what went wrong
     private fun showError(state: ResultViewModel.ErrorType) {
-        loading_anim.visibility = View.GONE
+        fragmentResultBinding.loadingAnim.visibility = View.GONE
 
         //make errorMessage visible if it's not already
-        if (!error_message.isVisible) error_message.visibility = View.VISIBLE
+        if (!fragmentResultBinding.errorMessage.isVisible) fragmentResultBinding.errorMessage.visibility = View.VISIBLE
         when (state) {
-            ResultViewModel.ErrorType.CallFailed -> error_message.text =
+            ResultViewModel.ErrorType.CallFailed -> fragmentResultBinding.errorMessage.text =
                 getString(R.string.call_failed)
-            ResultViewModel.ErrorType.NoMatch -> error_message.text =
+            ResultViewModel.ErrorType.NoMatch -> fragmentResultBinding.errorMessage.text =
                 getString(R.string.no_match)
         }
     }
@@ -80,7 +84,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     //info one by one to the result_linear_layout
     private fun showResults(response: Response<List<Word>>) {
         //hide the loading animation
-        loading_anim.visibility = View.GONE
+        fragmentResultBinding.loadingAnim.visibility = View.GONE
 
         //get the response output by the fetchWordInfo()
         val wordsList = response.body()!!
@@ -88,52 +92,52 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         for (WORD in wordsList) {
 
             //inflate word_item_layout to add information about the current word from the response
-            val wordItemLayout = layoutInflater.inflate(R.layout.word_item_layout, result_linear_layout, false)
+            val wordLayoutBinding = WordLayoutBinding.inflate(layoutInflater)
 
             //add the the word to word_title_textview
-            wordItemLayout.word_title_textview.text = WORD.word
+            wordLayoutBinding.wordTitleTextview.text = WORD.word
 
             //if there is no provided information about the origin, don't add anything to the textview and set the textview to gone
-            if (WORD.origin.isNullOrEmpty()) wordItemLayout.origin_textview.visibility = View.GONE
-            else wordItemLayout.origin_textview.text = getString(R.string.origin_info, WORD.origin)
+            if (WORD.origin.isNullOrEmpty()) wordLayoutBinding.originTextview.visibility = View.GONE
+            else wordLayoutBinding.originTextview.text = getString(R.string.origin_info, WORD.origin)
 
 
             //add the each meaning_layout to the current word_item_layout
-            val meaningsLayoutArray = getMeaningsLayoutList(WORD, wordItemLayout)
-            meaningsLayoutArray.forEach { wordItemLayout.word_linear_layout.addView(it) }
+            val meaningsLayoutArray = getMeaningsLayoutList(WORD, wordLayoutBinding)
+            meaningsLayoutArray.forEach { wordLayoutBinding.wordLinearLayout.addView(it.root) }
 
             //add the word_item_layout for the current word to results_linear_layout
-            result_linear_layout.addView(wordItemLayout)
+            fragmentResultBinding.resultLinearLayout.addView(wordLayoutBinding.root)
         }
     }
 
     private fun getMeaningsLayoutList(
         word: Word,
-        layoutForInflation: View,
-    ): ArrayList<View> {
-        val meaningLayoutArray = ArrayList<View>()
+        wordLayoutBinding: WordLayoutBinding,
+    ): ArrayList<MeaningLayoutBinding> {
+        val meaningLayoutArray = ArrayList<MeaningLayoutBinding>()
 
         //iterate over each provided meaning for the word
         for ((index, meaning) in word.meanings.withIndex()) {
 
             //add meanings_layout to add information about the current meanings of the current word
-            val meaningLayout = layoutInflater.inflate(R.layout.meaning_layout, layoutForInflation.word_linear_layout, false)
+            val meaningLayoutBinding = MeaningLayoutBinding.inflate(layoutInflater, wordLayoutBinding.root, false)
 
             //add information about the part of speech if provided, make the textview gone if not
-            if (meaning.partOfSpeech != null) meaningLayout.partofspeech_textview.text = meaning.partOfSpeech
-            else meaningLayout.partofspeech_textview.visibility = View.GONE
-
+            if (meaning.partOfSpeech != null) meaningLayoutBinding.partofspeechTextview.text = meaning.partOfSpeech
+            else meaningLayoutBinding.partofspeechTextview.visibility = View.GONE
             val definitionsText = getWordsLayoutList(meaning)
 
             if (index == word.meanings.lastIndex) {
-                val params = meaningLayout.layoutParams as LinearLayout.LayoutParams
-                params.setMargins(0, 0, 0, 0)
+                val meaningLayoutParams = meaningLayoutBinding.linearLayout.layoutParams as ConstraintLayout.LayoutParams
+                meaningLayoutParams.setMargins(0, 0, 0, 0)
+                meaningLayoutBinding.root.layoutParams = meaningLayoutParams
             }
 
             //add the definitions text to the textview
-            meaningLayout.definitions_textview.text = fromHtml(definitionsText, FROM_HTML_MODE_LEGACY)
+            meaningLayoutBinding.definitionsTextview.text = fromHtml(definitionsText, FROM_HTML_MODE_LEGACY)
 
-            meaningLayoutArray.add(meaningLayout)
+            meaningLayoutArray.add(meaningLayoutBinding)
         }
         return meaningLayoutArray
     }

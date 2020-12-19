@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.sbeve.jada.R
+import com.sbeve.jada.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,9 +29,12 @@ class MainActivity : AppCompatActivity() {
         get() = applicationSharedPreferences
             .getInt(getString(R.string.language_setting_key), 0)
 
+    lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -23,10 +23,10 @@
 
     <TextView
         android:id="@+id/origin_textview"
-        android:textColor="?attr/colorOnPrimarySurfaceVariant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?attr/colorOnPrimarySurfaceVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/word_title_textview"
         app:layout_constraintHorizontal_bias="0.0"

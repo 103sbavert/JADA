@@ -3,7 +3,6 @@ import groovy.json.JsonSlurper
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs.kotlin'
 }
 
@@ -15,6 +14,10 @@ android {
         keystore_password = json[0].keystore_password
         key_alias = json[0].keys[0].key_alias
         key_password = json[0].keys[0].key_password
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
     signingConfigs {
@@ -43,6 +46,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
