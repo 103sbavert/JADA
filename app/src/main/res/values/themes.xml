@@ -6,8 +6,8 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnPrimaryVariant">@color/translucent_white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/green_dark</item>
-        <item name="colorSecondaryVariant">@color/green_dark</item>
+        <item name="colorSecondary">@color/cyan_dark</item>
+        <item name="colorSecondaryVariant">@color/cyan_dark</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Others -->
         <item name="examples_color">@color/gray</item>
@@ -23,7 +23,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimarySurface</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <!-- Other UI Elements and Text Appearance -->
-        <item name="android:windowBackground">?attr/colorPrimarySurface</item>
+        <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="colorControlNormal">?attr/colorPrimary</item>
         <item name="textAppearanceHeadline1">@style/Headline1</item>
         <item name="textAppearanceHeadline2">@style/Headline2</item>

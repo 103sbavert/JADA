@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="orange_dark">#5F3832</color>
-    <color name="orange_dark_translucent">#885F3832</color>
+    <color name="orange_dark_translucent">#AA5F3832</color>
     <color name="orange_light">#90665d</color>
-    <color name="orange_light_translucent">#8890665d</color>
-    <color name="green_dark">#2B7D2C</color>
-    <color name="green_light">#5B9E58</color>
+    <color name="orange_light_translucent">#AA90665d</color>
+    <color name="cyan_dark">#32595f</color>
+    <color name="green_light">#658f97</color>
     <color name="gray_darker">#0E0E0E</color>
     <color name="gray_dark">#1A1A1A</color>
     <color name="white">#FFF</color>
     <color name="gray">#555555</color>
     <color name="gray_light">#aaaaaa</color>
-    <color name="translucent_gray_dark">#881e1e1e</color>
-    <color name="translucent_white">#88ffffff</color>
+    <color name="translucent_gray_dark">#AA1e1e1e</color>
+    <color name="translucent_white">#AAffffff</color>
     <color name="transparent">#0000</color>
 </resources>
