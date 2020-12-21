@@ -48,16 +48,12 @@ I have commented every piece of code that I believed was not part of common thin
 
 There can be found many parts that could use some improvement since I by no means claim to be a perfectly skilled or experienced developer, in fact, relative to so many awesome developers out there, I am very much new. I would like to get suggestions to improve my code or app from other experiened developers.
 
-<!--## Screenshots
+## Screenshots
 
-* ### Welcome Fragment
-<img src="assets/Screenshot_Welcome_Fragment_Light.png" alt="Welcome Fragment Light" width=300>
-<img src="assets/Screenshot_Welcome_Fragment.png" alt="Welcome Fragment Dark" width=300>
+* ### Main Fragment
+<img src="assets/Screenshot_Main_Fragment_Light.png" alt="Main Fragment Light" width=300>
+<img src="assets/Screenshot_Main_Fragment.png" alt="Main Fragment Dark" width=300>
 
 * ### Result Fragment
-<img src="assets/Screenshot_Result_Fragment_Light.png" alt="Welcome Fragment Light" width=300>
-<img src="assets/Screenshot_Result_Fragment.png" alt="Welcome Fragment Dark" width=300>
-
-* ### Change Language Dialog
-<img src="assets/Screenshot_Change_Language_Dialog_Light.png" alt="Welcome Fragment Light" width=300>
-<img src="assets/Screenshot_Change_Language_Dialog.png" alt="Welcome Fragment Dark" width=300>-->
+<img src="assets/Screenshot_Result_Fragment_Light.png" alt="Result Fragment Light" width=300>
+<img src="assets/Screenshot_Result_Fragment.png" alt="Result Fragment Dark" width=300>
