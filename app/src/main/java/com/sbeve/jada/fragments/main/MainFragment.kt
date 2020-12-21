@@ -44,10 +44,12 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
 
         fragmentMainBinding = FragmentMainBinding.bind(view)
         fragmentMainBinding.queriesRecyclerView.layoutManager = LinearLayoutManager(mainActivityContext)
-
         fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
         fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
             createChangeLanguageDialog().show()
+        }
+        fragmentMainBinding.clearAllButton.setOnClickListener {
+            viewModel.clear()
         }
         fragmentMainBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {

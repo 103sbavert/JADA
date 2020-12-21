@@ -2,7 +2,7 @@ package com.sbeve.jada.fragments.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sbeve.jada.myApplication
+import com.sbeve.jada.MyApplication
 import com.sbeve.jada.retrofit_utils.RetrofitInit
 import com.sbeve.jada.room_utils.DictionaryDatabase
 import com.sbeve.jada.room_utils.DictionaryDatabaseDAO
@@ -13,11 +13,20 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel : ViewModel() {
 
-    private var roomDatabase = DictionaryDatabase.getInstance(myApplication.getInstance())
+    private var roomDatabase = DictionaryDatabase.getInstance(MyApplication.getInstance())
 
     private val databaseDao: DictionaryDatabaseDAO = roomDatabase.getDao()
 
     val allQueries = databaseDao.getAllQueries()
+
+    fun clear() {
+        viewModelScope.launch {
+            withContext(IO) {
+                databaseDao.clear()
+
+            }
+        }
+    }
 
     fun addQuery(languageIndex: Int, query: String) {
         viewModelScope.launch {

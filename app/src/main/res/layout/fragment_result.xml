@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="@dimen/small_margin_padding" />
+            android:paddingHorizontal="@dimen/small_margin_padding"
+            android:paddingBottom="@dimen/small_margin_padding" />
     </ScrollView>
 
     <ProgressBar

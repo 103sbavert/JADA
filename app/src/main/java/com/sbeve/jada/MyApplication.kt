@@ -3,7 +3,7 @@ package com.sbeve.jada
 import android.app.Application
 import android.content.Context
 
-class myApplication : Application() {
+class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

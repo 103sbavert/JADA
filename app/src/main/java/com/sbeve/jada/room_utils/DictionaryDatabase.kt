@@ -12,6 +12,7 @@ abstract class DictionaryDatabase : RoomDatabase() {
 
     companion object {
 
+        @Volatile
         private var databaseInstance: DictionaryDatabase? = null
 
         fun getInstance(context: Context): DictionaryDatabase {

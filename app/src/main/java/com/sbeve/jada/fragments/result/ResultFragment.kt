@@ -83,9 +83,11 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     //this function takes the output from fetchWordsInfo() and gets it in a structured manner back from the methods in the viewmodel then adds that
     //info one by one to the result_linear_layout
     private fun showResults(response: Response<List<Word>>) {
+
         //hide the loading animation
         fragmentResultBinding.loadingAnim.visibility = View.GONE
         fragmentResultBinding.loadingErrorMessage.visibility = View.GONE
+        fragmentResultBinding.resultLinearLayout.removeAllViews()
 
         //get the response output by the fetchWordInfo()
         val wordsList = response.body()!!

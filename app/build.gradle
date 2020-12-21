@@ -36,8 +36,8 @@ android {
         applicationId "com.sbeve.jada"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 15
-        versionName "v3.1.0"
+        versionCode 16
+        versionName 'v4.0.0'
     }
 
     buildTypes {

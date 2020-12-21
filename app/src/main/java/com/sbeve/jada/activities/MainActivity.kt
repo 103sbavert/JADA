@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         get() = applicationSharedPreferences
             .getInt(getString(R.string.language_setting_key), 0)
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
