@@ -3,7 +3,7 @@
 
 <img src="./assets/icon.png" alt="drawing" width="200"/>
 
-A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode.
+A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode. The UI of the app was designed with the help of [Patricia B.](https://github.com/pborlongan), many thanks to her for helping me out. She has been a great help to me to make this app look how it does.
 
 ## Download
 Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases)
@@ -48,7 +48,7 @@ I have commented every piece of code that I believed was not part of common thin
 
 There can be found many parts that could use some improvement since I by no means claim to be a perfectly skilled or experienced developer, in fact, relative to so many awesome developers out there, I am very much new. I would like to get suggestions to improve my code or app from other experiened developers.
 
-## Screenshots
+<!--## Screenshots
 
 * ### Welcome Fragment
 <img src="assets/Screenshot_Welcome_Fragment_Light.png" alt="Welcome Fragment Light" width=300>
@@ -60,4 +60,4 @@ There can be found many parts that could use some improvement since I by no mean
 
 * ### Change Language Dialog
 <img src="assets/Screenshot_Change_Language_Dialog_Light.png" alt="Welcome Fragment Light" width=300>
-<img src="assets/Screenshot_Change_Language_Dialog.png" alt="Welcome Fragment Dark" width=300>
+<img src="assets/Screenshot_Change_Language_Dialog.png" alt="Welcome Fragment Dark" width=300>-->
