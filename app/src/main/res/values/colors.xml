@@ -2,8 +2,8 @@
 <resources>
     <color name="orange_dark">#5F3832</color>
     <color name="orange_dark_translucent">#AA5F3832</color>
-    <color name="orange_light">#C88374</color>
-    <color name="orange_light_translucent">#AAC08F85</color>
+    <color name="orange_light">#E19A8A</color>
+    <color name="orange_light_translucent">#AAF4BBB1</color>
     <color name="cyan_dark">#4095A2</color>
     <color name="cyan_light">#658f97</color>
     <color name="gray_darker">#0B0B0B</color>

@@ -1,5 +1,6 @@
 package com.sbeve.jada.fragments.main
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -20,7 +21,7 @@ import com.sbeve.jada.recyclerview_utils.RecentQueriesAdapter
 import com.sbeve.jada.retrofit_utils.RetrofitInit
 
 
-class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnItemClickListener {
+class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     private val navController: NavController by lazy {
         this.findNavController()
     }
@@ -36,25 +37,26 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
     }
 
     private val viewModel: MainViewModel by viewModels()
-
     private lateinit var fragmentMainBinding: FragmentMainBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentMainBinding = FragmentMainBinding.bind(view)
-        fragmentMainBinding.queriesRecyclerView.layoutManager = LinearLayoutManager(mainActivityContext)
-        fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
+        initializeRecyclerView()
         fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
             createChangeLanguageDialog().show()
         }
         fragmentMainBinding.clearAllButton.setOnClickListener {
             viewModel.clear()
         }
+
+        //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
+        fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
+        mainActivityContext.applicationPreferences.registerOnSharedPreferenceChangeListener(this)
+
         fragmentMainBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-
-                //work
                 viewModel.addQuery(mainActivityContext.savedLanguageIndex, query)
                 navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query))
                 hideSoftKeyboard()
@@ -63,9 +65,9 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
 
             override fun onQueryTextChange(newText: String?) = false
         })
-        setAdapter()
     }
 
+    //play an empty animation to keep the fragment from disappearing from the background when the enter animation for other fragments is playing
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) = stayInPlaceAnimation
 
     private fun createChangeLanguageDialog() =
@@ -73,8 +75,7 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
             .setTitle(getString(R.string.choose_a_language))
             .setSingleChoiceItems(RetrofitInit.supportedLanguages.first, mainActivityContext.savedLanguageIndex)
             { dialogInterface, i ->
-                fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[i]
-                mainActivityContext.applicationSharedPreferences
+                mainActivityContext.applicationPreferences
                     .edit()
                     .putInt(getString(R.string.language_setting_key), i)
                     .apply()
@@ -96,8 +97,8 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-
-    private fun setAdapter() {
+    private fun initializeRecyclerView() {
+        fragmentMainBinding.queriesRecyclerView.layoutManager = LinearLayoutManager(mainActivityContext)
         viewModel.allQueries.observe(viewLifecycleOwner) {
             val adapter = RecentQueriesAdapter(it, this)
             fragmentMainBinding.queriesRecyclerView.adapter = adapter
@@ -107,5 +108,13 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
     override fun onItemClick(position: Int) {
         val queryText = viewModel.allQueries.value!![position].queryText
         navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(queryText))
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            getString(R.string.language_setting_key) -> {
+                fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
+            }
+        }
     }
 }

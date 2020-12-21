@@ -1,21 +1,18 @@
 package com.sbeve.jada.room_utils
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface DictionaryDatabaseDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addQuery(recentQuery: RecentQuery)
 
     @Delete
     fun deleteQuery(recentQuery: RecentQuery)
 
-    @Query("SELECT * FROM recent_query ORDER BY id DESC")
+    @Query("SELECT * FROM recent_query ORDER BY time_date DESC")
     fun getAllQueries(): LiveData<List<RecentQuery>>
 
     @Query("DELETE FROM recent_query")

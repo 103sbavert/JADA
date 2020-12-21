@@ -21,12 +21,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     //public reference to the sharedPreferences for access in children fragments
-    val applicationSharedPreferences: SharedPreferences by lazy {
-        getSharedPreferences("main_shared_preferences", Context.MODE_PRIVATE)
+    val applicationPreferences: SharedPreferences by lazy {
+        getPreferences(Context.MODE_PRIVATE)
     }
 
     val savedLanguageIndex: Int
-        get() = applicationSharedPreferences
+        get() = applicationPreferences
             .getInt(getString(R.string.language_setting_key), 0)
 
     private lateinit var binding: ActivityMainBinding

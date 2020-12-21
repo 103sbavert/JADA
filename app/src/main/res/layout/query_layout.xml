@@ -39,5 +39,6 @@
             app:layout_constraintTop_toBottomOf="@+id/query_text"
             app:layout_constraintVertical_bias="0.0"
             tools:text="HH:MM YYYY MM SS" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

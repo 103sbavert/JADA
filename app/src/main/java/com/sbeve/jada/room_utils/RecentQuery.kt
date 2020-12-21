@@ -7,9 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "recent_query")
 data class RecentQuery(
 
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-
+    @PrimaryKey
     @ColumnInfo(name = "query_text")
     val queryText: String,
 
