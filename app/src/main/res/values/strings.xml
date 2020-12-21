@@ -26,4 +26,5 @@
     <string name="choose_a_language">Choose a language</string>
     <string name="loading">Loading…</string>
     <string name="recent_searches">Recent Searches</string>
+    <string name="clear_button_text">Clear recent searches</string>
 </resources>
