@@ -27,10 +27,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceHeadline4"
         android:textColor="?attr/colorOnPrimarySurface"
-        app:layout_constraintEnd_toEndOf="@+id/title_text"
+        app:layout_constraintEnd_toEndOf="@id/title_text"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/title_text"
-        app:layout_constraintTop_toBottomOf="@+id/title_text"
+        app:layout_constraintStart_toStartOf="@id/title_text"
+        app:layout_constraintTop_toBottomOf="@id/title_text"
         tools:text="English" />
 
     <ImageButton
@@ -40,11 +40,11 @@
         android:background="@drawable/circle_button_with_ripple"
         android:contentDescription="@string/change_language"
         android:padding="3dp"
-        app:layout_constraintBottom_toBottomOf="@+id/current_language"
+        app:layout_constraintBottom_toBottomOf="@id/current_language"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toEndOf="@+id/current_language"
-        app:layout_constraintTop_toTopOf="@+id/current_language"
+        app:layout_constraintStart_toEndOf="@id/current_language"
+        app:layout_constraintTop_toTopOf="@id/current_language"
         app:srcCompat="@drawable/ic_settings_gear" />
 
     <androidx.appcompat.widget.SearchView
@@ -59,20 +59,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/current_language"
+        app:layout_constraintTop_toBottomOf="@id/current_language"
         app:layout_constraintVertical_bias="0.02"
         app:queryBackground="@color/transparent"
         app:queryHint="@string/query_hint" />
 
-    <ScrollView
+    <TextView
+        android:id="@+id/recent_searches_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recent_searches"
+        android:textAppearance="?attr/textAppearanceHeadline7"
+        android:textColor="?attr/colorOnPrimarySurface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_view"
+        app:layout_constraintVertical_bias="0.048" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/queries_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/standard_margin_padding"
+        android:layout_marginTop="@dimen/medium_margin_padding"
         android:background="@drawable/top_corners_rounded_rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_view" />
+        app:layout_constraintTop_toBottomOf="@id/recent_searches_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

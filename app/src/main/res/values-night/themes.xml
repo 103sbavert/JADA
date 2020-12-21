@@ -3,17 +3,17 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange_light</item>
         <item name="colorPrimaryVariant">@color/orange_light_translucent</item>
-        <item name="colorOnPrimary">@color/gray_dark</item>
-        <item name="colorOnPrimaryVariant">@color/translucent_gray_dark</item>
+        <item name="colorOnPrimary">@color/gray_darker</item>
+        <item name="colorOnPrimaryVariant">@color/gray_darker</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/green_light</item>
-        <item name="colorSecondaryVariant">@color/green_light</item>
+        <item name="colorSecondary">@color/cyan_light</item>
+        <item name="colorSecondaryVariant">@color/cyan_light</item>
         <item name="colorOnSecondary">@color/gray_darker</item>
         <!-- Others -->
-        <item name="secondary_text_color">@color/gray_light</item>
+        <item name="examples_text_color">@color/gray_light</item>
         <item name="colorSurface">@color/gray_dark</item>
-        <item name="colorOnSurface">?attr/colorPrimary</item>
-        <item name="colorOnSurfaceVariant">?attr/colorPrimaryVariant</item>
+        <item name="colorOnSurface">@color/orange_light</item>
+        <item name="colorOnSurfaceVariant">@color/orange_light_translucent</item>
         <item name="colorOnPrimarySurfaceVariant">?attr/colorOnSurfaceVariant</item>
         <item name="backgroundColor">@color/gray_darker</item>
         <item name="colorOnBackground">@color/white</item>

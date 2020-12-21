@@ -2,7 +2,7 @@
     <style name="app_theme" parent="base_app_theme">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange_dark</item>
-        <item name="colorPrimaryVariant">@color/orange_dark_translucent</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnPrimaryVariant">@color/translucent_white</item>
         <!-- Secondary brand color. -->
@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/cyan_dark</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Others -->
-        <item name="secondary_text_color">@color/gray</item>
+        <item name="examples_text_color">@color/gray</item>
         <item name="colorOnPrimarySurfaceVariant">?attr/colorOnPrimaryVariant</item>
         <item name="backgroundColor">@color/white</item>
         <item name="colorOnBackground">@color/gray_darker</item>
@@ -39,10 +39,11 @@
         <item name="textAppearanceButton">@style/textAppearanceButton</item>
         <item name="materialAlertDialogTheme">@style/custom_alert_dialog</item>
         <item name="toolbarStyle">@style/custom_toolbar</item>
+        <item name="elevationOverlayEnabled">false</item>
     </style>
 
     <attr name="colorOnPrimaryVariant" format="color|reference" />
-    <attr name="secondary_text_color" format="color|reference" />
+    <attr name="examples_text_color" format="color|reference" />
     <attr name="colorOnSurfaceVariant" format="color|reference" />
     <attr name="colorOnPrimarySurfaceVariant" format="color|reference" />
 </resources>

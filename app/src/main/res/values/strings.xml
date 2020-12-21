@@ -24,4 +24,6 @@
     <string name="change_language">Change Language</string>
     <string name="language_setting_key">language_setting_key</string>
     <string name="choose_a_language">Choose a language</string>
+    <string name="loading">Loading…</string>
+    <string name="recent_searches">Recent Searches</string>
 </resources>

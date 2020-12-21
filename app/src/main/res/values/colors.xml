@@ -2,16 +2,16 @@
 <resources>
     <color name="orange_dark">#5F3832</color>
     <color name="orange_dark_translucent">#AA5F3832</color>
-    <color name="orange_light">#90665d</color>
-    <color name="orange_light_translucent">#AA90665d</color>
-    <color name="cyan_dark">#32595f</color>
-    <color name="green_light">#658f97</color>
+    <color name="orange_light">#C88374</color>
+    <color name="orange_light_translucent">#AAC08F85</color>
+    <color name="cyan_dark">#4095A2</color>
+    <color name="cyan_light">#658f97</color>
     <color name="gray_darker">#0B0B0B</color>
-    <color name="gray_dark">#151515</color>
+    <color name="gray_dark">#181818</color>
     <color name="white">#FFF</color>
-    <color name="gray">#555555</color>
+    <color name="gray">#797979</color>
     <color name="gray_light">#aaaaaa</color>
-    <color name="translucent_gray_dark">#AA1e1e1e</color>
+    <color name="translucent_gray_dark">#AAB2B2B2</color>
     <color name="translucent_white">#AAffffff</color>
     <color name="transparent">#0000</color>
 </resources>

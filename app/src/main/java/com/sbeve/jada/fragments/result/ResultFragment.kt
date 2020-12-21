@@ -6,12 +6,13 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.core.text.HtmlCompat.fromHtml
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.sbeve.jada.ErrorType
+import com.sbeve.jada.NetworkRequestResult
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
 import com.sbeve.jada.databinding.FragmentResultBinding
@@ -38,7 +39,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         fragmentResultBinding = FragmentResultBinding.bind(view)
 
         fragmentResultBinding.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
@@ -47,36 +47,36 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         }
 
         //getting the examples text color
-        mainActivityContext.theme.resolveAttribute(R.attr.secondary_text_color, examplesTextColor, true)
+        mainActivityContext.theme.resolveAttribute(R.attr.examples_text_color, examplesTextColor, true)
 
         viewModel.fetchWordInfo(mainActivityContext.savedLanguageIndex, args.queryFromWelcomeFragment)
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
-            when (it!!) {
+            if (it != null) {
+                when (it) {
 
-                //FetchResult was failed (this logic is included in fetchWordInformation()) and now
-                //we wanna show an error message now and every time a configuration change happens
-                //until fetchWordInformation() is called again
-                ResultViewModel.FetchWordInfoResultType.Failure -> showError(viewModel.errorType)
+                    //FetchResult was failed (this logic is included in fetchWordInformation()) and now
+                    //we wanna show an error message now and every time a configuration change happens
+                    //until fetchWordInformation() is called again
+                    NetworkRequestResult.Failure -> showError(viewModel.errorType)
 
-                //FetchResult was successful and now we wanna show the result fetched from the
-                //server now and every time a configuration change happens until
-                //fetchWordInformation() is called again
-                ResultViewModel.FetchWordInfoResultType.Success -> showResults(viewModel.wordInfo)
+                    //FetchResult was successful and now we wanna show the result fetched from the
+                    //server now and every time a configuration change happens until
+                    //fetchWordInformation() is called again
+                    NetworkRequestResult.Success -> showResults(viewModel.wordInfo)
+                }
             }
         }
     }
 
     //show the right error message based on what went wrong
-    private fun showError(state: ResultViewModel.ErrorType) {
+    private fun showError(state: ErrorType) {
         fragmentResultBinding.loadingAnim.visibility = View.GONE
 
         //make errorMessage visible if it's not already
-        if (!fragmentResultBinding.errorMessage.isVisible) fragmentResultBinding.errorMessage.visibility = View.VISIBLE
         when (state) {
-            ResultViewModel.ErrorType.CallFailed -> fragmentResultBinding.errorMessage.text =
-                getString(R.string.call_failed)
-            ResultViewModel.ErrorType.NoMatch -> fragmentResultBinding.errorMessage.text =
-                getString(R.string.no_match)
+            ErrorType.CallFailed -> fragmentResultBinding.loadingErrorMessage.text = getString(R.string.call_failed)
+
+            ErrorType.NoMatch -> fragmentResultBinding.loadingErrorMessage.text = getString(R.string.no_match)
         }
     }
 
@@ -85,6 +85,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     private fun showResults(response: Response<List<Word>>) {
         //hide the loading animation
         fragmentResultBinding.loadingAnim.visibility = View.GONE
+        fragmentResultBinding.loadingErrorMessage.visibility = View.GONE
 
         //get the response output by the fetchWordInfo()
         val wordsList = response.body()!!
@@ -136,7 +137,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
             //add the definitions text to the textview
             meaningLayoutBinding.definitionsTextview.text = fromHtml(definitionsText, FROM_HTML_MODE_LEGACY)
-
             meaningLayoutArray.add(meaningLayoutBinding)
         }
         return meaningLayoutArray

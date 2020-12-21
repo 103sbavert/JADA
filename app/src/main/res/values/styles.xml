@@ -9,7 +9,6 @@
         <item name="elevationOverlayEnabled">false</item>
         <item name="android:elevation">0dp</item>
     </style>
-
     <!--Text Appearance Styles-->
     <style name="Headline1" parent="TextAppearance.MaterialComponents.Headline1">
         <item name="fontFamily">@font/nunito_light</item>

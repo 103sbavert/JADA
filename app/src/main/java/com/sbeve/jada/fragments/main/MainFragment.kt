@@ -8,16 +8,19 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
 import com.sbeve.jada.databinding.FragmentMainBinding
+import com.sbeve.jada.recyclerview_utils.RecentQueriesAdapter
 import com.sbeve.jada.retrofit_utils.RetrofitInit
 
 
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnItemClickListener {
     private val navController: NavController by lazy {
         this.findNavController()
     }
@@ -32,12 +35,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         anim
     }
 
-    lateinit var fragmentMainBinding: FragmentMainBinding
+    private val viewModel: MainViewModel by viewModels()
+
+    private lateinit var fragmentMainBinding: FragmentMainBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentMainBinding = FragmentMainBinding.bind(view)
+        fragmentMainBinding.queriesRecyclerView.layoutManager = LinearLayoutManager(mainActivityContext)
 
         fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
         fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
@@ -45,6 +51,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
         fragmentMainBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+
+                //work
+                viewModel.addQuery(mainActivityContext.savedLanguageIndex, query)
                 navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query))
                 hideSoftKeyboard()
                 return true
@@ -52,7 +61,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
             override fun onQueryTextChange(newText: String?) = false
         })
-
+        setAdapter()
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) = stayInPlaceAnimation
@@ -71,23 +80,30 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
             .create()
 
-
     //hides the keyboard
     private fun hideSoftKeyboard() {
-        val imm: InputMethodManager =
-            mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
 
         //Find the currently focused view, so we can grab the correct window token from it.
         var view = mainActivityContext.currentFocus
 
-        //If no view currently has focus, create a new one, just so we can grab a window token from
-        // it
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
+
+    private fun setAdapter() {
+        viewModel.allQueries.observe(viewLifecycleOwner) {
+            val adapter = RecentQueriesAdapter(it, this)
+            fragmentMainBinding.queriesRecyclerView.adapter = adapter
+        }
+    }
+
+    override fun onItemClick(position: Int) {
+        val queryText = viewModel.allQueries.value!![position].queryText
+        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(queryText))
+    }
 }
-
-
-
