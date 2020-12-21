@@ -47,7 +47,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         }
 
         //getting the examples text color
-        mainActivityContext.theme.resolveAttribute(R.attr.examples_text_color, examplesTextColor, true)
+        mainActivityContext.theme.resolveAttribute(R.attr.suppressed_text, examplesTextColor, true)
 
         viewModel.fetchWordInfo(mainActivityContext.savedLanguageIndex, args.queryFromWelcomeFragment)
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
@@ -132,7 +132,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
             val definitionsText = getWordsLayoutList(meaning)
 
             if (index == word.meanings.lastIndex) {
-                val meaningLayoutParams = meaningLayoutBinding.linearLayout.layoutParams as ConstraintLayout.LayoutParams
+                val meaningLayoutParams = meaningLayoutBinding.root.layoutParams as ConstraintLayout.LayoutParams
                 meaningLayoutParams.setMargins(0, 0, 0, 0)
                 meaningLayoutBinding.root.layoutParams = meaningLayoutParams
             }

@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/cyan_light</item>
         <item name="colorOnSecondary">@color/gray_darker</item>
         <!-- Others -->
-        <item name="examples_text_color">@color/gray_light</item>
+        <item name="suppressed_text">@color/gray_light</item>
         <item name="colorSurface">@color/gray_dark</item>
         <item name="colorOnSurface">@color/orange_light</item>
         <item name="colorOnSurfaceVariant">@color/orange_light_translucent</item>

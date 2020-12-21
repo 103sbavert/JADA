@@ -21,7 +21,6 @@
             &lt;/font>
         &lt;/i>
     </string>
-    <string name="shared_preference_name">main_shared_preference</string>
     <string name="change_language">Change Language</string>
     <string name="language_setting_key">language_setting_key</string>
     <string name="choose_a_language">Choose a language</string>

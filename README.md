@@ -3,7 +3,11 @@
 
 <img src="./assets/icon.png" alt="drawing" width="200"/>
 
-A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode. The UI of the app was designed with the help of [Patricia B.](https://github.com/pborlongan), many thanks to her for helping me out. She has been a great help to me to make this app look how it does.
+A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode.
+
+### Collaborators 
+* [Patricia B.](https://github.com/pborlongan): The designer of the app's new UI overhaul. Most of the design was designed by her, I am highly thankful to her for helping me out.
+
 
 ## Download
 Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases)

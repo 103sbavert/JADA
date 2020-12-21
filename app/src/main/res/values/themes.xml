@@ -10,10 +10,10 @@
         <item name="colorSecondaryVariant">@color/cyan_dark</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Others -->
-        <item name="examples_text_color">@color/gray</item>
+        <item name="suppressed_text">@color/gray</item>
         <item name="colorOnPrimarySurfaceVariant">?attr/colorOnPrimaryVariant</item>
         <item name="backgroundColor">@color/white</item>
-        <item name="colorOnBackground">@color/gray_darker</item>
+        <item name="colorOnBackground">@color/gray_dark</item>
     </style>
 
     <style name="base_app_theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -43,7 +43,7 @@
     </style>
 
     <attr name="colorOnPrimaryVariant" format="color|reference" />
-    <attr name="examples_text_color" format="color|reference" />
+    <attr name="suppressed_text" format="color|reference" />
     <attr name="colorOnSurfaceVariant" format="color|reference" />
     <attr name="colorOnPrimarySurfaceVariant" format="color|reference" />
 </resources>
