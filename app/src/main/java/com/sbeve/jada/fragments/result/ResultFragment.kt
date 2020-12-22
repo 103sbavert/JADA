@@ -49,7 +49,8 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         //getting the examples text color
         mainActivityContext.theme.resolveAttribute(R.attr.suppressed_text, examplesTextColor, true)
 
-        viewModel.fetchWordInfo(mainActivityContext.savedLanguageIndex, args.queryFromWelcomeFragment)
+        viewModel.fetchWordInfo(args.queryText, args.queryLanguage)
+
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
             if (it != null) {
                 when (it) {

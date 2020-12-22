@@ -21,7 +21,10 @@
         android:label="Result"
         tools:layout="@layout/fragment_result">
         <argument
-            android:name="queryFromWelcomeFragment"
+            android:name="queryText"
             app:argType="string" />
+        <argument
+            android:name="queryLanguage"
+            app:argType="integer" />
     </fragment>
 </navigation>

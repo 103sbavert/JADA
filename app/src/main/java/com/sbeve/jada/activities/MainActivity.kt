@@ -25,10 +25,6 @@ class MainActivity : AppCompatActivity() {
         getPreferences(Context.MODE_PRIVATE)
     }
 
-    val savedLanguageIndex: Int
-        get() = applicationPreferences
-            .getInt(getString(R.string.language_setting_key), 0)
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

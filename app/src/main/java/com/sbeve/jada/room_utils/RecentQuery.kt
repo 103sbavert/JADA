@@ -12,9 +12,9 @@ data class RecentQuery(
     val queryText: String,
 
     @ColumnInfo(name = "query_language")
-    val queryLanguage: String,
+    val queryLanguage: Int,
 
     @ColumnInfo(name = "time_date")
-    val timeDate: Long,
+    val timeDate: Long = System.currentTimeMillis()
 
-    )
+)

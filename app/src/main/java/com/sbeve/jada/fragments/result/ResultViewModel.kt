@@ -25,8 +25,8 @@ class ResultViewModel : ViewModel() {
     lateinit var wordInfo: Response<List<Word>>
 
     //make a call to the server
-    fun fetchWordInfo(savedLanguageIndex: Int, queriedWord: String) {
-        val savedLanguageCode = RetrofitInit.supportedLanguages.second[savedLanguageIndex]
+    fun fetchWordInfo(queriedWord: String, queryLanguageIndex: Int) {
+        val savedLanguageCode = RetrofitInit.supportedLanguages.second[queryLanguageIndex]
 
         //retrieve a new call object to make a request to the server
         accessApiObject

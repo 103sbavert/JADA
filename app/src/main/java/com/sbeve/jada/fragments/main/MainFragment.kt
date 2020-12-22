@@ -19,9 +19,10 @@ import com.sbeve.jada.activities.MainActivity
 import com.sbeve.jada.databinding.FragmentMainBinding
 import com.sbeve.jada.recyclerview_utils.RecentQueriesAdapter
 import com.sbeve.jada.retrofit_utils.RetrofitInit
+import com.sbeve.jada.room_utils.RecentQuery
 
 
-class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     private val navController: NavController by lazy {
         this.findNavController()
     }
@@ -35,9 +36,11 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
         anim.duration = 150
         anim
     }
-
     private val viewModel: MainViewModel by viewModels()
     private lateinit var fragmentMainBinding: FragmentMainBinding
+    private val savedLanguageIndex: Int
+        get() = mainActivityContext.applicationPreferences
+            .getInt(getString(R.string.language_setting_key), 0)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,13 +57,13 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
         fragmentMainBinding.queriesRecyclerView.setHasFixedSize(true)
 
         //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
-        fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
+        fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
         mainActivityContext.applicationPreferences.registerOnSharedPreferenceChangeListener(this)
 
         fragmentMainBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.addQuery(mainActivityContext.savedLanguageIndex, query)
-                navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query))
+                viewModel.addQuery(query, savedLanguageIndex)
+                navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, savedLanguageIndex))
                 hideSoftKeyboard()
                 return true
             }
@@ -75,7 +78,7 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
     private fun createChangeLanguageDialog() =
         MaterialAlertDialogBuilder(mainActivityContext)
             .setTitle(getString(R.string.choose_a_language))
-            .setSingleChoiceItems(RetrofitInit.supportedLanguages.first, mainActivityContext.savedLanguageIndex)
+            .setSingleChoiceItems(RetrofitInit.supportedLanguages.first, savedLanguageIndex)
             { dialogInterface, i ->
                 mainActivityContext.applicationPreferences
                     .edit()
@@ -108,13 +111,19 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
 
     override fun onItemClick(position: Int) {
         val queryText = viewModel.allQueries.value!![position].queryText
-        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(queryText))
+        val queryLanguage = viewModel.allQueries.value!![position].queryLanguage
+        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(queryText, queryLanguage))
+    }
+
+    override fun onDeleteButtonClick(query: String, queryLanguageIndex: Int) {
+        val recentQuery = RecentQuery(query, queryLanguageIndex)
+        viewModel.deleteQuery(recentQuery)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             getString(R.string.language_setting_key) -> {
-                fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
+                fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
             }
         }
     }
