@@ -50,7 +50,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         mainActivityContext.theme.resolveAttribute(R.attr.suppressed_text, examplesTextColor, true)
 
         viewModel.fetchWordInfo(args.queryText, args.queryLanguage)
-
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
             if (it != null) {
                 when (it) {
@@ -76,7 +75,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         //make errorMessage visible if it's not already
         when (state) {
             ErrorType.CallFailed -> fragmentResultBinding.loadingErrorMessage.text = getString(R.string.call_failed)
-
             ErrorType.NoMatch -> fragmentResultBinding.loadingErrorMessage.text = getString(R.string.no_match)
         }
     }
@@ -104,8 +102,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
             //if there is no provided information about the origin, don't add anything to the textview and set the textview to gone
             if (WORD.origin.isNullOrEmpty()) wordLayoutBinding.originTextview.visibility = View.GONE
             else wordLayoutBinding.originTextview.text = getString(R.string.origin_info, WORD.origin)
-
-
+            
             //add the each meaning_layout to the current word_item_layout
             val meaningsLayoutArray = getMeaningsLayoutList(WORD, wordLayoutBinding)
             meaningsLayoutArray.forEach { wordLayoutBinding.wordLinearLayout.addView(it.root) }

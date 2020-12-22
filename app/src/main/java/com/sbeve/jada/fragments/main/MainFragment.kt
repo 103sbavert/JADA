@@ -41,12 +41,15 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
     private val savedLanguageIndex: Int
         get() = mainActivityContext.applicationPreferences
             .getInt(getString(R.string.language_setting_key), 0)
+    private val adapter by lazy {
+        RecentQueriesAdapter(emptyList(), this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentMainBinding = FragmentMainBinding.bind(view)
-        initializeRecyclerView()
+        updateRecyclerView()
         fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
             createChangeLanguageDialog().show()
         }
@@ -55,6 +58,7 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
         }
         fragmentMainBinding.queriesRecyclerView.layoutManager = LinearLayoutManager(mainActivityContext)
         fragmentMainBinding.queriesRecyclerView.setHasFixedSize(true)
+        fragmentMainBinding.queriesRecyclerView.adapter = adapter
 
         //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
         fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
@@ -102,10 +106,10 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun initializeRecyclerView() {
+    private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {
-            val adapter = RecentQueriesAdapter(it, this)
-            fragmentMainBinding.queriesRecyclerView.adapter = adapter
+            adapter.dataSet = it
+            adapter.notifyDataSetChanged()
         }
     }
 

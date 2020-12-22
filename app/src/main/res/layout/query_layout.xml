@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/medium_margin_padding">
+    android:layout_marginTop="@dimen/medium_margin_padding">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,14 +23,14 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.025"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="query" />
 
         <TextView
             android:id="@+id/language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="1dp"
             android:textAppearance="?attr/textAppearanceSubtitle2"
             android:textColor="?attr/suppressed_text"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -45,15 +45,14 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/tiny_margin_padding"
             android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?attr/suppressed_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/delete_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/language"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
             tools:text="HH:MM YYYY MM SS" />
 
         <ImageButton
@@ -61,12 +60,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorSurface"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:contentDescription="@string/delete_query_button_text"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_delete" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/small_margin_padding"
+            android:layout_marginBottom="@dimen/small_margin_padding"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toTopOf="@+id/time"
+            app:layout_constraintEnd_toStartOf="@+id/delete_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/language" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

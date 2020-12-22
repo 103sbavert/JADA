@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
-class RecentQueriesAdapter(private val dataSet: List<RecentQuery>, private val onClickListener: OnClickListener) :
+class RecentQueriesAdapter(var dataSet: List<RecentQuery>, private val onClickListener: OnClickListener) :
     RecyclerView.Adapter<RecentQueriesAdapter.ViewHolder>() {
 
     class ViewHolder(myItemView: QueryLayoutBinding, private val onClickListener: OnClickListener) :
@@ -32,7 +32,7 @@ class RecentQueriesAdapter(private val dataSet: List<RecentQuery>, private val o
         }
 
         fun setTimeText(timeValue: Long) {
-            time.text = SimpleDateFormat.getDateTimeInstance().format(Date(timeValue))
+            time.text = SimpleDateFormat("HH:mm, dd MMM, yyyy", Locale.getDefault()).format(timeValue)
         }
 
         init {
