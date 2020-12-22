@@ -35,8 +35,8 @@ This dictionary supports multiple language as the API I am using does too. The l
 The app uses a special blend of [Semantic Versioning](https://semver.org/#semantic-versioning-200) and some conventions decided by me to follow for this app since the guidelines for MAJOR in MAJOR.MINOR.PATCH are not compatible with Android Apps.
 Everything is essentially the same except for a few key differences with MAJOR:
 * MAJOR would be incremented if MINOR reaches 9
-* It can also be incremented whenever a new library is added and used in the app
 * It may also be incremented whenever the app stops supporting an old API level
+* It may also be incremented upon what any change that I consider major.
 
 ## What's special
 
