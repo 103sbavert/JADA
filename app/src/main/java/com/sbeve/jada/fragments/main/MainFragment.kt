@@ -50,6 +50,8 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
         fragmentMainBinding.clearAllButton.setOnClickListener {
             viewModel.clear()
         }
+        fragmentMainBinding.queriesRecyclerView.layoutManager = LinearLayoutManager(mainActivityContext)
+        fragmentMainBinding.queriesRecyclerView.setHasFixedSize(true)
 
         //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
         fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[mainActivityContext.savedLanguageIndex]
@@ -98,7 +100,6 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnIt
     }
 
     private fun initializeRecyclerView() {
-        fragmentMainBinding.queriesRecyclerView.layoutManager = LinearLayoutManager(mainActivityContext)
         viewModel.allQueries.observe(viewLifecycleOwner) {
             val adapter = RecentQueriesAdapter(it, this)
             fragmentMainBinding.queriesRecyclerView.adapter = adapter
