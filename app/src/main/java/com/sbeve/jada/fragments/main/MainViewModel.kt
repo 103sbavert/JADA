@@ -37,9 +37,8 @@ class MainViewModel : ViewModel() {
     }
 
     //add a query whenever a new word is searched
-    fun addQuery(query: String, languageIndex: Int) {
+    fun addQuery(recentQuery: RecentQuery) {
         viewModelScope.launch(IO) {
-            val recentQuery = RecentQuery(query, languageIndex, System.currentTimeMillis())
             databaseDao.addQuery(recentQuery)
         }
     }

@@ -31,6 +31,9 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
     private val mainActivityContext: MainActivity by lazy {
         activity as MainActivity
     }
+
+    //animation to be played when a fragment transaction happens from this activity a pop action transaction to this activity happens so the fragment
+    //doesn't disappear from the background
     private val stayInPlaceAnimation: Animation? by lazy {
         val anim: Animation = AlphaAnimation(1.0F, 1.0F)
         anim.duration = 150
@@ -38,9 +41,13 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
     }
     private val viewModel: MainViewModel by viewModels()
     private lateinit var fragmentMainBinding: FragmentMainBinding
+
+    //getting the saved language setting's value through a custom getter
     private val savedLanguageIndex: Int
         get() = mainActivityContext.applicationPreferences
             .getInt(getString(R.string.language_setting_key), 0)
+
+    //adapter with empty list as the list will be provided when the database emits information
     private val adapter by lazy {
         RecentQueriesAdapter(emptyList(), this)
     }
@@ -49,7 +56,6 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
         super.onViewCreated(view, savedInstanceState)
 
         fragmentMainBinding = FragmentMainBinding.bind(view)
-        updateRecyclerView()
         fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
             createChangeLanguageDialog().show()
         }
@@ -60,13 +66,16 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
         fragmentMainBinding.queriesRecyclerView.setHasFixedSize(true)
         fragmentMainBinding.queriesRecyclerView.adapter = adapter
 
+        //set up an observer to update the recycler view whenever the database is updated
+        updateRecyclerView()
+
         //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
         fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
         mainActivityContext.applicationPreferences.registerOnSharedPreferenceChangeListener(this)
 
         fragmentMainBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.addQuery(query, savedLanguageIndex)
+                viewModel.addQuery(RecentQuery(query, savedLanguageIndex))
                 navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, savedLanguageIndex))
                 hideSoftKeyboard()
                 return true
@@ -79,6 +88,7 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
     //play an empty animation to keep the fragment from disappearing from the background when the enter animation for other fragments is playing
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) = stayInPlaceAnimation
 
+    //change language dialog to change the language to be used by the dictionary
     private fun createChangeLanguageDialog() =
         MaterialAlertDialogBuilder(mainActivityContext)
             .setTitle(getString(R.string.choose_a_language))
@@ -113,15 +123,12 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
         }
     }
 
-    override fun onItemClick(position: Int) {
-        val queryText = viewModel.allQueries.value!![position].queryText
-        val queryLanguage = viewModel.allQueries.value!![position].queryLanguage
-        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(queryText, queryLanguage))
+    override fun onItemClick(query: String, queryLanguageIndex: Int) {
+        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, queryLanguageIndex))
     }
 
     override fun onDeleteButtonClick(query: String, queryLanguageIndex: Int) {
-        val recentQuery = RecentQuery(query, queryLanguageIndex)
-        viewModel.deleteQuery(recentQuery)
+        viewModel.deleteQuery(RecentQuery(query, queryLanguageIndex))
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
