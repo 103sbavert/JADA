@@ -6,6 +6,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.core.text.HtmlCompat.fromHtml
+import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -73,6 +74,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         fragmentResultBinding.loadingAnim.visibility = View.GONE
 
         //make errorMessage visible if it's not already
+        fragmentResultBinding.loadingErrorMessage.visibility = View.VISIBLE
         when (state) {
             ErrorType.CallFailed -> fragmentResultBinding.loadingErrorMessage.text = getString(R.string.call_failed)
             ErrorType.NoMatch -> fragmentResultBinding.loadingErrorMessage.text = getString(R.string.no_match)
@@ -85,7 +87,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
         //hide the loading animation
         fragmentResultBinding.loadingAnim.visibility = View.GONE
-        fragmentResultBinding.loadingErrorMessage.visibility = View.GONE
         fragmentResultBinding.resultLinearLayout.removeAllViews()
 
         //get the response output by the fetchWordInfo()
@@ -99,10 +100,13 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
             //add the the word to word_title_textview
             wordLayoutBinding.wordTitleTextview.text = WORD.word
 
+            //for some weird cases, words don't have available definitions, just information about their phonetics. We're going to skip such words
+            if (WORD.meanings.isEmpty()) continue
+
             //if there is no provided information about the origin, don't add anything to the textview and set the textview to gone
             if (WORD.origin.isNullOrEmpty()) wordLayoutBinding.originTextview.visibility = View.GONE
             else wordLayoutBinding.originTextview.text = getString(R.string.origin_info, WORD.origin)
-            
+
             //add the each meaning_layout to the current word_item_layout
             val meaningsLayoutArray = getMeaningsLayoutList(WORD, wordLayoutBinding)
             meaningsLayoutArray.forEach { wordLayoutBinding.wordLinearLayout.addView(it.root) }
@@ -110,6 +114,9 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
             //add the word_item_layout for the current word to results_linear_layout
             fragmentResultBinding.resultLinearLayout.addView(wordLayoutBinding.root)
         }
+
+        if (fragmentResultBinding.resultLinearLayout.isEmpty()) showError(ErrorType.NoMatch)
+        else fragmentResultBinding.loadingErrorMessage.visibility = View.GONE
     }
 
     private fun getMeaningsLayoutList(

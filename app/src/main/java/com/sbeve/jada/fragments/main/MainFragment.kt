@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
@@ -22,7 +21,8 @@ import com.sbeve.jada.retrofit_utils.RetrofitInit
 import com.sbeve.jada.room_utils.RecentQuery
 
 
-class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.ViewHolderClickListener,
+    SharedPreferences.OnSharedPreferenceChangeListener {
     private val navController: NavController by lazy {
         this.findNavController()
     }
@@ -62,7 +62,6 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
         fragmentMainBinding.clearAllButton.setOnClickListener {
             viewModel.clear()
         }
-        fragmentMainBinding.queriesRecyclerView.layoutManager = LinearLayoutManager(mainActivityContext)
         fragmentMainBinding.queriesRecyclerView.setHasFixedSize(true)
         fragmentMainBinding.queriesRecyclerView.adapter = adapter
 
@@ -119,7 +118,6 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.OnCl
     private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {
             adapter.dataSet = it
-            adapter.notifyDataSetChanged()
         }
     }
 

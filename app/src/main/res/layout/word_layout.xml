@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/large_margin_padding"
     android:orientation="vertical">
 
     <TextView
@@ -39,7 +38,8 @@
         android:id="@+id/word_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/standard_margin_padding"
+        android:layout_marginTop="@dimen/tiny_margin_padding"
+        android:layout_marginBottom="@dimen/standard_margin_padding"
         android:background="@drawable/rounded_corners_rectangle"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/standard_margin_padding"

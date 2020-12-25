@@ -23,15 +23,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:paddingHorizontal="@dimen/small_margin_padding"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <LinearLayout
             android:id="@+id/result_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/small_margin_padding"
-            android:paddingBottom="@dimen/small_margin_padding" />
+            android:orientation="vertical" />
     </ScrollView>
 
     <ProgressBar
@@ -53,13 +52,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/standard_margin_padding"
-        android:textAlignment="center"
+        android:layout_marginTop="5dp"
         android:text="@string/loading"
+        android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceHeadline7"
         android:textColor="?attr/colorOnPrimarySurfaceVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loading_anim"
+        app:layout_constraintVertical_bias="0.0"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

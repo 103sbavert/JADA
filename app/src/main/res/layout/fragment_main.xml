@@ -86,6 +86,7 @@
         android:clipToPadding="false"
         android:paddingHorizontal="@dimen/medium_margin_padding"
         android:paddingBottom="@dimen/medium_margin_padding"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:background="@drawable/top_corners_rounded_rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
