@@ -2,6 +2,8 @@ package com.sbeve.jada.recyclerview_utils
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sbeve.jada.databinding.QueryLayoutBinding
 import com.sbeve.jada.retrofit_utils.RetrofitInit
@@ -10,25 +12,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
-class RecentQueriesAdapter(dataSet: List<RecentQuery>, private val viewHolderClickListener: ViewHolderClickListener) :
-    RecyclerView.Adapter<RecentQueriesAdapter.RecentQueriesViewHolder>() {
+class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickListener) :
+    ListAdapter<RecentQuery, RecentQueriesAdapter.RecentQueryViewHolder>(RecentQueriesDiffUtil()) {
 
-    var dataSet = dataSet
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentQueriesViewHolder {
-        return RecentQueriesViewHolder.recentQueriesViewHolder(this, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentQueryViewHolder {
+        return RecentQueryViewHolder.inflateLayout(this, parent)
     }
 
-    override fun onBindViewHolder(holder: RecentQueriesViewHolder, position: Int) {
-        val currentItem = dataSet[position]
+    override fun onBindViewHolder(holder: RecentQueryViewHolder, position: Int) {
+        val currentItem = getItem(position)
         holder.provideCurrentItem(currentItem)
     }
-
-    override fun getItemCount() = dataSet.size
 
     //custom interface to be implemented by the main activity to set up onClickListeners
     interface ViewHolderClickListener {
@@ -36,7 +30,7 @@ class RecentQueriesAdapter(dataSet: List<RecentQuery>, private val viewHolderCli
         fun onDeleteButtonClick(query: String, queryLanguageIndex: Int)
     }
 
-    class RecentQueriesViewHolder(myItemView: QueryLayoutBinding, private val viewHolderClickListener: ViewHolderClickListener) :
+    class RecentQueryViewHolder(myItemView: QueryLayoutBinding, private val viewHolderClickListener: ViewHolderClickListener) :
         RecyclerView.ViewHolder(myItemView.root) {
 
         //setting on click listeners for each item and the delete button in each item
@@ -46,9 +40,9 @@ class RecentQueriesAdapter(dataSet: List<RecentQuery>, private val viewHolderCli
         }
 
         companion object {
-            fun recentQueriesViewHolder(recentQueriesAdapter: RecentQueriesAdapter, parent: ViewGroup): RecentQueriesViewHolder {
+            fun inflateLayout(recentQueriesAdapter: RecentQueriesAdapter, parent: ViewGroup): RecentQueryViewHolder {
                 val binding = QueryLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return RecentQueriesViewHolder(binding, recentQueriesAdapter.viewHolderClickListener)
+                return RecentQueryViewHolder(binding, recentQueriesAdapter.viewHolderClickListener)
             }
         }
 
@@ -56,7 +50,7 @@ class RecentQueriesAdapter(dataSet: List<RecentQuery>, private val viewHolderCli
         private lateinit var queryTextValue: String
         private val queryLanguage = myItemView.language
         private var queryLanguageValue by Delegates.notNull<Int>()
-        private val time = myItemView.time
+        private val timeDate = myItemView.timeDate
 
         //function to be called from onBindViewHolder() to provide the current item to the ViewHolder.
         fun provideCurrentItem(currentItem: RecentQuery) {
@@ -76,7 +70,18 @@ class RecentQueriesAdapter(dataSet: List<RecentQuery>, private val viewHolderCli
         }
 
         private fun bindTime(timeValue: Long) {
-            time.text = SimpleDateFormat("hh:mm a; dd MMMM, yyyy", Locale.getDefault()).format(timeValue)
+            timeDate.text = SimpleDateFormat("hh:mm a; dd MMMM, yyyy", Locale.getDefault()).format(timeValue)
         }
     }
+}
+
+class RecentQueriesDiffUtil : DiffUtil.ItemCallback<RecentQuery>() {
+    override fun areItemsTheSame(oldItem: RecentQuery, newItem: RecentQuery): Boolean {
+        return oldItem.queryText == newItem.queryText
+    }
+
+    override fun areContentsTheSame(oldItem: RecentQuery, newItem: RecentQuery): Boolean {
+        return oldItem.timeDate == newItem.timeDate
+    }
+
 }

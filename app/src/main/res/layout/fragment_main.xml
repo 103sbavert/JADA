@@ -101,11 +101,11 @@
         android:background="@drawable/circle_button_with_ripple"
         android:contentDescription="@string/clear_button_text"
         android:padding="3dp"
-        app:layout_constraintBottom_toBottomOf="@+id/recent_searches_title"
+        app:layout_constraintBottom_toBottomOf="@id/recent_searches_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toEndOf="@+id/recent_searches_title"
-        app:layout_constraintTop_toTopOf="@+id/recent_searches_title"
+        app:layout_constraintStart_toEndOf="@id/recent_searches_title"
+        app:layout_constraintTop_toTopOf="@id/recent_searches_title"
         app:srcCompat="@drawable/ic_clear_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

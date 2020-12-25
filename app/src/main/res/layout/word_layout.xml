@@ -27,10 +27,10 @@
         android:textAppearance="?attr/textAppearanceCaption"
         android:textColor="?attr/colorOnPrimarySurfaceVariant"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/word_title_textview"
+        app:layout_constraintEnd_toEndOf="@id/word_title_textview"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/word_title_textview"
-        app:layout_constraintTop_toBottomOf="@+id/word_title_textview"
+        app:layout_constraintStart_toStartOf="@id/word_title_textview"
+        app:layout_constraintTop_toBottomOf="@id/word_title_textview"
         app:layout_constraintVertical_bias="0.0"
         tools:text="origin:English" />
 
@@ -49,6 +49,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/origin_textview"
+        app:layout_constraintTop_toBottomOf="@id/origin_textview"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

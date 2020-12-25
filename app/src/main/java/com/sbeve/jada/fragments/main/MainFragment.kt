@@ -49,7 +49,7 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.View
 
     //adapter with empty list as the list will be provided when the database emits information
     private val adapter by lazy {
-        RecentQueriesAdapter(emptyList(), this)
+        RecentQueriesAdapter(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,7 +117,7 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.View
 
     private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {
-            adapter.dataSet = it
+            adapter.submitList(it)
         }
     }
 
