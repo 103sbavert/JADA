@@ -6,15 +6,14 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "recent_query")
 data class RecentQuery(
-
+    
     @PrimaryKey
     @ColumnInfo(name = "query_text")
     val queryText: String,
-
+    
     @ColumnInfo(name = "query_language")
     val queryLanguage: Int,
-
+    
     @ColumnInfo(name = "time_date")
     val timeDate: Long = System.currentTimeMillis()
-
 )

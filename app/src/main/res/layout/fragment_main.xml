@@ -92,9 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_searches_title">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@id/recent_searches_title" />
 
     <TextView
         android:id="@+id/no_recent_queries"
@@ -105,7 +103,7 @@
         android:text="@string/no_recent_searches_found"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceHeadline7"
-        android:textColor="?attr/colorOnPrimarySurfaceVariant"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintBottom_toBottomOf="@id/queries_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

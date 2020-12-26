@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 object RetrofitInit {
-
+    
     val supportedLanguages = Pair(
         arrayOf(
             "Hindi",
@@ -36,13 +36,13 @@ object RetrofitInit {
             "tr",
         )
     )
-
+    
     val accessApiObject: AccessApi = Retrofit.Builder()
         .baseUrl("https://api.dictionaryapi.dev/api/v2/entries/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(AccessApi::class.java)
-
+    
     //set up the interface to be implemented by retrofit to create an access api
     interface AccessApi {
         @GET("{language_selected}/{word_to_query}")

@@ -7,14 +7,14 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [RecentQuery::class], version = 3, exportSchema = false)
 abstract class DictionaryDatabase : RoomDatabase() {
-
+    
     abstract fun getDao(): DictionaryDatabaseDAO
-
+    
     companion object {
-
+        
         @Volatile
         private var databaseInstance: DictionaryDatabase? = null
-
+        
         fun getInstance(context: Context): DictionaryDatabase {
             synchronized(this) {
                 var instance = databaseInstance
@@ -27,6 +27,6 @@ abstract class DictionaryDatabase : RoomDatabase() {
                 return instance
             }
         }
-
+        
     }
 }

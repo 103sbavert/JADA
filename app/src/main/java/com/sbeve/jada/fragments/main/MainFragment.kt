@@ -21,7 +21,6 @@ import com.sbeve.jada.recyclerview_utils.RecentQueriesAdapter
 import com.sbeve.jada.retrofit_utils.RetrofitInit
 import com.sbeve.jada.room_utils.RecentQuery
 
-
 class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.ViewHolderClickListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
     private val navController: NavController by lazy {
