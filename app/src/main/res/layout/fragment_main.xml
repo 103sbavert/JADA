@@ -83,16 +83,34 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/medium_margin_padding"
+        android:background="@drawable/top_corners_rounded_rectangle"
         android:clipToPadding="false"
         android:paddingHorizontal="@dimen/medium_margin_padding"
         android:paddingBottom="@dimen/medium_margin_padding"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:background="@drawable/top_corners_rounded_rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_searches_title" />
+        app:layout_constraintTop_toBottomOf="@id/recent_searches_title">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/no_recent_queries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/standard_margin_padding"
+        android:text="@string/no_recent_searches_found"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceHeadline7"
+        android:textColor="?attr/colorOnPrimarySurfaceVariant"
+        app:layout_constraintBottom_toBottomOf="@id/queries_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/queries_recycler_view"
+        tools:visibility="visible" />
 
     <ImageButton
         android:id="@+id/clear_all_button"

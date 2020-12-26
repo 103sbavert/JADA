@@ -14,7 +14,7 @@ import kotlin.properties.Delegates
 
 class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickListener) :
     ListAdapter<RecentQuery, RecentQueriesAdapter.RecentQueryViewHolder>(RecentQueriesDiffUtil()) {
-
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentQueryViewHolder {
         return RecentQueryViewHolder.inflateLayout(this, parent)
     }
@@ -76,6 +76,7 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
 }
 
 class RecentQueriesDiffUtil : DiffUtil.ItemCallback<RecentQuery>() {
+    
     override fun areItemsTheSame(oldItem: RecentQuery, newItem: RecentQuery): Boolean {
         return oldItem.queryText == newItem.queryText
     }
@@ -83,5 +84,4 @@ class RecentQueriesDiffUtil : DiffUtil.ItemCallback<RecentQuery>() {
     override fun areContentsTheSame(oldItem: RecentQuery, newItem: RecentQuery): Boolean {
         return oldItem.timeDate == newItem.timeDate
     }
-
 }
