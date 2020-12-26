@@ -118,6 +118,8 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.View
     
     private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {
+    
+            //making the error message visible if the list empty, hiding it again if it is not empty
             fragmentMainBinding.noRecentQueries.visibility = if (it.isNotEmpty()) View.GONE else View.VISIBLE
             adapter.submitList(it)
         }
