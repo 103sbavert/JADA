@@ -40,7 +40,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         super.onViewCreated(view, savedInstanceState)
         fragmentResultBinding = FragmentResultBinding.bind(view)
         
-        fragmentResultBinding.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
         fragmentResultBinding.toolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }

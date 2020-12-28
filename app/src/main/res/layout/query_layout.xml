@@ -59,8 +59,9 @@
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="?attr/colorSurface"
             android:contentDescription="@string/delete_query_button_text"
+            android:background="@drawable/circle_button_with_ripple_surface"
+            android:padding="@dimen/tiny_margin_padding"
             app:layout_constraintBottom_toTopOf="@id/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -68,6 +69,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_delete" />
+
+        <ImageButton
+            android:id="@+id/copy_to_search_bar_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_button_with_ripple_surface"
+            android:contentDescription="@string/copy_to_search_bar_text"
+            android:padding="@dimen/tiny_margin_padding"
+            android:rotation="45"
+            app:layout_constraintBottom_toTopOf="@id/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/delete_button"
+            app:layout_constraintHorizontal_bias="0.953"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="?attr/actionModeCloseDrawable" />
 
         <View
             android:id="@+id/divider"

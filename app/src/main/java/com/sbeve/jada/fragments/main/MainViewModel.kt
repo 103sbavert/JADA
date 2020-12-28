@@ -29,7 +29,8 @@ class MainViewModel : ViewModel() {
             databaseDao.clear()
         }
     }
-
+    
+    //delete the query when the trash button is clicked
     fun deleteQuery(recentQuery: RecentQuery) {
         viewModelScope.launch(IO) {
             databaseDao.deleteQuery(recentQuery)

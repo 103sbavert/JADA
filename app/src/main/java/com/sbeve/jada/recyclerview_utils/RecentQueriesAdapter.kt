@@ -24,19 +24,14 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
         holder.provideCurrentItem(currentItem)
     }
     
-    //custom interface to be implemented by the main activity to set up onClickListeners
-    interface ViewHolderClickListener {
-        fun onItemClick(query: String, queryLanguageIndex: Int)
-        fun onDeleteButtonClick(query: String, queryLanguageIndex: Int)
-    }
-    
     class RecentQueryViewHolder(myItemView: QueryLayoutBinding, private val viewHolderClickListener: ViewHolderClickListener) :
         RecyclerView.ViewHolder(myItemView.root) {
         
         //setting on click listeners for each item and the delete button in each item
         init {
             myItemView.root.setOnClickListener { viewHolderClickListener.onItemClick(queryTextValue, queryLanguageValue) }
-            myItemView.deleteButton.setOnClickListener { viewHolderClickListener.onDeleteButtonClick(queryText.text.toString(), queryLanguageValue) }
+            myItemView.deleteButton.setOnClickListener { viewHolderClickListener.onDeleteButtonClick(queryTextValue, queryLanguageValue) }
+            myItemView.copyToSearchBarButton.setOnClickListener { viewHolderClickListener.onCopyTextButtonClick(queryTextValue) }
         }
         
         companion object {
@@ -63,16 +58,23 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
             queryLanguageValue = languageValue
             queryLanguage.text = RetrofitInit.supportedLanguages.first[languageValue]
         }
-        
+    
         private fun bindQuery(queryValue: String) {
             queryTextValue = queryValue
             queryText.text = queryValue
         }
-        
+    
         private fun bindTime(timeValue: Long) {
             timeDate.text = SimpleDateFormat("hh:mm a; dd MMMM, yyyy", Locale.getDefault()).format(timeValue)
         }
     }
+}
+
+//custom interface to be implemented by the main activity to set up onClickListeners
+interface ViewHolderClickListener {
+    fun onItemClick(query: String, queryLanguageIndex: Int)
+    fun onDeleteButtonClick(query: String, queryLanguageIndex: Int)
+    fun onCopyTextButtonClick(query: String)
 }
 
 class RecentQueriesDiffUtil : DiffUtil.ItemCallback<RecentQuery>() {

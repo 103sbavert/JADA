@@ -18,10 +18,11 @@ import com.sbeve.jada.R
 import com.sbeve.jada.activities.MainActivity
 import com.sbeve.jada.databinding.FragmentMainBinding
 import com.sbeve.jada.recyclerview_utils.RecentQueriesAdapter
+import com.sbeve.jada.recyclerview_utils.ViewHolderClickListener
 import com.sbeve.jada.retrofit_utils.RetrofitInit
 import com.sbeve.jada.room_utils.RecentQuery
 
-class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.ViewHolderClickListener,
+class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
     private val navController: NavController by lazy {
         this.findNavController()
@@ -76,6 +77,8 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.View
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.addQuery(RecentQuery(query, savedLanguageIndex))
                 navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, savedLanguageIndex))
+        
+                //hide the keyboard instantly when the new fragment opens for more a seamless experience
                 hideSoftKeyboard()
                 return true
             }
@@ -104,10 +107,10 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.View
     //hides the keyboard
     private fun hideSoftKeyboard() {
         val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-        
+    
         //Find the currently focused view, so we can grab the correct window token from it.
         var view = mainActivityContext.currentFocus
-        
+    
         //If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
             view = View(activity)
@@ -115,9 +118,14 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.View
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
     
+    private fun showSoftKeyboard(view: View) {
+        val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(view, 0)
+    }
+    
     private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {
-    
+            
             //making the error message visible if the list empty, hiding it again if it is not empty
             fragmentMainBinding.noRecentQueries.visibility = if (it.isNotEmpty()) View.GONE else View.VISIBLE
             adapter.submitList(it)
@@ -135,14 +143,23 @@ class MainFragment : Fragment(R.layout.fragment_main), RecentQueriesAdapter.View
         })
     }
     
+    //implement on onItemClick which opens the result fragment with the saved recent query and the provided language
     override fun onItemClick(query: String, queryLanguageIndex: Int) {
         navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, queryLanguageIndex))
     }
     
+    //implement onDeleteButtonClick to delete the saved query the button of which is pressed
     override fun onDeleteButtonClick(query: String, queryLanguageIndex: Int) {
         viewModel.deleteQuery(RecentQuery(query, queryLanguageIndex))
     }
     
+    override fun onCopyTextButtonClick(query: String) {
+        fragmentMainBinding.searchView.setQuery(query, false)
+        fragmentMainBinding.searchView.requestFocus()
+        showSoftKeyboard(mainActivityContext.currentFocus!!)
+    }
+    
+    //update the current language textview whenever the SharedPreference updates
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             getString(R.string.language_setting_key) -> {
