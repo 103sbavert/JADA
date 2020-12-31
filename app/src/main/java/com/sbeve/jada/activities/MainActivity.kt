@@ -19,20 +19,20 @@ class MainActivity : AppCompatActivity() {
     private val appBarConfiguration: AppBarConfiguration by lazy {
         AppBarConfiguration(navController.graph)
     }
-
+    
     //public reference to the sharedPreferences for access in children fragments
     val applicationPreferences: SharedPreferences by lazy {
         getPreferences(Context.MODE_PRIVATE)
     }
-
+    
     private lateinit var binding: ActivityMainBinding
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
-
+    
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
