@@ -37,7 +37,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
     //doesn't disappear from the background
     private val stayInPlaceAnimation: Animation? by lazy {
         val anim: Animation = AlphaAnimation(1.0F, 1.0F)
-        anim.duration = 150
+        anim.duration = 300
         anim
     }
     private val viewModel: MainViewModel by viewModels()
