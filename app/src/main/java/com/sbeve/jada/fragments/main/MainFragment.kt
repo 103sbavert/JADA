@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,7 +35,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
     //doesn't disappear from the background
     private val stayInPlaceAnimation: Animation? by lazy {
         val anim: Animation = AlphaAnimation(1.0F, 1.0F)
-        anim.duration = 300
+        anim.duration = resources.getInteger(R.integer.animation_duration).toLong()
         anim
     }
     private val viewModel: MainViewModel by viewModels()
@@ -78,8 +76,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
                 viewModel.addQuery(RecentQuery(query, savedLanguageIndex))
                 navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, savedLanguageIndex))
         
-                //hide the keyboard instantly when the new fragment opens for more a seamless experience
-                hideSoftKeyboard()
                 return true
             }
     
@@ -104,13 +100,13 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
             }
             .create()
     
-    //hides the keyboard
+    /*//hides the keyboard
     private fun hideSoftKeyboard() {
         val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-    
+        
         //Find the currently focused view, so we can grab the correct window token from it.
         var view = mainActivityContext.currentFocus
-    
+        
         //If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
             view = View(activity)
@@ -121,7 +117,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
     private fun showSoftKeyboard(view: View) {
         val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(view, 0)
-    }
+    }*/
     
     private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {
@@ -151,12 +147,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
     //implement onDeleteButtonClick to delete the saved query the button of which is pressed
     override fun onDeleteButtonClick(query: String, queryLanguageIndex: Int) {
         viewModel.deleteQuery(RecentQuery(query, queryLanguageIndex))
-    }
-    
-    override fun onCopyTextButtonClick(query: String) {
-        fragmentMainBinding.searchView.setQuery(query, false)
-        fragmentMainBinding.searchView.requestFocus()
-        showSoftKeyboard(mainActivityContext.currentFocus!!)
     }
     
     //update the current language textview whenever the SharedPreference updates

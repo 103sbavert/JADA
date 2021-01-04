@@ -3,8 +3,7 @@
     <!--Toolbar-->
     <style name="custom_toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">?attr/colorPrimarySurface</item>
-        <item name="background">?attr/colorPrimary</item>
+        <item name="android:background">?attr/colorPrimaryBackground</item>
         <item name="titleTextColor">?attr/colorControlNormal</item>
         <item name="elevationOverlayEnabled">false</item>
         <item name="android:elevation">0dp</item>
@@ -46,8 +45,6 @@
         <item name="android:fontFamily">@font/nunito_bold</item>
         <item name="android:textSize">23sp</item>
     </style>
-
-    <attr name="textAppearanceHeadline7" format="reference" />
 
     <style name="Headline7" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/nunito_semibold</item>

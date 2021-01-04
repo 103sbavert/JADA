@@ -2,26 +2,29 @@
     <style name="app_theme" parent="base_app_theme">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange_dark</item>
-        <item name="colorPrimaryVariant">@color/orange_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/orange_dark_translucent</item>
+        <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorOnPrimaryVariant">@color/translucent_white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/cyan_dark</item>
         <item name="colorSecondaryVariant">@color/cyan_dark</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSecondary">@android:color/white</item>
         <!-- Others -->
         <item name="suppressed_text">@color/gray</item>
         <item name="colorOnPrimarySurfaceVariant">?attr/colorOnPrimaryVariant</item>
-        <item name="backgroundColor">@color/white</item>
+        <item name="backgroundColor">@android:color/white</item>
+        <item name="colorPrimaryBackground">?attr/colorPrimary</item>
         <item name="colorOnBackground">@color/gray_dark</item>
+        <item name="rippleColor">@color/gray_light</item>
     </style>
 
     <style name="base_app_theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- System UI Elements. -->
         <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">?attr/isLightTheme</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimarySurface</item>
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
         <!-- Other UI Elements and Text Appearance -->
         <item name="colorControlNormal">?attr/colorPrimary</item>
         <item name="textAppearanceHeadline1">@style/Headline1</item>
@@ -44,7 +47,9 @@
 
     <attr name="colorOnPrimaryVariant" format="color|reference" />
     <attr name="suppressed_text" format="color|reference" />
+    <attr name="colorPrimaryBackground" format="color|reference" />
     <attr name="colorOnSurfaceVariant" format="color|reference" />
     <attr name="colorOnPrimarySurfaceVariant" format="color|reference" />
+    <attr name="textAppearanceHeadline7" format="reference" />
 </resources>
 

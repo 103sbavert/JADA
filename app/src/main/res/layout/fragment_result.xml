@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimarySurface"
-    android:backgroundTintMode="screen">
+    android:background="?attr/colorPrimaryBackground"
+    android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -24,13 +24,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:paddingHorizontal="@dimen/small_margin_padding"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
             android:id="@+id/result_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/small_margin_padding"
             android:orientation="vertical" />
     </ScrollView>
 
@@ -56,7 +56,7 @@
         android:layout_marginTop="5dp"
         android:text="@string/loading"
         android:textAlignment="center"
-        android:textAppearance="?attr/textAppearanceHeadline7"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
         android:textColor="?attr/colorOnPrimarySurfaceVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

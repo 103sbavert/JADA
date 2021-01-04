@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimarySurface">
+    android:background="?attr/colorPrimarySurface"
+    android:fitsSystemWindows="true">
 
     <TextView
         android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/standard_margin_padding"
+        android:layout_marginStart="@dimen/medium_margin_padding"
         android:text="@string/main_fragment_small_header"
-        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textAppearance="?attr/textAppearanceHeadline7"
         android:textColor="?attr/colorOnPrimarySurfaceVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,12 +39,13 @@
         android:id="@+id/change_language_gear_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/circle_button_with_ripple_primary"
+        android:layout_marginStart="@dimen/tiny_margin_padding"
+        android:background="@drawable/circle_button_with_ripple_on_primary"
         android:contentDescription="@string/change_language"
         android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="@id/current_language"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/current_language"
         app:layout_constraintTop_toTopOf="@id/current_language"
         app:srcCompat="@drawable/ic_settings_gear" />
@@ -51,8 +54,8 @@
         android:id="@+id/search_view"
         android:layout_width="0dp"
         android:layout_height="@dimen/search_view_width"
-        android:layout_marginStart="@dimen/standard_margin_padding"
-        android:layout_marginEnd="@dimen/standard_margin_padding"
+        android:layout_marginStart="@dimen/medium_margin_padding"
+        android:layout_marginEnd="@dimen/medium_margin_padding"
         android:background="@drawable/rounded_corners_rectangle"
         app:iconifiedByDefault="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,22 +64,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current_language"
         app:layout_constraintVertical_bias="0.02"
-        app:queryBackground="@color/transparent"
+        app:queryBackground="@android:color/transparent"
         app:queryHint="@string/query_hint" />
 
     <TextView
         android:id="@+id/recent_searches_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_margin_padding"
+        android:layout_marginTop="4dp"
         android:text="@string/recent_searches"
         android:textAppearance="?attr/textAppearanceHeadline7"
         android:textColor="?attr/colorOnPrimarySurface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_view"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintTop_toBottomOf="@+id/search_view"
+        app:layout_constraintVertical_bias="0.050000012" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/queries_recycler_view"
@@ -90,9 +95,10 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_searches_title" />
+        app:layout_constraintTop_toBottomOf="@id/recent_searches_title"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/query_layout" />
 
     <TextView
         android:id="@+id/no_recent_queries"
@@ -102,8 +108,8 @@
         android:layout_marginHorizontal="@dimen/standard_margin_padding"
         android:text="@string/no_recent_searches_found"
         android:textAlignment="center"
-        android:textAppearance="?attr/textAppearanceHeadline7"
-        android:textColor="?attr/colorOnBackground"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintBottom_toBottomOf="@id/queries_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,14 +120,22 @@
         android:id="@+id/clear_all_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/circle_button_with_ripple_primary"
+        android:layout_marginEnd="@dimen/medium_margin_padding"
+        android:background="@drawable/circle_button_with_ripple_on_primary"
         android:contentDescription="@string/clear_button_text"
         android:padding="@dimen/tiny_margin_padding"
         app:layout_constraintBottom_toBottomOf="@id/recent_searches_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toEndOf="@id/recent_searches_title"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/recent_searches_title"
         app:layout_constraintTop_toTopOf="@id/recent_searches_title"
         app:srcCompat="@drawable/ic_clear_button" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="12dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

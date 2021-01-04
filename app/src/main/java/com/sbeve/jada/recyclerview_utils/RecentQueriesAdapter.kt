@@ -31,7 +31,6 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
         init {
             myItemView.root.setOnClickListener { viewHolderClickListener.onItemClick(queryTextValue, queryLanguageValue) }
             myItemView.deleteButton.setOnClickListener { viewHolderClickListener.onDeleteButtonClick(queryTextValue, queryLanguageValue) }
-            myItemView.copyToSearchBarButton.setOnClickListener { viewHolderClickListener.onCopyTextButtonClick(queryTextValue) }
         }
         
         companion object {
@@ -74,7 +73,6 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
 interface ViewHolderClickListener {
     fun onItemClick(query: String, queryLanguageIndex: Int)
     fun onDeleteButtonClick(query: String, queryLanguageIndex: Int)
-    fun onCopyTextButtonClick(query: String)
 }
 
 class RecentQueriesDiffUtil : DiffUtil.ItemCallback<RecentQuery>() {

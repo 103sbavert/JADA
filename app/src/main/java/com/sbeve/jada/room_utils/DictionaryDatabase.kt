@@ -27,6 +27,5 @@ abstract class DictionaryDatabase : RoomDatabase() {
                 return instance
             }
         }
-        
     }
 }
