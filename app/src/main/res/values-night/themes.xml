@@ -1,5 +1,5 @@
 <resources>
-    <style name="app_theme" parent="base_app_theme">
+    <style name="AppTheme" parent="BaseTheme">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange_light</item>
         <item name="colorPrimaryVariant">@color/orange_light_translucent</item>

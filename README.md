@@ -57,10 +57,14 @@ There can be found many parts that could use some improvement since I by no mean
 
 ## Screenshots
 
-* ### Main Fragment
+* ### Light Theme
 <img src="assets/Screenshot_Main_Fragment_Light.png" alt="Main Fragment Light" width=300>
-<img src="assets/Screenshot_Main_Fragment.png" alt="Main Fragment Dark" width=300>
-
-* ### Result Fragment
 <img src="assets/Screenshot_Result_Fragment_Light.png" alt="Result Fragment Light" width=300>
+<img src="assets/Screenshot_Change_Language_Dialog_Light.png" alt="Change Language Dialog" width=300>
+
+
+
+* ### Dark Theme
+<img src="assets/Screenshot_Main_Fragment.png" alt="Main Fragment Dark" width=300>
 <img src="assets/Screenshot_Result_Fragment.png" alt="Result Fragment Dark" width=300>
+<img src="assets/Screenshot_Change_Language_Dialog.png" alt="Change Language Dialog" width=300>

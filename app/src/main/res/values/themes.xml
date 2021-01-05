@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="app_theme" parent="base_app_theme">
+    <style name="AppTheme" parent="BaseTheme">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange_dark</item>
         <item name="colorPrimaryVariant">@color/orange_dark_translucent</item>
@@ -18,7 +18,7 @@
         <item name="rippleColor">@color/gray_light</item>
     </style>
 
-    <style name="base_app_theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- System UI Elements. -->
         <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">?attr/isLightTheme</item>

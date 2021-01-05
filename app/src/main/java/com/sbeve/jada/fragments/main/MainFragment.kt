@@ -127,7 +127,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
             adapter.submitList(it)
         }
         
-        //scroll the recycler view to the top every time a new item is inserted ( submitList(it) is asynchronous )
+        //scroll the recycler view to the top every time a new item is inserted (submitList(it) is asynchronous)
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 fragmentMainBinding.queriesRecyclerView.scrollToPosition(0)
