@@ -9,11 +9,11 @@ A simple free and open-source dictionary app that uses the API created by [Meet 
 * [Patricia B.](https://github.com/pborlongan): The designer of the app's new UI overhaul. Most of the design was designed by her, I am highly thankful to her for helping me out.
 
 ### Known Bugs/Issues
-* Searching for a word shows an empty screen, no error message no result. One such word is "Nope". The issue cannot be fixed as this is something wrong on the server's side, the server doesn't provide a definition for those words.
 
+* [Mitigated] Searching for a word shows an empty screen, no error message no result. One such word is "Nope". The issue cannot be fixed as this is something wrong on the server's side, the server doesn't provide a definition for those words.
 
 ## Download
-Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases)
+Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases/latest)
 
 ## Multi Language support
 
