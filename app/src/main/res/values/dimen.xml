@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="large_margin_padding">30dp</dimen>
-    <dimen name="standard_margin_padding">15dp</dimen>
-    <dimen name="medium_margin_padding">12dp</dimen>
-    <dimen name="small_margin_padding">10dp</dimen>
-    <dimen name="tiny_margin_padding">7dp</dimen>
+    <dimen name="margin_padding_600">20dp</dimen>
+    <dimen name="margin_padding_500">15dp</dimen>
+    <dimen name="margin_padding_400">12dp</dimen>
+    <dimen name="margin_padding_300">10dp</dimen>
+    <dimen name="margin_padding_200">7dp</dimen>
     <dimen name="search_view_width">60dp</dimen>
-
-    <integer name="animation_duration">200</integer>
+    <integer name="animation_duration">250</integer>
 </resources>

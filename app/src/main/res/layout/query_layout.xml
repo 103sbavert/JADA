@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginTop="@dimen/medium_margin_padding">
+    android:layout_marginTop="@dimen/margin_padding_400">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/small_margin_padding">
+        android:padding="@dimen/margin_padding_300">
 
         <TextView
             android:id="@+id/query_text"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circle_button_with_ripple_on_surface_background"
             android:contentDescription="@string/delete_query_button_text"
-            android:padding="@dimen/tiny_margin_padding"
+            android:padding="@dimen/margin_padding_200"
             app:layout_constraintBottom_toBottomOf="@+id/language"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -74,8 +74,8 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/small_margin_padding"
-            android:layout_marginBottom="@dimen/small_margin_padding"
+            android:layout_marginTop="@dimen/margin_padding_300"
+            android:layout_marginBottom="@dimen/margin_padding_300"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toTopOf="@id/time_date"
             app:layout_constraintEnd_toStartOf="@id/delete_button"

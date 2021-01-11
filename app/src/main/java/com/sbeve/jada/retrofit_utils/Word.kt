@@ -8,6 +8,8 @@ data class Word(
     val word: String,
     @SerializedName("origin")
     val origin: String?,
+    @SerializedName("phonetics")
+    val phonetics: List<Phonetics>,
     @SerializedName("meanings")
     val meanings: List<Meaning>
 )
@@ -28,9 +30,9 @@ data class Meaning(
     val definitions: List<Definition>
 )
 
-/*data class Phonetics(
+data class Phonetics(
     @SerializedName("text")
     val text: String,
-    @SerializedName("audio")
-    val audio: String
-)*/
+//    @SerializedName("audio")
+//    val audio: String
+)

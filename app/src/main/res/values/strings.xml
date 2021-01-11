@@ -28,6 +28,5 @@
     <string name="recent_searches">Recent Searches</string>
     <string name="clear_button_text">Clear recent searches</string>
     <string name="delete_query_button_text">Delete Query</string>
-    <string name="copy_to_search_bar_text">Copy to search bar</string>
     <string name="no_recent_searches_found">No recent searches to show</string>
 </resources>

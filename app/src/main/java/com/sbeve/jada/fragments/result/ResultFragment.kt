@@ -90,24 +90,28 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         val wordsList = response.body()!!
         
         for (WORD in wordsList) {
-            
-            //inflate word_item_layout to add information about the current word from the response
-            val wordLayoutBinding = WordLayoutBinding.inflate(layoutInflater)
-            
-            //add the the word to word_title_textview
-            wordLayoutBinding.wordTitleTextview.text = WORD.word
-            
+    
             //for some weird cases, words don't have available definitions, just information about their phonetics. We're going to skip such words
             if (WORD.meanings.isEmpty()) continue
-            
+    
+            //inflate word_item_layout to add information about the current word from the response
+            val wordLayoutBinding = WordLayoutBinding.inflate(layoutInflater)
+    
+            //add the the word to word_title_textview
+            wordLayoutBinding.wordTitleTextview.text = WORD.word
+    
+            //if there is no provided information about the pronunciation, don't add anything
+            if (WORD.phonetics.isNullOrEmpty()) wordLayoutBinding.phoneticsTextview.visibility = View.GONE
+            else wordLayoutBinding.phoneticsTextview.text = WORD.phonetics.first().text
+    
             //if there is no provided information about the origin, don't add anything to the textview and set the textview to gone
             if (WORD.origin.isNullOrEmpty()) wordLayoutBinding.originTextview.visibility = View.GONE
             else wordLayoutBinding.originTextview.text = getString(R.string.origin_info, WORD.origin)
-            
+    
             //add the each meaning_layout to the current word_item_layout
             val meaningsLayoutArray = getMeaningsLayoutList(WORD, wordLayoutBinding)
             meaningsLayoutArray.forEach { wordLayoutBinding.wordLinearLayout.addView(it.root) }
-            
+    
             //add the word_item_layout for the current word to results_linear_layout
             fragmentResultBinding.resultLinearLayout.addView(wordLayoutBinding.root)
         }

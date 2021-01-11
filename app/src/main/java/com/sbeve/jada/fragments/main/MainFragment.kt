@@ -100,7 +100,8 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
             }
             .create()
     
-    /*//hides the keyboard
+    /*
+    //hides the keyboard
     private fun hideSoftKeyboard() {
         val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         
@@ -117,7 +118,8 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
     private fun showSoftKeyboard(view: View) {
         val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(view, 0)
-    }*/
+    }
+    */
     
     private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {

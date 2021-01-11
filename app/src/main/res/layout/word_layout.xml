@@ -21,6 +21,19 @@
         tools:text="Word" />
 
     <TextView
+        android:id="@+id/phonetics_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_padding_300"
+        android:textAppearance="@style/Headline6"
+        android:textColor="?attr/colorOnPrimarySurfaceVariant"
+        app:layout_constraintBaseline_toBaselineOf="@+id/word_title_textview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/word_title_textview"
+        tools:text="Word" />
+
+    <TextView
         android:id="@+id/origin_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,8 +50,8 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/tiny_margin_padding"
-        android:layout_marginBottom="@dimen/standard_margin_padding"
+        android:layout_marginTop="@dimen/margin_padding_200"
+        android:layout_marginBottom="@dimen/margin_padding_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,8 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingHorizontal="@dimen/standard_margin_padding"
-            android:paddingTop="@dimen/tiny_margin_padding"
-            android:paddingBottom="@dimen/standard_margin_padding" />
+            android:paddingHorizontal="@dimen/margin_padding_500"
+            android:paddingTop="@dimen/margin_padding_200"
+            android:paddingBottom="@dimen/margin_padding_500" />
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
