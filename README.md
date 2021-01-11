@@ -1,9 +1,11 @@
 # JADA (Just Another Dictionary App)
 (Licensed under the MIT License)
 
-<img src="./assets/icon.png" alt="drawing" width="200"/>
+<img src="./assets/icon.png" alt="drawing" width="125"/>
 
 A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode.
+
+**Keep in mind that JADA is not a translator app. Nothing does a better job of being a translator app than Google Translate. JADA provides you definitions of a word in the same language as the one the word is from.**
 
 ### Collaborators
 * [Patricia B.](https://github.com/pborlongan): The designer of the app's new UI overhaul. Most of the design was designed by her, I am highly thankful to her for helping me out.
@@ -15,7 +17,7 @@ A simple free and open-source dictionary app that uses the API created by [Meet 
 ## Download
 Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases/latest)
 
-## Multi Language support
+## Multi-language Support
 
 This dictionary supports multiple language as the API I am using does too. The languages supported are the following
 
@@ -31,7 +33,7 @@ This dictionary supports multiple language as the API I am using does too. The l
 * Brazilian Portuguese
 * Turkish
 
-*This dictionary does not support Arabic even though the API supports the language as there seems to be some issues with arabic side of the API. I have tested it with different arabic words and it never returns an output. I will add support for Arabic if I figure out the reason it isn't behaving like it should.* ***I encourage people who know Arabic to help me figure out the issue***
+*JADA does not support Arabic even though the API used does as there seems to be some issues with the Arabic side of the API. I have tested it with different Arabic words and it never returns an output. I will add support for Arabic if I figure out the reason it isn't behaving like it should.* ***I encourage people who know Arabic to help me figure out the issue***
 
 ## Versioning
 
@@ -39,7 +41,7 @@ The app uses a special blend of [Semantic Versioning](https://semver.org/#semant
 Everything is essentially the same except for a few key differences with MAJOR:
 * MAJOR would be incremented if MINOR reaches 9
 * It may also be incremented whenever the app stops supporting an old API level
-* It may also be incremented upon what any change that I consider major.
+* It may also be incremented upon any change that I consider major.
 
 ## What's special
 
@@ -58,13 +60,13 @@ There can be found many parts that could use some improvement since I by no mean
 ## Screenshots
 
 * ### Light Theme
-<img src="assets/Screenshot_Main_Fragment_Light.png" alt="Main Fragment Light" width=300>
-<img src="assets/Screenshot_Result_Fragment_Light.png" alt="Result Fragment Light" width=300>
-<img src="assets/Screenshot_Change_Language_Dialog_Light.png" alt="Change Language Dialog" width=300>
+<img src="assets/Screenshot_Main_Fragment_Light.png" alt="Main Fragment Light" width=250>
+<img src="assets/Screenshot_Result_Fragment_Light.png" alt="Result Fragment Light" width=250>
+<img src="assets/Screenshot_Change_Language_Dialog_Light.png" alt="Change Language Dialog" width=250>
 
 
 
 * ### Dark Theme
-<img src="assets/Screenshot_Main_Fragment.png" alt="Main Fragment Dark" width=300>
-<img src="assets/Screenshot_Result_Fragment.png" alt="Result Fragment Dark" width=300>
-<img src="assets/Screenshot_Change_Language_Dialog.png" alt="Change Language Dialog" width=300>
+<img src="assets/Screenshot_Main_Fragment.png" alt="Main Fragment Dark" width=250>
+<img src="assets/Screenshot_Result_Fragment.png" alt="Result Fragment Dark" width=250>
+<img src="assets/Screenshot_Change_Language_Dialog.png" alt="Change Language Dialog" width=250>
