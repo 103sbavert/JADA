@@ -1,5 +1,7 @@
 package com.sbeve.jada.fragments.main
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -20,7 +22,7 @@ import com.sbeve.jada.recyclerview_utils.ViewHolderClickListener
 import com.sbeve.jada.retrofit_utils.RetrofitInit
 import com.sbeve.jada.room_utils.RecentQuery
 
-class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
+class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextListener, ViewHolderClickListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
     private val navController: NavController by lazy {
         this.findNavController()
@@ -53,73 +55,56 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
         fragmentMainBinding = FragmentMainBinding.bind(view)
         fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
-            createChangeLanguageDialog().show()
+            createChangeLanguageDialog(null).show()
         }
         fragmentMainBinding.clearAllButton.setOnClickListener {
             viewModel.clear()
         }
         fragmentMainBinding.queriesRecyclerView.setHasFixedSize(true)
         fragmentMainBinding.queriesRecyclerView.adapter = adapter
-        
+    
         //set up an observer to update the recycler view whenever the database is updated
         updateRecyclerView()
-        
+    
+        if (mainActivityContext.intent.action == Intent.ACTION_SEND) {
+            handleSharedText(mainActivityContext.intent.getStringExtra(Intent.EXTRA_TEXT)!!)
+            mainActivityContext.intent.action = Intent.ACTION_MAIN
+        }
+    
         //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
         fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
         mainActivityContext.applicationPreferences.registerOnSharedPreferenceChangeListener(this)
-        
-        fragmentMainBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.addQuery(RecentQuery(query, savedLanguageIndex))
-                navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, savedLanguageIndex))
-        
-                return true
-            }
     
-            override fun onQueryTextChange(newText: String?) = false
-        })
+        fragmentMainBinding.searchView.setOnQueryTextListener(this)
     }
     
     //play an empty animation to keep the fragment from disappearing from the background when the enter animation for other fragments is playing
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) = stayInPlaceAnimation
     
     //change language dialog to change the language to be used by the dictionary
-    private fun createChangeLanguageDialog() =
+    private fun createChangeLanguageDialog(action: ((dialogInterface: DialogInterface, item: Int) -> Unit)?) =
         MaterialAlertDialogBuilder(mainActivityContext)
             .setTitle(getString(R.string.choose_a_language))
             .setSingleChoiceItems(RetrofitInit.supportedLanguages.first, savedLanguageIndex)
-            { dialogInterface, i ->
+            { dialogInterface, item ->
                 mainActivityContext.applicationPreferences
                     .edit()
-                    .putInt(getString(R.string.language_setting_key), i)
+                    .putInt(getString(R.string.language_setting_key), item)
                     .apply()
                 dialogInterface.dismiss()
+                action?.invoke(dialogInterface, item)
             }
             .create()
     
-    /*
-    //hides the keyboard
-    private fun hideSoftKeyboard() {
-        val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-        
-        //Find the currently focused view, so we can grab the correct window token from it.
-        var view = mainActivityContext.currentFocus
-        
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = View(activity)
-        }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
     
-    private fun showSoftKeyboard(view: View) {
-        val imm: InputMethodManager = mainActivityContext.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(view, 0)
+    private fun handleSharedText(sharedText: String) {
+        createChangeLanguageDialog { _, _ ->
+            navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(sharedText, savedLanguageIndex))
+            viewModel.addQuery(RecentQuery(sharedText, savedLanguageIndex))
+        }.show()
     }
-    */
     
     private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {
@@ -159,4 +144,14 @@ class MainFragment : Fragment(R.layout.fragment_main), ViewHolderClickListener,
             }
         }
     }
+    
+    //navigate to the result fragment and show the results for submitted query. Asynchronously update the database.
+    override fun onQueryTextSubmit(query: String): Boolean {
+        viewModel.addQuery(RecentQuery(query, savedLanguageIndex))
+        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, savedLanguageIndex))
+        return true
+    }
+    
+    //nothing to implement
+    override fun onQueryTextChange(newText: String?) = false
 }

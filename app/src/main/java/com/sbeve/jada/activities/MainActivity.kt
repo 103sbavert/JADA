@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     val applicationPreferences: SharedPreferences by lazy {
         getPreferences(Context.MODE_PRIVATE)
     }
-    
     private lateinit var binding: ActivityMainBinding
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,4 +35,26 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
+
+
+/*
+    private fun hideSoftKeyboard() {
+        val imm: InputMethodManager = getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = currentFocus
+        
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(this)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+    
+    private fun showSoftKeyboard(view: View) {
+        val imm: InputMethodManager = getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(view, 0)
+    }
+*/
+
 }
