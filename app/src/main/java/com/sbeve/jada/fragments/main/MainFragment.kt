@@ -24,6 +24,7 @@ import com.sbeve.jada.room_utils.RecentQuery
 
 class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextListener, ViewHolderClickListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
+    
     private val navController: NavController by lazy {
         this.findNavController()
     }

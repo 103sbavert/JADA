@@ -1,4 +1,4 @@
-package com.sbeve.jada.fragments.result
+    package com.sbeve.jada.fragments.result
 
 import android.os.Bundle
 import android.util.TypedValue
@@ -33,7 +33,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     }
     private val args: ResultFragmentArgs by navArgs()
     private val examplesTextColor = TypedValue()
-    
     private lateinit var fragmentResultBinding: FragmentResultBinding
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

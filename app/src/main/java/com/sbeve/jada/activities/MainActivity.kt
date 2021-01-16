@@ -13,6 +13,7 @@ import com.sbeve.jada.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+    
     private val navController: NavController by lazy {
         (supportFragmentManager.findFragmentById(R.id.main_nav_host) as NavHostFragment).navController
     }
