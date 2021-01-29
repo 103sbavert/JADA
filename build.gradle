@@ -2,7 +2,7 @@
 buildscript {
     ext {
         kotlin_version = "1.4.21"
-        nav_version = "2.3.2"
+        nav_version = '2.3.3'
         retrofit_version = "2.9.0"
         lifecycle_version = "2.2.0"
         room_version = "2.2.6"
@@ -17,7 +17,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath "com.android.tools.build:gradle:4.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }

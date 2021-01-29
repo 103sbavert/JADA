@@ -99,7 +99,6 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
             }
             .create()
     
-    
     private fun handleSharedText(sharedText: String) {
         createChangeLanguageDialog { _, _ ->
             navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(sharedText, savedLanguageIndex))
