@@ -20,7 +20,8 @@ object RetrofitInit {
             "Italian",
             "Korean",
             "Br Portuguese",
-            "Turkish"
+            "Turkish",
+            "Arabic"
         ),
         arrayOf(
             "hi",
@@ -34,6 +35,7 @@ object RetrofitInit {
             "ko",
             "pt-BR",
             "tr",
+            "ar",
         )
     )
     

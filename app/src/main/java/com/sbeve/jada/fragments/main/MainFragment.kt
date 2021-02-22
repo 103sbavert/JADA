@@ -1,5 +1,6 @@
 package com.sbeve.jada.fragments.main
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -101,8 +103,7 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     
     private fun handleSharedText(sharedText: String) {
         createChangeLanguageDialog { _, _ ->
-            navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(sharedText, savedLanguageIndex))
-            viewModel.addQuery(RecentQuery(sharedText, savedLanguageIndex))
+            navigateToResultsFragment(sharedText, savedLanguageIndex, true)
         }.show()
     }
     
@@ -126,9 +127,28 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         })
     }
     
+    private fun hideSoftKeyboard() {
+        val imm: InputMethodManager = mainActivityContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = mainActivityContext.currentFocus
+        
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(mainActivityContext)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+    
+    private fun navigateToResultsFragment(query: String, languageIndex: Int, isQueryToBeSaved: Boolean) {
+        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, languageIndex))
+        if (isQueryToBeSaved) viewModel.addQuery(RecentQuery(query, languageIndex))
+        hideSoftKeyboard()
+    }
+    
     //implement on onItemClick which opens the result fragment with the saved recent query and the provided language
     override fun onItemClick(query: String, queryLanguageIndex: Int) {
-        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, queryLanguageIndex))
+        navigateToResultsFragment(query, queryLanguageIndex, false)
     }
     
     //implement onDeleteButtonClick to delete the saved query the button of which is pressed
@@ -147,8 +167,7 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     
     //navigate to the result fragment and show the results for submitted query. Asynchronously update the database.
     override fun onQueryTextSubmit(query: String): Boolean {
-        viewModel.addQuery(RecentQuery(query, savedLanguageIndex))
-        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, savedLanguageIndex))
+        navigateToResultsFragment(query, savedLanguageIndex, true)
         return true
     }
     
