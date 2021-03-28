@@ -19,8 +19,6 @@ data class Definition(
     val definition: String,
     @SerializedName("example")
     val example: String?,
-//    @SerializedName("synonyms")
-//    val synonyms: List<String>
 )
 
 data class Meaning(

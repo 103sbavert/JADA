@@ -1,5 +1,6 @@
 package com.sbeve.jada.fragments.main
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbeve.jada.MyApplication
@@ -12,7 +13,8 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
     
     //get the application context to use it to make the database
-    private val applicationContext = MyApplication.getInstance()
+    @SuppressLint("StaticFieldLeak")
+    private val applicationContext = MyApplication.context
     
     //get the instance of the database
     private var roomDatabase = DictionaryDatabase.getInstance(applicationContext)
