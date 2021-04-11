@@ -16,7 +16,7 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
     ListAdapter<RecentQuery, RecentQueriesAdapter.RecentQueryViewHolder>(RecentQueriesDiffUtil()) {
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentQueryViewHolder {
-        return RecentQueryViewHolder.inflateLayout(this, parent)
+        return RecentQueryViewHolder.getViewHolderInstance(viewHolderClickListener, parent)
     }
     
     override fun onBindViewHolder(holder: RecentQueryViewHolder, position: Int) {
@@ -34,12 +34,13 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
         }
         
         companion object {
-            fun inflateLayout(recentQueriesAdapter: RecentQueriesAdapter, parent: ViewGroup): RecentQueryViewHolder {
+            fun getViewHolderInstance(viewHolderClickListener: ViewHolderClickListener, parent: ViewGroup): RecentQueryViewHolder {
                 val binding = QueryLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return RecentQueryViewHolder(binding, recentQueriesAdapter.viewHolderClickListener)
+                return RecentQueryViewHolder(binding, viewHolderClickListener)
             }
         }
-        
+    
+    
         private val queryText = myItemView.queryText
         private lateinit var queryTextValue: String
         private val queryLanguage = myItemView.language
@@ -69,7 +70,7 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
     }
 }
 
-//custom interface to be implemented by the main activity to set up onClickListeners
+//custom interface to be implemented by the main fragment to set up onClickListeners
 interface ViewHolderClickListener {
     fun onItemClick(query: String, queryLanguageIndex: Int)
     fun onDeleteButtonClick(query: String, queryLanguageIndex: Int)

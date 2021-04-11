@@ -41,6 +41,4 @@ class MainActivity : AppCompatActivity() {
         imm.showSoftInput(view, 0)
     }
 */
-
-
 }
