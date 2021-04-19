@@ -6,6 +6,6 @@
     <dimen name="margin_padding_400">12dp</dimen>
     <dimen name="margin_padding_300">10dp</dimen>
     <dimen name="margin_padding_200">7dp</dimen>
-    <dimen name="search_view_width">60dp</dimen>
+    <dimen name="search_view_width">55dp</dimen>
     <integer name="animation_duration">250</integer>
 </resources>

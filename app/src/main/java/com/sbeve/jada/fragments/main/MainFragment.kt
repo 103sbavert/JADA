@@ -23,7 +23,9 @@ import com.sbeve.jada.recyclerview_utils.RecentQueriesAdapter
 import com.sbeve.jada.recyclerview_utils.ViewHolderClickListener
 import com.sbeve.jada.retrofit_utils.RetrofitInit
 import com.sbeve.jada.room_utils.RecentQuery
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextListener, ViewHolderClickListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
     
@@ -67,19 +69,19 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         }
         fragmentMainBinding.queriesRecyclerView.setHasFixedSize(true)
         fragmentMainBinding.queriesRecyclerView.adapter = adapter
-    
+        
         //set up an observer to update the recycler view whenever the database is updated
         updateRecyclerView()
-    
+        
         if (mainActivityContext.intent.action == Intent.ACTION_SEND) {
             handleSharedText(mainActivityContext.intent.getStringExtra(Intent.EXTRA_TEXT)!!)
             mainActivityContext.intent.action = Intent.ACTION_MAIN
         }
-    
+        
         //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
         fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
         mainActivityContext.applicationPreferences.registerOnSharedPreferenceChangeListener(this)
-    
+        
         fragmentMainBinding.searchView.setOnQueryTextListener(this)
     }
     
@@ -120,7 +122,7 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 fragmentMainBinding.queriesRecyclerView.scrollToPosition(0)
             }
-    
+            
             override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
                 fragmentMainBinding.queriesRecyclerView.scrollToPosition(0)
             }
