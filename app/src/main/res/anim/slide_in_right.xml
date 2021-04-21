@@ -4,8 +4,4 @@
         android:duration="@integer/animation_duration"
         android:fromXDelta="100%p"
         android:toXDelta="0" />
-    <alpha
-        android:duration="@integer/animation_duration"
-        android:fromAlpha="0.1"
-        android:toAlpha="1" />
 </set>

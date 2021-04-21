@@ -30,6 +30,7 @@ android {
             keyPassword key_password
         }
     }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -37,8 +38,8 @@ android {
         applicationId "com.sbeve.jada"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 25
-        versionName 'v4.3.3'
+        versionCode 26
+        versionName 'v4.3.4'
     }
 
     buildTypes {
