@@ -38,8 +38,8 @@ android {
         applicationId "com.sbeve.jada"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 26
-        versionName 'v4.3.4'
+        versionCode 27
+        versionName 'v4.3.5'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -48,7 +48,7 @@ android {
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
-            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
