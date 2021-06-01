@@ -1,7 +1,8 @@
-package com.sbeve.jada.room_utils
+package com.sbeve.jada.utils.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.sbeve.jada.models.RecentQuery
 
 @Dao
 interface DictionaryDatabaseDAO {

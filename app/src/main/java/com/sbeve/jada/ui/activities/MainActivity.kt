@@ -1,10 +1,11 @@
-package com.sbeve.jada.activities
+package com.sbeve.jada.ui.activities
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.sbeve.jada.databinding.ActivityMainBinding
@@ -13,22 +14,23 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     
-    private val navController by lazy {
-        findNavController(binding.mainNavHost.id)
-    }
-    private val appBarConfiguration: AppBarConfiguration by lazy {
-        AppBarConfiguration(navController.graph)
-    }
+    private lateinit var binding: ActivityMainBinding
     
     //public reference to the sharedPreferences for access in children fragments
-    val applicationPreferences: SharedPreferences by lazy {
-        getPreferences(Context.MODE_PRIVATE)
-    }
-    private lateinit var binding: ActivityMainBinding
+    lateinit var applicationPreferences: SharedPreferences
+    private lateinit var navController: NavController
+    private lateinit var navHostFragment: NavHostFragment
+    private lateinit var appBarConfiguration: AppBarConfiguration
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
+        navHostFragment = supportFragmentManager.findFragmentById(binding.mainNavhost.id) as NavHostFragment
+        navController = navHostFragment.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        applicationPreferences = getPreferences(Context.MODE_PRIVATE)
+        
         setContentView(binding.root)
     }
     

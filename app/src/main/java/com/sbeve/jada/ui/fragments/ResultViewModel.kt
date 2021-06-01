@@ -1,10 +1,10 @@
-package com.sbeve.jada.fragments.result
+package com.sbeve.jada.ui.fragments
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sbeve.jada.retrofit_utils.RetrofitInit
-import com.sbeve.jada.retrofit_utils.RetrofitInit.accessApiObject
-import com.sbeve.jada.retrofit_utils.Word
+import com.sbeve.jada.models.Word
+import com.sbeve.jada.utils.retrofit.RetrofitInit
+import com.sbeve.jada.utils.retrofit.RetrofitInit.accessApiObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,22 +44,22 @@ class ResultViewModel : ViewModel() {
             .enqueue(object : Callback<List<Word>> {
                 override fun onResponse(call: Call<List<Word>>, response: Response<List<Word>>) {
                     if (!response.isSuccessful) {
-            
+    
                         //set the type of error to NoMatch since a connection to the server was
                         //successful it's just that the entered word wasn't found in the database
                         errorType = ErrorType.NoMatch
-            
+    
                         //since the fragment has to shown an error message now and on every
                         //configuration from now until fetchWordInformation() is called again, set
                         //fetchResult to Failure
                         fetchWordInfoResultType.value = NetworkRequestResult.Failure
                         return
                     }
-        
+    
                     //pass the response body to outputResponse to be used by updateUI() to show the
                     //result on the screen
                     wordInfo = response
-        
+    
                     //set fetchResult to Success so the fragment shows the result fetched from the
                     //server now and on every configuration change from now until fetchWordInformation
                     //is called again

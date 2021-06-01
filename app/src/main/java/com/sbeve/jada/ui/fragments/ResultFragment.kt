@@ -1,4 +1,4 @@
-    package com.sbeve.jada.fragments.result
+package com.sbeve.jada.ui.fragments
 
 import android.os.Bundle
 import android.util.TypedValue
@@ -13,49 +13,49 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sbeve.jada.R
-import com.sbeve.jada.activities.MainActivity
 import com.sbeve.jada.databinding.FragmentResultBinding
 import com.sbeve.jada.databinding.MeaningLayoutBinding
 import com.sbeve.jada.databinding.WordLayoutBinding
-import com.sbeve.jada.retrofit_utils.Meaning
-import com.sbeve.jada.retrofit_utils.Word
+import com.sbeve.jada.models.Meaning
+import com.sbeve.jada.models.Word
+import com.sbeve.jada.ui.activities.MainActivity
 import retrofit2.Response
 
 class ResultFragment : Fragment(R.layout.fragment_result) {
     
-    //the currently running instance of the activity
-    private val mainActivityContext: MainActivity by lazy {
-        activity as MainActivity
-    }
-    private val viewModel: ResultViewModel by viewModels()
-    private val navController: NavController by lazy {
-        this.findNavController()
-    }
+    private lateinit var binding: FragmentResultBinding
     private val args: ResultFragmentArgs by navArgs()
+    private val viewModel: ResultViewModel by viewModels()
+    
+    //the currently running instance of the activity
+    private lateinit var mainActivity: MainActivity
+    private lateinit var navController: NavController
     private val examplesTextColor = TypedValue()
-    private lateinit var fragmentResultBinding: FragmentResultBinding
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragmentResultBinding = FragmentResultBinding.bind(view)
         
-        fragmentResultBinding.toolbar.setNavigationOnClickListener {
+        mainActivity = requireActivity() as MainActivity
+        binding = FragmentResultBinding.bind(view)
+        navController = findNavController()
+        
+        binding.toolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }
         
         //getting the examples text color
-        mainActivityContext.theme.resolveAttribute(R.attr.suppressed_text, examplesTextColor, true)
+        mainActivity.theme.resolveAttribute(R.attr.suppressed_text, examplesTextColor, true)
         
         viewModel.fetchWordInfo(args.queryText, args.queryLanguage)
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
             if (it != null) {
                 when (it) {
-    
+                    
                     //FetchResult was failed (this logic is included in fetchWordInformation()) and now
                     //we wanna show an error message now and every time a configuration change happens
                     //until fetchWordInformation() is called again
                     ResultViewModel.NetworkRequestResult.Failure -> showError(viewModel.errorType)
-    
+                    
                     //FetchResult was successful and now we wanna show the result fetched from the
                     //server now and every time a configuration change happens until
                     //fetchWordInformation() is called again
@@ -67,56 +67,56 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     
     //show the right error message based on what went wrong
     private fun showError(state: ResultViewModel.ErrorType) {
-        fragmentResultBinding.loadingAnim.visibility = View.GONE
+        binding.loadingAnim.visibility = View.GONE
         
         //make errorMessage visible if it's not already
-        fragmentResultBinding.loadingErrorMessage.visibility = View.VISIBLE
+        binding.loadingErrorMessage.visibility = View.VISIBLE
         when (state) {
-            ResultViewModel.ErrorType.CallFailed -> fragmentResultBinding.loadingErrorMessage.text = getString(R.string.call_failed)
-            ResultViewModel.ErrorType.NoMatch -> fragmentResultBinding.loadingErrorMessage.text = getString(R.string.no_match)
+            ResultViewModel.ErrorType.CallFailed -> binding.loadingErrorMessage.text = getString(R.string.call_failed)
+            ResultViewModel.ErrorType.NoMatch -> binding.loadingErrorMessage.text = getString(R.string.no_match)
         }
     }
     
     //this function takes the output from fetchWordsInfo() and gets it in a structured manner back from the methods in the viewmodel then adds that
     //info one by one to the result_linear_layout
     private fun showResults(response: Response<List<Word>>) {
-        
+    
         //hide the loading animation
-        fragmentResultBinding.loadingAnim.visibility = View.GONE
-        fragmentResultBinding.resultLinearLayout.removeAllViews()
-        
+        binding.loadingAnim.visibility = View.GONE
+        binding.resultLinearLayout.removeAllViews()
+    
         //get the response output by the fetchWordInfo()
         val wordsList = response.body()!!
-        
-        for (WORD in wordsList) {
     
+        for (WORD in wordsList) {
+        
             //for some weird cases, words don't have available definitions, just information about their phonetics. We're going to skip such words
             if (WORD.meanings.isEmpty()) continue
-    
+        
             //inflate word_item_layout to add information about the current word from the response
             val wordLayoutBinding = WordLayoutBinding.inflate(layoutInflater)
-    
+        
             //add the the word to word_title_textview
             wordLayoutBinding.wordTitleTextview.text = WORD.word
-    
+        
             //if there is no provided information about the pronunciation, don't add anything
             if (WORD.phonetics.isNullOrEmpty()) wordLayoutBinding.phoneticsTextview.visibility = View.GONE
             else wordLayoutBinding.phoneticsTextview.text = WORD.phonetics.first().text
-    
+        
             //if there is no provided information about the origin, don't add anything to the textview and set the textview to gone
             if (WORD.origin.isNullOrEmpty()) wordLayoutBinding.originTextview.visibility = View.GONE
             else wordLayoutBinding.originTextview.text = getString(R.string.origin_info, WORD.origin)
-    
+        
             //add the each meaning_layout to the current word_item_layout
             val meaningsLayoutArray = getMeaningsLayoutList(WORD, wordLayoutBinding)
             meaningsLayoutArray.forEach { wordLayoutBinding.wordLinearLayout.addView(it.root) }
-    
-            //add the word_item_layout for the current word to results_linear_layout
-            fragmentResultBinding.resultLinearLayout.addView(wordLayoutBinding.root)
-        }
         
-        if (fragmentResultBinding.resultLinearLayout.isEmpty()) showError(ResultViewModel.ErrorType.NoMatch)
-        else fragmentResultBinding.loadingErrorMessage.visibility = View.GONE
+            //add the word_item_layout for the current word to results_linear_layout
+            binding.resultLinearLayout.addView(wordLayoutBinding.root)
+        }
+    
+        if (binding.resultLinearLayout.isEmpty()) showError(ResultViewModel.ErrorType.NoMatch)
+        else binding.loadingErrorMessage.visibility = View.GONE
     }
     
     private fun getMeaningsLayoutList(
@@ -172,5 +172,4 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         }
         return definitionsText
     }
-    
 }

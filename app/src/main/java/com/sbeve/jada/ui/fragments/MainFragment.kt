@@ -1,4 +1,4 @@
-package com.sbeve.jada.fragments.main
+package com.sbeve.jada.ui.fragments
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.DialogInterface
@@ -17,50 +17,41 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sbeve.jada.R
-import com.sbeve.jada.activities.MainActivity
 import com.sbeve.jada.databinding.FragmentMainBinding
-import com.sbeve.jada.recyclerview_utils.RecentQueriesAdapter
-import com.sbeve.jada.recyclerview_utils.ViewHolderClickListener
-import com.sbeve.jada.retrofit_utils.RetrofitInit
-import com.sbeve.jada.room_utils.RecentQuery
+import com.sbeve.jada.models.RecentQuery
+import com.sbeve.jada.ui.activities.MainActivity
+import com.sbeve.jada.utils.recyclerview.RecentQueriesAdapter
+import com.sbeve.jada.utils.recyclerview.ViewHolderClickListener
+import com.sbeve.jada.utils.retrofit.RetrofitInit
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextListener, ViewHolderClickListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
     
-    private val navController: NavController by lazy {
-        this.findNavController()
-    }
+    private lateinit var navController: NavController
     
     //the currently running instance of the activity
-    private val mainActivityContext: MainActivity by lazy {
-        activity as MainActivity
-    }
-    
-    //animation to be played when a fragment transaction happens from this activity a pop action transaction to this activity happens so the fragment
-    //doesn't disappear from the background
-    private val stayInPlaceAnimation: Animation? by lazy {
-        val anim: Animation = AlphaAnimation(1.0F, 1.0F)
-        anim.duration = resources.getInteger(R.integer.animation_duration).toLong()
-        anim
-    }
-    private val viewModel: MainViewModel by viewModels()
+    private lateinit var mainActivity: MainActivity
     private lateinit var fragmentMainBinding: FragmentMainBinding
+    private val viewModel: MainViewModel by viewModels()
     
     //getting the saved language setting's value through a custom getter
     private val savedLanguageIndex: Int
-        get() = mainActivityContext.applicationPreferences
+        get() = mainActivity.applicationPreferences
             .getInt(getString(R.string.language_setting_key), 0)
     
     //adapter with empty list as the list will be provided when the database emits information
-    private val adapter by lazy {
-        RecentQueriesAdapter(this)
-    }
+    private val adapter = RecentQueriesAdapter(this)
+    
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        mainActivity = requireActivity() as MainActivity
+        navController = this.findNavController()
         fragmentMainBinding = FragmentMainBinding.bind(view)
+        
         fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
             createChangeLanguageDialog(null).show()
         }
@@ -73,28 +64,35 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         //set up an observer to update the recycler view whenever the database is updated
         updateRecyclerView()
         
-        if (mainActivityContext.intent.action == Intent.ACTION_SEND) {
-            handleSharedText(mainActivityContext.intent.getStringExtra(Intent.EXTRA_TEXT)!!)
-            mainActivityContext.intent.action = Intent.ACTION_MAIN
+        if (mainActivity.intent.action == Intent.ACTION_SEND) {
+            handleSharedText(mainActivity.intent.getStringExtra(Intent.EXTRA_TEXT)!!)
+            mainActivity.intent.action = Intent.ACTION_MAIN
         }
         
         //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
         fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
-        mainActivityContext.applicationPreferences.registerOnSharedPreferenceChangeListener(this)
+        mainActivity.applicationPreferences.registerOnSharedPreferenceChangeListener(this)
         
         fragmentMainBinding.searchView.setOnQueryTextListener(this)
     }
     
     //play an empty animation to keep the fragment from disappearing from the background when the enter animation for other fragments is playing
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) = stayInPlaceAnimation
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
+        
+        //animation to be played when a fragment transaction happens from this activity a pop action transaction to this activity happens so the fragment
+        //doesn't disappear from the background
+        return AlphaAnimation(1.0F, 1.0F).apply {
+            duration = resources.getInteger(R.integer.animation_duration).toLong()
+        }
+    }
     
     //change language dialog to change the language to be used by the dictionary
     private fun createChangeLanguageDialog(action: ((dialogInterface: DialogInterface, item: Int) -> Unit)?) =
-        MaterialAlertDialogBuilder(mainActivityContext)
+        MaterialAlertDialogBuilder(mainActivity)
             .setTitle(getString(R.string.choose_a_language))
             .setSingleChoiceItems(RetrofitInit.supportedLanguages.first, savedLanguageIndex)
             { dialogInterface, item ->
-                mainActivityContext.applicationPreferences
+                mainActivity.applicationPreferences
                     .edit()
                     .putInt(getString(R.string.language_setting_key), item)
                     .apply()
@@ -130,14 +128,14 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     }
     
     private fun hideSoftKeyboard() {
-        val imm: InputMethodManager = mainActivityContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager = mainActivity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         
         //Find the currently focused view, so we can grab the correct window token from it.
-        var view = mainActivityContext.currentFocus
+        var view = mainActivity.currentFocus
         
         //If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
-            view = View(mainActivityContext)
+            view = View(mainActivity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }

@@ -1,5 +1,6 @@
-package com.sbeve.jada.retrofit_utils
+package com.sbeve.jada.utils.retrofit
 
+import com.sbeve.jada.models.Word
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,7 +22,6 @@ object RetrofitInit {
             "Korean",
             "Br Portuguese",
             "Turkish",
-            "Arabic"
         ),
         arrayOf(
             "hi",
@@ -35,7 +35,6 @@ object RetrofitInit {
             "ko",
             "pt-BR",
             "tr",
-            "ar",
         )
     )
     

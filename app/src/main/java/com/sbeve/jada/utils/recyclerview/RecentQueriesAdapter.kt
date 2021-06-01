@@ -1,4 +1,4 @@
-package com.sbeve.jada.recyclerview_utils
+package com.sbeve.jada.utils.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sbeve.jada.databinding.QueryLayoutBinding
-import com.sbeve.jada.retrofit_utils.RetrofitInit
-import com.sbeve.jada.room_utils.RecentQuery
+import com.sbeve.jada.models.RecentQuery
+import com.sbeve.jada.utils.retrofit.RetrofitInit
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates

@@ -2,22 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/main_fragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.sbeve.jada.fragments.main.MainFragment"
+        android:id="@+id/main_fragment"
+        android:name="com.sbeve.jada.ui.fragments.MainFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_resultFragment"
-            app:destination="@id/resultFragment"
+            app:destination="@id/result_fragment"
             app:enterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/resultFragment"
-        android:name="com.sbeve.jada.fragments.result.ResultFragment"
+        android:id="@+id/result_fragment"
+        android:name="com.sbeve.jada.ui.fragments.ResultFragment"
         android:label="Result"
         tools:layout="@layout/fragment_result">
         <argument

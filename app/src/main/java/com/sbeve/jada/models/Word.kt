@@ -1,4 +1,4 @@
-package com.sbeve.jada.retrofit_utils
+package com.sbeve.jada.models
 
 import com.google.gson.annotations.SerializedName
 

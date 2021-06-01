@@ -1,4 +1,4 @@
-package com.sbeve.jada.room_utils
+package com.sbeve.jada.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

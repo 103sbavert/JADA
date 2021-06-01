@@ -1,10 +1,10 @@
-package com.sbeve.jada.fragments.main
+package com.sbeve.jada.ui.fragments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sbeve.jada.room_utils.DictionaryDatabase
-import com.sbeve.jada.room_utils.DictionaryDatabaseDAO
-import com.sbeve.jada.room_utils.RecentQuery
+import com.sbeve.jada.models.RecentQuery
+import com.sbeve.jada.utils.room.DictionaryDatabase
+import com.sbeve.jada.utils.room.DictionaryDatabaseDAO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch

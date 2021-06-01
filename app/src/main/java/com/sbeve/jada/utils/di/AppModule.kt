@@ -1,8 +1,8 @@
-package com.sbeve.jada.di
+package com.sbeve.jada.utils.di
 
 import android.content.Context
 import androidx.room.Room
-import com.sbeve.jada.room_utils.DictionaryDatabase
+import com.sbeve.jada.utils.room.DictionaryDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
