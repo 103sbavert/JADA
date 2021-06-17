@@ -3,7 +3,7 @@ package com.sbeve.jada.utils.retrofit
 import com.sbeve.jada.models.Word
 import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -40,7 +40,7 @@ object RetrofitInit {
     
     val accessApiObject: AccessApi = Retrofit.Builder()
         .baseUrl("https://api.dictionaryapi.dev/api/v2/entries/")
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create())
         .build()
         .create(AccessApi::class.java)
     

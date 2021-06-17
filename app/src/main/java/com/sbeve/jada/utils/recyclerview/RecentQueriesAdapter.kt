@@ -24,15 +24,15 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
         holder.provideCurrentItem(currentItem)
     }
     
-    class RecentQueryViewHolder(myItemView: QueryLayoutBinding, private val viewHolderClickListener: ViewHolderClickListener) :
+    class RecentQueryViewHolder(myItemView: QueryLayoutBinding, viewHolderClickListener: ViewHolderClickListener) :
         RecyclerView.ViewHolder(myItemView.root) {
-        
+    
         //setting on click listeners for each item and the delete button in each item
         init {
             myItemView.root.setOnClickListener { viewHolderClickListener.onItemClick(queryTextValue, queryLanguageValue) }
             myItemView.deleteButton.setOnClickListener { viewHolderClickListener.onDeleteButtonClick(queryTextValue, queryLanguageValue) }
         }
-        
+    
         companion object {
             fun getViewHolderInstance(viewHolderClickListener: ViewHolderClickListener, parent: ViewGroup): RecentQueryViewHolder {
                 val binding = QueryLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)

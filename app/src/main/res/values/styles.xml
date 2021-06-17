@@ -98,6 +98,6 @@
     <style name="custom_alert_dialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/alert_dialog_title</item>
         <item name="elevationOverlayEnabled">false</item>
-        <item name="colorOnSurface">?attr/colorOnBackground</item>
+        <item name="colorOnSurface">?colorOnBackground</item>
     </style>
 </resources>

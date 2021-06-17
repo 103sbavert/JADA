@@ -38,8 +38,8 @@ android {
         applicationId "com.sbeve.jada"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 27
-        versionName 'v4.3.5'
+        versionCode 28
+        versionName 'v4.3.6'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -72,8 +72,7 @@ dependencies {
     implementation "com.google.android.material:material:$material_components_version"
 
     //retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     //navigation components
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
