@@ -1,13 +1,13 @@
 package com.sbeve.jada.utils.retrofit
 
 import com.sbeve.jada.models.Word
-import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-object RetrofitInit {
+object RetrofitUtils {
+    
+    const val BASE_URL = "https://api.dictionaryapi.dev/api/v2/entries/"
     
     val supportedLanguages = Pair(
         arrayOf(
@@ -38,18 +38,12 @@ object RetrofitInit {
         )
     )
     
-    val accessApiObject: AccessApi = Retrofit.Builder()
-        .baseUrl("https://api.dictionaryapi.dev/api/v2/entries/")
-        .addConverterFactory(MoshiConverterFactory.create())
-        .build()
-        .create(AccessApi::class.java)
-    
     //set up the interface to be implemented by retrofit to create an access api
     interface AccessApi {
         @GET("{language_selected}/{word_to_query}")
-        fun getDefinitions(
-            @Path("language_selected") language: String,
-            @Path("word_to_query") word: String
-        ): Call<List<Word>>
+        suspend fun getDefinitions(
+            @Path("word_to_query") word: String,
+            @Path("language_selected") language: String
+        ): Response<List<Word>>
     }
 }

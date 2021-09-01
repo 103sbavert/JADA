@@ -1,5 +1,6 @@
 package com.sbeve.jada.ui.fragments
 
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.DialogInterface
 import android.content.Intent
@@ -7,10 +8,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -19,10 +20,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sbeve.jada.R
 import com.sbeve.jada.databinding.FragmentMainBinding
 import com.sbeve.jada.models.RecentQuery
-import com.sbeve.jada.ui.activities.MainActivity
 import com.sbeve.jada.utils.recyclerview.RecentQueriesAdapter
 import com.sbeve.jada.utils.recyclerview.ViewHolderClickListener
-import com.sbeve.jada.utils.retrofit.RetrofitInit
+import com.sbeve.jada.utils.retrofit.RetrofitUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,13 +32,14 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     private lateinit var navController: NavController
     
     //the currently running instance of the activity
-    private lateinit var mainActivity: MainActivity
+    private lateinit var parentActivity: FragmentActivity
     private lateinit var fragmentMainBinding: FragmentMainBinding
+    private lateinit var parentActivityPreferences: SharedPreferences
     private val viewModel: MainViewModel by viewModels()
     
     //getting the saved language setting's value through a custom getter
     private val savedLanguageIndex: Int
-        get() = mainActivity.applicationPreferences
+        get() = parentActivityPreferences
             .getInt(getString(R.string.language_setting_key), 0)
     
     //adapter with empty list as the list will be provided when the database emits information
@@ -47,11 +48,12 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
-        mainActivity = requireActivity() as MainActivity
+    
+        parentActivity = requireActivity()
+        parentActivityPreferences = parentActivity.getPreferences(Context.MODE_PRIVATE)
         navController = this.findNavController()
         fragmentMainBinding = FragmentMainBinding.bind(view)
-        
+    
         fragmentMainBinding.changeLanguageGearIcon.setOnClickListener {
             createChangeLanguageDialog(null).show()
         }
@@ -60,39 +62,33 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         }
         fragmentMainBinding.queriesRecyclerView.setHasFixedSize(true)
         fragmentMainBinding.queriesRecyclerView.adapter = adapter
-        
+    
         //set up an observer to update the recycler view whenever the database is updated
         updateRecyclerView()
-        
-        if (mainActivity.intent.action == Intent.ACTION_SEND) {
-            handleSharedText(mainActivity.intent.getStringExtra(Intent.EXTRA_TEXT)!!)
-            mainActivity.intent.action = Intent.ACTION_MAIN
+    
+        if (parentActivity.intent.action == Intent.ACTION_SEND) {
+            handleSharedText(parentActivity.intent.getStringExtra(Intent.EXTRA_TEXT)!!)
+            parentActivity.intent.action = Intent.ACTION_MAIN
         }
-        
+    
         //set the text view's text to show whichever language is selected and update the text whenever the setting is changed
-        fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
-        mainActivity.applicationPreferences.registerOnSharedPreferenceChangeListener(this)
-        
+        fragmentMainBinding.currentLanguage.text = RetrofitUtils.supportedLanguages.first[savedLanguageIndex]
+        parentActivityPreferences.registerOnSharedPreferenceChangeListener(this)
+    
         fragmentMainBinding.searchView.setOnQueryTextListener(this)
     }
     
     //play an empty animation to keep the fragment from disappearing from the background when the enter animation for other fragments is playing
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
-        
-        //animation to be played when a fragment transaction happens from this activity a pop action transaction to this activity happens so the fragment
-        //doesn't disappear from the background
-        return AlphaAnimation(1.0F, 1.0F).apply {
-            duration = resources.getInteger(R.integer.animation_duration).toLong()
-        }
-    }
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) =
+        AlphaAnimation(1.0F, 1.0F).apply { duration = resources.getInteger(R.integer.animation_duration).toLong() }
     
     //change language dialog to change the language to be used by the dictionary
     private fun createChangeLanguageDialog(action: ((dialogInterface: DialogInterface, item: Int) -> Unit)?) =
-        MaterialAlertDialogBuilder(mainActivity)
+        MaterialAlertDialogBuilder(parentActivity)
             .setTitle(getString(R.string.choose_a_language))
-            .setSingleChoiceItems(RetrofitInit.supportedLanguages.first, savedLanguageIndex)
+            .setSingleChoiceItems(RetrofitUtils.supportedLanguages.first, savedLanguageIndex)
             { dialogInterface, item ->
-                mainActivity.applicationPreferences
+                parentActivityPreferences
                     .edit()
                     .putInt(getString(R.string.language_setting_key), item)
                     .apply()
@@ -128,14 +124,14 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     }
     
     private fun hideSoftKeyboard() {
-        val imm: InputMethodManager = mainActivity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager = parentActivity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         
         //Find the currently focused view, so we can grab the correct window token from it.
-        var view = mainActivity.currentFocus
+        var view = parentActivity.currentFocus
         
         //If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
-            view = View(mainActivity)
+            view = View(parentActivity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
@@ -160,7 +156,7 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             getString(R.string.language_setting_key) -> {
-                fragmentMainBinding.currentLanguage.text = RetrofitInit.supportedLanguages.first[savedLanguageIndex]
+                fragmentMainBinding.currentLanguage.text = RetrofitUtils.supportedLanguages.first[savedLanguageIndex]
             }
         }
     }
