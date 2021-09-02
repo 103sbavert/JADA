@@ -2,7 +2,10 @@ package com.sbeve.jada.utils.di
 
 import android.content.Context
 import androidx.room.Room
-import com.sbeve.jada.utils.retrofit.RetrofitUtils
+import com.sbeve.jada.utils.Constants
+import com.sbeve.jada.utils.SharedPreferencesUtil
+import com.sbeve.jada.utils.SharedPreferencesUtilImpl
+import com.sbeve.jada.utils.retrofit.RetrofitAccessApi
 import com.sbeve.jada.utils.room.DictionaryDatabase
 import dagger.Module
 import dagger.Provides
@@ -30,9 +33,15 @@ object AppModule {
     
     @Singleton
     @Provides
-    fun providesRetrofitAccessApi(): RetrofitUtils.AccessApi = Retrofit.Builder()
-        .baseUrl(RetrofitUtils.BASE_URL)
+    fun providesRetrofitAccessApi(): RetrofitAccessApi = Retrofit.Builder()
+        .baseUrl(Constants.BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
-        .create(RetrofitUtils.AccessApi::class.java)
+        .create(RetrofitAccessApi::class.java)
+    
+    @Provides
+    fun providesSharedPreferencesUtil(@ApplicationContext applicationContext: Context): SharedPreferencesUtil = SharedPreferencesUtilImpl(
+        applicationContext,
+        Context.MODE_PRIVATE
+    )
 }

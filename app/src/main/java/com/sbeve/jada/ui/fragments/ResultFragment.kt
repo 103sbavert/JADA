@@ -8,7 +8,6 @@ import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.core.text.HtmlCompat.fromHtml
 import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -27,16 +26,12 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     private lateinit var binding: FragmentResultBinding
     private val args: ResultFragmentArgs by navArgs()
     private val viewModel: ResultViewModel by viewModels()
-    
-    //the currently running instance of the activity
-    private lateinit var parentActivity: FragmentActivity
     private lateinit var navController: NavController
     private val examplesTextColor = TypedValue()
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        parentActivity = requireActivity()
         binding = FragmentResultBinding.bind(view)
         navController = findNavController()
         
@@ -45,24 +40,23 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         }
         
         //getting the examples text color
-        parentActivity.theme.resolveAttribute(R.attr.suppressed_text, examplesTextColor, true)
+        requireActivity().theme.resolveAttribute(R.attr.suppressed_text, examplesTextColor, true)
         
         viewModel.fetchWordInfo(args.queryText, args.queryLanguage)
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
-            if (it != null) {
-                when (it) {
-                    
-                    //FetchResult was failed (this logic is included in fetchWordInformation()) and now
-                    //we wanna show an error message now and every time a configuration change happens
-                    //until fetchWordInformation() is called again
-                    ResultViewModel.NetworkRequestResult.Error -> showError(viewModel.errorType)
-                    
-                    //FetchResult was successful and now we wanna show the result fetched from the
-                    //server now and every time a configuration change happens until
-                    //fetchWordInformation() is called again
-                    ResultViewModel.NetworkRequestResult.Success -> showResults(viewModel.wordInfo)
-                }
+            when (it!!) {
+        
+                //FetchResult was failed (this logic is included in fetchWordInformation()) and now
+                //we wanna show an error message now and every time a configuration change happens
+                //until fetchWordInformation() is called again
+                ResultViewModel.NetworkRequestResult.Error -> showError(viewModel.errorType)
+        
+                //FetchResult was successful and now we wanna show the result fetched from the
+                //server now and every time a configuration change happens until
+                //fetchWordInformation() is called again
+                ResultViewModel.NetworkRequestResult.Success -> showResults(viewModel.wordInfo)
             }
+    
         }
     }
     
@@ -90,25 +84,25 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
             
             //for some weird cases, words don't have available definitions, just information about their phonetics. We're going to skip such words
             if (WORD.meanings.isEmpty()) continue
-            
+    
             //inflate word_item_layout to add information about the current word from the response
             val wordLayoutBinding = WordLayoutBinding.inflate(layoutInflater)
-            
+    
             //add the the word to word_title_textview
             wordLayoutBinding.wordTitleTextview.text = WORD.word
-            
+    
             //if there is no provided information about the pronunciation, don't add anything
             if (WORD.phonetics.isNullOrEmpty()) wordLayoutBinding.phoneticsTextview.visibility = View.GONE
             else wordLayoutBinding.phoneticsTextview.text = WORD.phonetics.first().text
-            
-            //if there is no provided information about the origin, don't add anything to the textview and set the textview to gone
+    
+            //if there is no provided information about the origin, don't add anything to the textview and set the text view's visibility to gone
             if (WORD.origin.isNullOrEmpty()) wordLayoutBinding.originTextview.visibility = View.GONE
             else wordLayoutBinding.originTextview.text = getString(R.string.origin_info, WORD.origin)
-            
+    
             //add the each meaning_layout to the current word_item_layout
             val meaningsLayoutArray = getMeaningsLayoutList(WORD, wordLayoutBinding)
             meaningsLayoutArray.forEach { wordLayoutBinding.wordLinearLayout.addView(it.root) }
-            
+    
             //add the word_item_layout for the current word to results_linear_layout
             binding.resultLinearLayout.addView(wordLayoutBinding.root)
         }

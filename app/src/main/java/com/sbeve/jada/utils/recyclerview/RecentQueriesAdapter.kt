@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sbeve.jada.databinding.QueryLayoutBinding
 import com.sbeve.jada.models.RecentQuery
-import com.sbeve.jada.utils.retrofit.RetrofitUtils
+import com.sbeve.jada.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
@@ -40,7 +40,6 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
             }
         }
     
-    
         private val queryText = myItemView.queryText
         private lateinit var queryTextValue: String
         private val queryLanguage = myItemView.language
@@ -56,7 +55,7 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
         
         private fun bindLanguage(languageValue: Int) {
             queryLanguageValue = languageValue
-            queryLanguage.text = RetrofitUtils.supportedLanguages.first[languageValue]
+            queryLanguage.text = Constants.supportedLanguages.names[languageValue]
         }
     
         private fun bindQuery(queryValue: String) {

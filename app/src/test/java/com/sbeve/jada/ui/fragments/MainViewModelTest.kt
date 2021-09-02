@@ -2,6 +2,7 @@ package com.sbeve.jada.ui.fragments
 
 import com.sbeve.jada.models.RecentQuery
 import com.sbeve.jada.testutils.CoroutinesTestRule
+import com.sbeve.jada.utils.SharedPreferencesUtil
 import com.sbeve.jada.utils.room.DictionaryDatabaseDAO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -20,6 +21,10 @@ class MainViewModelTest {
     
     @Mock
     lateinit var dictionaryDatabaseDAO: DictionaryDatabaseDAO
+    
+    @Mock
+    private lateinit var sharedPreferencesUtil: SharedPreferencesUtil
+    
     lateinit var mainViewModel: MainViewModel
     private val recentQuery: RecentQuery = RecentQuery("word", 1)
     
@@ -29,24 +34,36 @@ class MainViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        mainViewModel = MainViewModel(dictionaryDatabaseDAO)
+        mainViewModel = MainViewModel(dictionaryDatabaseDAO, sharedPreferencesUtil)
     }
     
     @Test
-    fun addQuery(): Unit = runBlockingTest {
+    fun addQuery_dictionaryDatabaseDao_callsAddQueryMethod(): Unit = runBlockingTest {
         mainViewModel.addQuery(recentQuery)
         verify(dictionaryDatabaseDAO).addQuery(recentQuery)
     }
     
     @Test
-    fun clear(): Unit = runBlockingTest {
+    fun clear_dictionaryDatabaseDao_callsClearMethod(): Unit = runBlockingTest {
         mainViewModel.clear()
         verify(dictionaryDatabaseDAO).clear()
     }
     
     @Test
-    fun deleteQuery(): Unit = runBlockingTest {
+    fun deleteQuery_dictionaryDatabaseDao_callsDeleteQuery(): Unit = runBlockingTest {
         mainViewModel.deleteQuery(recentQuery)
         verify(dictionaryDatabaseDAO).deleteQuery(recentQuery)
+    }
+    
+    @Test
+    fun getSavedLanguageIndex_sharedPreferencesUtil_callsGetSavedLanguagheMethod() {
+        mainViewModel.getSavedLanguageIndex()
+        verify(sharedPreferencesUtil).getSavedLanguageIndex()
+    }
+    
+    @Test
+    fun updateLanguageSettingKey_sharedPreferencesUtil_callsUpdateLanguageSettingKey() {
+        mainViewModel.updateLanguageSettingKey(0)
+        verify(sharedPreferencesUtil).updateLanguageSettingKey(0)
     }
 }

@@ -1,15 +1,9 @@
-package com.sbeve.jada.utils.retrofit
+package com.sbeve.jada.utils
 
-import com.sbeve.jada.models.Word
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-
-object RetrofitUtils {
+object Constants {
     
     const val BASE_URL = "https://api.dictionaryapi.dev/api/v2/entries/"
-    
-    val supportedLanguages = Pair(
+    val supportedLanguages = SupportedLanguages(
         arrayOf(
             "Hindi",
             "English",
@@ -37,13 +31,4 @@ object RetrofitUtils {
             "tr",
         )
     )
-    
-    //set up the interface to be implemented by retrofit to create an access api
-    interface AccessApi {
-        @GET("{language_selected}/{word_to_query}")
-        suspend fun getDefinitions(
-            @Path("word_to_query") word: String,
-            @Path("language_selected") language: String
-        ): Response<List<Word>>
-    }
 }

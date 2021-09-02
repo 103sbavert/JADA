@@ -7,7 +7,7 @@ import com.sbeve.jada.models.Phonetics
 import com.sbeve.jada.models.Word
 import com.sbeve.jada.testutils.CoroutinesTestRule
 import com.sbeve.jada.testutils.getOrAwaitValue
-import com.sbeve.jada.utils.retrofit.RetrofitUtils
+import com.sbeve.jada.utils.retrofit.RetrofitAccessApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.MediaType
@@ -27,7 +27,7 @@ import retrofit2.Response
 class ResultViewModelTest {
     
     @Mock
-    private lateinit var accessApi: RetrofitUtils.AccessApi
+    private lateinit var retrofitAccessApi: RetrofitAccessApi
     private lateinit var resultViewModel: ResultViewModel
     
     @get:Rule
@@ -39,12 +39,12 @@ class ResultViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        resultViewModel = ResultViewModel(accessApi)
+        resultViewModel = ResultViewModel(retrofitAccessApi)
     }
     
     @Test
     fun fetchWordInfo_successfulResponse_updatesLiveDataCorrectly() = runBlockingTest {
-        `when`(accessApi.getDefinitions(Mockito.anyString(), Mockito.anyString()))
+        `when`(retrofitAccessApi.getDefinitions(Mockito.anyString(), Mockito.anyString()))
             .thenReturn(Response.success(201, getWordList()))
         
         resultViewModel.fetchWordInfo("doesn't matter", 1)
@@ -61,7 +61,7 @@ class ResultViewModelTest {
     
     @Test
     fun fetchWordInfo_errorResponse_updatesLiveDataCorrectly() = runBlockingTest {
-        `when`(accessApi.getDefinitions(Mockito.anyString(), Mockito.anyString()))
+        `when`(retrofitAccessApi.getDefinitions(Mockito.anyString(), Mockito.anyString()))
             .thenReturn(Response.error(404, ResponseBody.create(MediaType.get("text/plain"), "No such word was found")))
         
         resultViewModel.fetchWordInfo("no worries", 2)
@@ -78,7 +78,7 @@ class ResultViewModelTest {
     
     @Test
     fun fetchWordInfo_exception_doesNotUpdateLiveData() = runBlockingTest {
-        `when`(accessApi.getDefinitions(Mockito.anyString(), Mockito.anyString()))
+        `when`(retrofitAccessApi.getDefinitions(Mockito.anyString(), Mockito.anyString()))
             .thenThrow(RuntimeException())
         
         resultViewModel.fetchWordInfo("idk", 1)

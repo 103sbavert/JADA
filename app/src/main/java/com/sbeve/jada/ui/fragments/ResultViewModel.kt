@@ -4,7 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbeve.jada.models.Word
-import com.sbeve.jada.utils.retrofit.RetrofitUtils
+import com.sbeve.jada.utils.Constants
+import com.sbeve.jada.utils.retrofit.RetrofitAccessApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ResultViewModel
 @Inject
-constructor(private var accessApi: RetrofitUtils.AccessApi) : ViewModel() {
+constructor(private var retrofitAccessApi: RetrofitAccessApi) : ViewModel() {
     
     //type of failure that occurred while looking for a definition for the submitted query
     enum class ErrorType {
@@ -39,12 +40,12 @@ constructor(private var accessApi: RetrofitUtils.AccessApi) : ViewModel() {
     
     //make a call to the server
     fun fetchWordInfo(queriedWord: String, queryLanguageIndex: Int) {
-        val savedLanguageCode = RetrofitUtils.supportedLanguages.second[queryLanguageIndex]
+        val savedLanguageCode = Constants.supportedLanguages.codes[queryLanguageIndex]
     
         //retrieve a new call object to make a request to the server
         viewModelScope.launch {
             try {
-                val response = accessApi.getDefinitions(queriedWord, savedLanguageCode)
+                val response = retrofitAccessApi.getDefinitions(queriedWord, savedLanguageCode)
                 if (response.isSuccessful) {
                 
                     //pass the response body to outputResponse to be used by updateUI() to show the
