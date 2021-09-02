@@ -9,13 +9,10 @@ import androidx.navigation.ui.NavigationUI
 import com.sbeve.jada.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-private const val TAG = "MainActivity"
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     
     private lateinit var binding: ActivityMainBinding
-    
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var appBarConfiguration: AppBarConfiguration

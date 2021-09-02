@@ -5,6 +5,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -27,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextListener, ViewHolderClickListener,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    OnSharedPreferenceChangeListener {
     
     private lateinit var navController: NavController
     
@@ -44,7 +45,6 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     
     //adapter with empty list as the list will be provided when the database emits information
     private val adapter = RecentQueriesAdapter(this)
-    
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,8 +79,9 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     }
     
     //play an empty animation to keep the fragment from disappearing from the background when the enter animation for other fragments is playing
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) =
-        AlphaAnimation(1.0F, 1.0F).apply { duration = resources.getInteger(R.integer.animation_duration).toLong() }
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) = AlphaAnimation(1.0F, 1.0F).apply {
+        duration = resources.getInteger(R.integer.animation_duration).toLong()
+    }
     
     //change language dialog to change the language to be used by the dictionary
     private fun createChangeLanguageDialog(action: ((dialogInterface: DialogInterface, item: Int) -> Unit)?) =
@@ -88,14 +89,18 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
             .setTitle(getString(R.string.choose_a_language))
             .setSingleChoiceItems(RetrofitUtils.supportedLanguages.first, savedLanguageIndex)
             { dialogInterface, item ->
-                parentActivityPreferences
-                    .edit()
-                    .putInt(getString(R.string.language_setting_key), item)
-                    .apply()
+                putLanguageSettingKey(item)
                 dialogInterface.dismiss()
                 action?.invoke(dialogInterface, item)
             }
             .create()
+    
+    private fun putLanguageSettingKey(item: Int) {
+        parentActivityPreferences
+            .edit()
+            .putInt(getString(R.string.language_setting_key), item)
+            .apply()
+    }
     
     private fun handleSharedText(sharedText: String) {
         createChangeLanguageDialog { _, _ ->
@@ -112,6 +117,10 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         }
         
         //scroll the recycler view to the top every time a new item is inserted (submitList(it) is asynchronous)
+        scrollToTheTop()
+    }
+    
+    private fun scrollToTheTop() {
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 fragmentMainBinding.queriesRecyclerView.scrollToPosition(0)
