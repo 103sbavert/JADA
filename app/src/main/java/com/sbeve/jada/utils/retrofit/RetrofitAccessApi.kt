@@ -7,6 +7,7 @@ import retrofit2.http.Path
 
 //set up the interface to be implemented by retrofit to create an access api
 interface RetrofitAccessApi {
+    
     @GET("{language_selected}/{word_to_query}")
     suspend fun getDefinitions(
         @Path("word_to_query") word: String,

@@ -15,8 +15,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sbeve.jada.R
 import com.sbeve.jada.databinding.FragmentMainBinding
 import com.sbeve.jada.models.RecentQuery
+import com.sbeve.jada.ui.recyclerview.RecentQueriesAdapter
 import com.sbeve.jada.utils.Constants
-import com.sbeve.jada.utils.recyclerview.RecentQueriesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

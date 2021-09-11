@@ -1,4 +1,4 @@
-package com.sbeve.jada.utils.recyclerview
+package com.sbeve.jada.ui.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

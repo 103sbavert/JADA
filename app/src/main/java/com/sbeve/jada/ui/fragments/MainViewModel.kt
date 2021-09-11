@@ -19,7 +19,7 @@ constructor(
     
     //get all the queries as a list of RecentQuery to show in the recycler view
     val allQueries = databaseDao.getAllQueries()
-    val currentLanguage = sharedPreferencesUtilImpl.currentLanguage
+    val currentLanguage = sharedPreferencesUtilImpl.selectedLanguage
     
     //clear all the queries on button press
     fun clear() = viewModelScope.launch {
@@ -36,7 +36,7 @@ constructor(
         databaseDao.addQuery(recentQuery)
     }
     
-    fun getSavedLanguageIndex() = sharedPreferencesUtilImpl.getSavedLanguageIndex()
+    fun getSavedLanguageIndex() = sharedPreferencesUtilImpl.getLanguageSetting()
     
-    fun updateLanguageSettingKey(index: Int) = sharedPreferencesUtilImpl.updateLanguageSettingKey(index)
+    fun updateLanguageSettingKey(index: Int) = sharedPreferencesUtilImpl.updateLanguageSetting(index)
 }

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 
 interface SharedPreferencesUtil : SharedPreferences.OnSharedPreferenceChangeListener {
     
-    val currentLanguage: LiveData<String>
+    val selectedLanguage: LiveData<String>
     
-    fun getSavedLanguageIndex(): Int
-    fun updateLanguageSettingKey(index: Int)
+    fun getLanguageSetting(): Int
+    fun updateLanguageSetting(index: Int)
 }

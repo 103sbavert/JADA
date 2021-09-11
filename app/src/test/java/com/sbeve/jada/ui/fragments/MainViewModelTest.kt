@@ -58,12 +58,12 @@ class MainViewModelTest {
     @Test
     fun getSavedLanguageIndex_sharedPreferencesUtil_callsGetSavedLanguagheMethod() {
         mainViewModel.getSavedLanguageIndex()
-        verify(sharedPreferencesUtil).getSavedLanguageIndex()
+        verify(sharedPreferencesUtil).getLanguageSetting()
     }
     
     @Test
     fun updateLanguageSettingKey_sharedPreferencesUtil_callsUpdateLanguageSettingKey() {
         mainViewModel.updateLanguageSettingKey(0)
-        verify(sharedPreferencesUtil).updateLanguageSettingKey(0)
+        verify(sharedPreferencesUtil).updateLanguageSetting(0)
     }
 }

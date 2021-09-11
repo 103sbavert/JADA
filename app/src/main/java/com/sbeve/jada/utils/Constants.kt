@@ -2,6 +2,8 @@ package com.sbeve.jada.utils
 
 object Constants {
     
+    const val SHARED_PREFERENCES_NAME = "JADA"
+    const val LANGUAGE_SETTING_KEY = "language_setting"
     const val BASE_URL = "https://api.dictionaryapi.dev/api/v2/entries/"
     val supportedLanguages = SupportedLanguages(
         arrayOf(
