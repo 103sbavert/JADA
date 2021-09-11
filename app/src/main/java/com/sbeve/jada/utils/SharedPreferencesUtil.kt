@@ -9,6 +9,4 @@ interface SharedPreferencesUtil : SharedPreferences.OnSharedPreferenceChangeList
     
     fun getSavedLanguageIndex(): Int
     fun updateLanguageSettingKey(index: Int)
-    
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?)
 }

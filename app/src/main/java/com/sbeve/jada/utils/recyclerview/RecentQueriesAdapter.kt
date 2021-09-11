@@ -67,21 +67,21 @@ class RecentQueriesAdapter(private val viewHolderClickListener: ViewHolderClickL
             timeDate.text = SimpleDateFormat("hh:mm a; dd MMMM, yyyy", Locale.getDefault()).format(timeValue)
         }
     }
-}
-
-//custom interface to be implemented by the main fragment to set up onClickListeners
-interface ViewHolderClickListener {
-    fun onItemClick(query: String, queryLanguageIndex: Int)
-    fun onDeleteButtonClick(query: String, queryLanguageIndex: Int)
-}
-
-class RecentQueriesDiffUtil : DiffUtil.ItemCallback<RecentQuery>() {
     
-    override fun areItemsTheSame(oldItem: RecentQuery, newItem: RecentQuery): Boolean {
-        return oldItem.queryText == newItem.queryText
+    //custom interface to be implemented by the main fragment to set up onClickListeners
+    interface ViewHolderClickListener {
+        fun onItemClick(query: String, queryLanguageIndex: Int)
+        fun onDeleteButtonClick(query: String, queryLanguageIndex: Int)
     }
     
-    override fun areContentsTheSame(oldItem: RecentQuery, newItem: RecentQuery): Boolean {
-        return oldItem.timeDate == newItem.timeDate
+    class RecentQueriesDiffUtil : DiffUtil.ItemCallback<RecentQuery>() {
+        
+        override fun areItemsTheSame(oldItem: RecentQuery, newItem: RecentQuery): Boolean {
+            return oldItem.queryText == newItem.queryText
+        }
+        
+        override fun areContentsTheSame(oldItem: RecentQuery, newItem: RecentQuery): Boolean {
+            return oldItem.timeDate == newItem.timeDate
+        }
     }
 }

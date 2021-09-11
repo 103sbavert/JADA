@@ -47,32 +47,32 @@ constructor(private var retrofitAccessApi: RetrofitAccessApi) : ViewModel() {
             try {
                 val response = retrofitAccessApi.getDefinitions(queriedWord, savedLanguageCode)
                 if (response.isSuccessful) {
-                
+    
                     //pass the response body to outputResponse to be used by updateUI() to show the
                     //result on the screen
                     wordInfo = response.body()!!
-                
+    
                     //set fetchResult to Success so the fragment shows the result fetched from the
                     //server now and on every configuration change from now until fetchWordInformation
                     //is called again
                     fetchWordInfoResultType.value = NetworkRequestResult.Success
                 } else {
-                
+    
                     //set the type of error to NoMatch since a connection to the server was
                     //successful it's just that the entered word wasn't found in the database
                     errorType = ErrorType.NoMatch
-                
+    
                     //since the fragment has to shown an error message now and on every
                     //configuration from now until fetchWordInformation() is called again, set
                     //fetchResult to Failure
                     fetchWordInfoResultType.value = NetworkRequestResult.Error
                 }
             } catch (e: Exception) {
-            
+    
                 //set the type of error to CallFailed since a request to the server could not be
                 //made
                 errorType = ErrorType.CallFailed
-            
+    
                 //since the fragment has to shown an error message now and on every
                 //configuration from now until fetchWordInformation() is called again, set
                 //fetchResult to Failure

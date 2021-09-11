@@ -45,12 +45,12 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         viewModel.fetchWordInfo(args.queryText, args.queryLanguage)
         viewModel.fetchWordInfoResultType.observe(viewLifecycleOwner) {
             when (it!!) {
-        
+    
                 //FetchResult was failed (this logic is included in fetchWordInformation()) and now
                 //we wanna show an error message now and every time a configuration change happens
                 //until fetchWordInformation() is called again
                 ResultViewModel.NetworkRequestResult.Error -> showError(viewModel.errorType)
-        
+    
                 //FetchResult was successful and now we wanna show the result fetched from the
                 //server now and every time a configuration change happens until
                 //fetchWordInformation() is called again

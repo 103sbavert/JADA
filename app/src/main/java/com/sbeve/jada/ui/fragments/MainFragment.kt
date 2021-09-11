@@ -1,7 +1,6 @@
 package com.sbeve.jada.ui.fragments
 
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -18,11 +17,10 @@ import com.sbeve.jada.databinding.FragmentMainBinding
 import com.sbeve.jada.models.RecentQuery
 import com.sbeve.jada.utils.Constants
 import com.sbeve.jada.utils.recyclerview.RecentQueriesAdapter
-import com.sbeve.jada.utils.recyclerview.ViewHolderClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextListener, ViewHolderClickListener {
+class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextListener, RecentQueriesAdapter.ViewHolderClickListener {
     
     private lateinit var navController: NavController
     
@@ -39,7 +37,7 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         binding = FragmentMainBinding.bind(view)
         
         binding.changeLanguageGearIcon.setOnClickListener {
-            createChangeLanguageDialog(null).show()
+            createChangeLanguageDialog().show()
         }
         binding.clearAllButton.setOnClickListener {
             viewModel.clear()
@@ -69,44 +67,48 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     }
     
     //change language dialog to change the language to be used by the dictionary
-    private fun createChangeLanguageDialog(action: ((dialogInterface: DialogInterface, item: Int) -> Unit)?) =
+    private fun createChangeLanguageDialog(action: (() -> Unit) = {}) =
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.choose_a_language))
             .setSingleChoiceItems(Constants.supportedLanguages.names, viewModel.getSavedLanguageIndex())
             { dialogInterface, item ->
                 viewModel.updateLanguageSettingKey(item)
                 dialogInterface.dismiss()
-                action?.invoke(dialogInterface, item)
+                action.invoke()
             }
             .create()
     
+    //show a language selection dialog everytime a word is shared to the app. Navigate to the results fragment as soon as a language is selected
     private fun handleSharedText(sharedText: String) {
-        createChangeLanguageDialog { _, _ ->
+        createChangeLanguageDialog {
             navigateToResultsFragment(sharedText, viewModel.getSavedLanguageIndex(), true)
         }.show()
     }
     
+    //set up an observer for the all queries livedata that updates the recycler view adapter
     private fun updateRecyclerView() {
         viewModel.allQueries.observe(viewLifecycleOwner) {
-    
+            
             //making the error message visible if the list empty, hiding it again if it is not empty
             binding.noRecentQueries.visibility = if (it.isNotEmpty()) View.GONE else View.VISIBLE
-    
+            
             adapter.submitList(it) {
                 binding.queriesRecyclerView.scrollToPosition(0)
             }
         }
     }
     
+    //an extension function on View that grabs the view token from the view it's called on to hide the soft keyboard
     private fun View.hideSoftKeyboard() {
-        val imm: InputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
     
+    //navigate to the results fragment and save the query that is being passed to the results fragment. Also hide the soft keyboard.
     private fun navigateToResultsFragment(query: String, languageIndex: Int, isQueryToBeSaved: Boolean) {
         navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, languageIndex))
         if (isQueryToBeSaved) viewModel.addQuery(RecentQuery(query, languageIndex))
-        binding.queriesRecyclerView.hideSoftKeyboard()
+        binding.root.hideSoftKeyboard()
     }
     
     //implement on onItemClick which opens the result fragment with the saved recent query and the provided language
