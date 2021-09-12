@@ -5,7 +5,7 @@ object Constants {
     const val SHARED_PREFERENCES_NAME = "JADA"
     const val LANGUAGE_SETTING_KEY = "language_setting"
     const val BASE_URL = "https://api.dictionaryapi.dev/api/v2/entries/"
-    val supportedLanguages = SupportedLanguages(
+    val supportedLanguages = Languages(
         arrayOf(
             "Hindi",
             "English",
@@ -16,8 +16,9 @@ object Constants {
             "German",
             "Italian",
             "Korean",
-            "Br Portuguese",
+            //"Br Portuguese",
             "Turkish",
+            //"Arabic"
         ),
         arrayOf(
             "hi",
@@ -29,8 +30,9 @@ object Constants {
             "de",
             "it",
             "ko",
-            "pt-BR",
+            //"pt-BR",
             "tr",
+            //"ar"
         )
     )
 }

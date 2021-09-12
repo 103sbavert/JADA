@@ -14,12 +14,12 @@ class MainViewModel
 @Inject
 constructor(
     private val databaseDao: DictionaryDatabaseDAO,
-    private val sharedPreferencesUtilImpl: SharedPreferencesUtil
+    private val sharedPreferencesUtil: SharedPreferencesUtil
 ) : ViewModel() {
     
     //get all the queries as a list of RecentQuery to show in the recycler view
     val allQueries = databaseDao.getAllQueries()
-    val currentLanguage = sharedPreferencesUtilImpl.selectedLanguage
+    val currentLanguage = sharedPreferencesUtil.selectedLanguage
     
     //clear all the queries on button press
     fun clear() = viewModelScope.launch {
@@ -36,7 +36,7 @@ constructor(
         databaseDao.addQuery(recentQuery)
     }
     
-    fun getSavedLanguageIndex() = sharedPreferencesUtilImpl.getLanguageSetting()
+    fun getSavedLanguageIndex() = sharedPreferencesUtil.getLanguageSetting()
     
-    fun updateLanguageSettingKey(index: Int) = sharedPreferencesUtilImpl.updateLanguageSetting(index)
+    fun updateLanguageSettingKey(index: Int) = sharedPreferencesUtil.updateLanguageSetting(index)
 }

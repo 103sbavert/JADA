@@ -1,5 +1,6 @@
 package com.sbeve.jada.ui.fragments
 
+import androidx.test.filters.SmallTest
 import com.sbeve.jada.models.RecentQuery
 import com.sbeve.jada.testutils.CoroutinesTestRule
 import com.sbeve.jada.utils.SharedPreferencesUtil
@@ -17,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
+@SmallTest
 class MainViewModelTest {
     
     @Mock
@@ -33,7 +35,7 @@ class MainViewModelTest {
     
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         mainViewModel = MainViewModel(dictionaryDatabaseDAO, sharedPreferencesUtil)
     }
     
@@ -57,7 +59,7 @@ class MainViewModelTest {
     
     @Test
     fun getSavedLanguageIndex_sharedPreferencesUtil_callsGetSavedLanguagheMethod() {
-        mainViewModel.getSavedLanguageIndex()
+        println(mainViewModel.getSavedLanguageIndex())
         verify(sharedPreferencesUtil).getLanguageSetting()
     }
     

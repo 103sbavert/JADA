@@ -29,4 +29,8 @@
     <string name="delete_query_button_text">Delete Query</string>
     <string name="no_recent_searches_found">No recent searches to show</string>
     <string name="search">Find Definition</string>
+    <string name="delete_confirmation_title">Clear recent searches?</string>
+    <string name="delete_confirmation_message">This will clear all your recent searches.</string>
+    <string name="positive_text">Yes</string>
+    <string name="negative_text">No</string>
 </resources>

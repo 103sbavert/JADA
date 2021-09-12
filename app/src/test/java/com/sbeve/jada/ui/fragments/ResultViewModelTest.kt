@@ -1,6 +1,7 @@
 package com.sbeve.jada.ui.fragments
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.SmallTest
 import com.sbeve.jada.models.Definition
 import com.sbeve.jada.models.Meaning
 import com.sbeve.jada.models.Phonetics
@@ -24,6 +25,7 @@ import org.mockito.MockitoAnnotations
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
+@SmallTest
 class ResultViewModelTest {
     
     @Mock

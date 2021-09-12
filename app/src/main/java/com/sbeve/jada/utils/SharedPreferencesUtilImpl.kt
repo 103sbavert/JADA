@@ -1,15 +1,14 @@
 package com.sbeve.jada.utils
 
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class SharedPreferencesUtilImpl(@ApplicationContext private val applicationContext: Context, mode: Int) : SharedPreferencesUtil {
-    
-    private val sharedPreferences = applicationContext.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, mode)
+class SharedPreferencesUtilImpl
+@Inject
+constructor(private val sharedPreferences: SharedPreferences) : SharedPreferencesUtil {
     
     private val _selectedLanguage = MutableLiveData(Constants.supportedLanguages.names[getLanguageSetting()])
     override val selectedLanguage: LiveData<String>

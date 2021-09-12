@@ -8,5 +8,6 @@ interface SharedPreferencesUtil : SharedPreferences.OnSharedPreferenceChangeList
     val selectedLanguage: LiveData<String>
     
     fun getLanguageSetting(): Int
+    
     fun updateLanguageSetting(index: Int)
 }

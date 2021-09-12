@@ -41,7 +41,6 @@ object AppModule {
     
     @Provides
     fun providesSharedPreferencesUtil(@ApplicationContext applicationContext: Context): SharedPreferencesUtil = SharedPreferencesUtilImpl(
-        applicationContext,
-        Context.MODE_PRIVATE
+        applicationContext.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
     )
 }

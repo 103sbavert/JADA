@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.sqlite.db.SupportSQLiteQueryBuilder
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SmallTest
 import com.sbeve.jada.models.RecentQuery
 import com.sbeve.jada.testutils.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,11 +16,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
 @ExperimentalCoroutinesApi
-@Config(manifest = Config.NONE)
 @RunWith(AndroidJUnit4::class)
+@SmallTest
 class DictionaryDatabaseDAOTest {
     
     lateinit var dictionaryDatabase: DictionaryDatabase

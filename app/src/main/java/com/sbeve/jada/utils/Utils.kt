@@ -1,6 +1,6 @@
 package com.sbeve.jada.utils
 
-data class SupportedLanguages(
+data class Languages(
     val names: Array<String>,
     val codes: Array<String>
 ) {
@@ -8,7 +8,7 @@ data class SupportedLanguages(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
         
-        other as SupportedLanguages
+        other as Languages
         
         if (!names.contentEquals(other.names)) return false
         if (!codes.contentEquals(other.codes)) return false
@@ -22,3 +22,4 @@ data class SupportedLanguages(
         return result
     }
 }
+

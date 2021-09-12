@@ -1,6 +1,7 @@
 package com.sbeve.jada.ui.fragments
 
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -40,24 +41,39 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
             createChangeLanguageDialog().show()
         }
         binding.clearAllButton.setOnClickListener {
-            viewModel.clear()
+            createDeleteConfirmationDialog().show()
         }
-        
+    
         viewModel.currentLanguage.observe(viewLifecycleOwner) {
             binding.currentLanguage.text = it
         }
+    
+        //set up an observer to update the recycler view whenever the database is updated
+        viewModel.allQueries.observe(viewLifecycleOwner) {
         
+            //making the error message visible if the list empty, hiding it again if it is not empty
+            if (it.isNotEmpty()) {
+                binding.noRecentQueries.visibility = View.GONE
+                binding.clearAllButton.visibility = View.VISIBLE
+            } else {
+                binding.noRecentQueries.visibility = View.VISIBLE
+                binding.clearAllButton.visibility = View.GONE
+            }
+        
+            adapter.submitList(it) {
+                binding.queriesRecyclerView.scrollToPosition(0)
+            }
+        }
+    
         binding.queriesRecyclerView.setHasFixedSize(true)
         binding.queriesRecyclerView.adapter = adapter
-        
-        //set up an observer to update the recycler view whenever the database is updated
-        updateRecyclerView()
-        
+    
+    
         if (requireActivity().intent.action == Intent.ACTION_SEND) {
             handleSharedText(requireActivity().intent.getStringExtra(Intent.EXTRA_TEXT)!!)
             requireActivity().intent.action = Intent.ACTION_MAIN
         }
-        
+    
         binding.searchView.setOnQueryTextListener(this)
     }
     
@@ -78,6 +94,16 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
             }
             .create()
     
+    private fun createDeleteConfirmationDialog() = MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.delete_confirmation_title)
+        .setMessage(getString(R.string.delete_confirmation_message))
+        .setPositiveButton(R.string.positive_text) { _: DialogInterface, _: Int ->
+            viewModel.clear()
+        }
+        .setNegativeButton(R.string.negative_text, null)
+        .create()
+    
+    
     //show a language selection dialog everytime a word is shared to the app. Navigate to the results fragment as soon as a language is selected
     private fun handleSharedText(sharedText: String) {
         createChangeLanguageDialog {
@@ -85,22 +111,9 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         }.show()
     }
     
-    //set up an observer for the all queries livedata that updates the recycler view adapter
-    private fun updateRecyclerView() {
-        viewModel.allQueries.observe(viewLifecycleOwner) {
-            
-            //making the error message visible if the list empty, hiding it again if it is not empty
-            binding.noRecentQueries.visibility = if (it.isNotEmpty()) View.GONE else View.VISIBLE
-            
-            adapter.submitList(it) {
-                binding.queriesRecyclerView.scrollToPosition(0)
-            }
-        }
-    }
-    
     //an extension function on View that grabs the view token from the view it's called on to hide the soft keyboard
     private fun View.hideSoftKeyboard() {
-        val imm: InputMethodManager = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
     
