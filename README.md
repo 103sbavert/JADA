@@ -3,7 +3,9 @@
 
 <img src="./assets/icon.png" alt="drawing" width="125"/>
 
-A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode.
+~~A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode.~~
+
+JADA **NO** longer uses meet developer's api but instead now it has switched to the [oxford dictionary's api](https://developer.oxforddictionaries.com/). It is still open-source and free.
 
 **Keep in mind that JADA is not a translator app. Nothing does a better job of being a translator app than Google Translate. JADA provides you definitions of a word in the same language as the one the word is from.**
 
@@ -12,7 +14,8 @@ A simple free and open-source dictionary app that uses the API created by [Meet 
 
 ### Known Bugs/Issues
 
-* [Fuxed] Searching for a word shows an empty screen, no error message no result. One such word is "Nope". The issue cannot be fixed as this is something wrong on the server's side, the server doesn't provide a definition for those words.
+* [Fixed] Searching for a word shows an empty screen, no error message no result. One such word is "Nope". The issue cannot be fixed as this is something wrong on the server's side, the server doesn't provide a definition for those words.
+* Some words might throw a 404 error regardless of them appearing in the lemmas list.
 
 ## Download
 Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases/latest)
@@ -21,19 +24,16 @@ Currently the app is only available on Github releases due to some compilcated p
 
 This dictionary supports multiple language as the API I am using does too. The languages supported are the following
 
-* English
+* English US
+* English UK
 * Hindi
-* Spanish
 * French
-* Japanese
-* Russian
-* German
-* Italian
-* Korean
-* Brazilian Portuguese
-* Turkish
-
-*JADA does not support Arabic even though the API used does as there seems to be some issues with the Arabic side of the API. I have tested it with different Arabic words and it never returns an output. I will add support for Arabic if I figure out the reason it isn't behaving like it should.* ***I encourage people who know Arabic to help me figure out the issue***
+* Gujarati
+* Latvian
+* Romanian
+* Tamil
+* Swahili
+* Spanish
 
 ## Versioning
 
@@ -56,17 +56,3 @@ This app can be used by absolute beginners as a way to learn some basic things l
 I have commented every piece of code that I believed was not part of common things you do in Android Development. All the logic and operations done by me that are not common practices and unique to this particular app were explained with comments.
 
 There can be found many parts that could use some improvement since I by no means claim to be a perfectly skilled or experienced developer, in fact, relative to so many awesome developers out there, I am very much new. I would like to get suggestions to improve my code or app from other experiened developers.
-
-## Screenshots
-
-* ### Light Theme
-<img src="assets/Screenshot_Main_Fragment_Light.png" alt="Main Fragment Light" width=250>
-<img src="assets/Screenshot_Result_Fragment_Light.png" alt="Result Fragment Light" width=250>
-<img src="assets/Screenshot_Change_Language_Dialog_Light.png" alt="Change Language Dialog" width=250>
-
-
-
-* ### Dark Theme
-<img src="assets/Screenshot_Main_Fragment.png" alt="Main Fragment Dark" width=250>
-<img src="assets/Screenshot_Result_Fragment.png" alt="Result Fragment Dark" width=250>
-<img src="assets/Screenshot_Change_Language_Dialog.png" alt="Change Language Dialog" width=250>
