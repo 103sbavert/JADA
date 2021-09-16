@@ -12,11 +12,6 @@ JADA **NO** longer uses meet developer's api but instead now it has switched to 
 ### Collaborators
 * [Patricia B.](https://github.com/pborlongan): The designer of the app's new UI overhaul. Most of the design was designed by her, I am highly thankful to her for helping me out.
 
-### Known Bugs/Issues
-
-* [Fixed] Searching for a word shows an empty screen, no error message no result. One such word is "Nope". The issue cannot be fixed as this is something wrong on the server's side, the server doesn't provide a definition for those words.
-* Some words might throw a 404 error regardless of them appearing in the lemmas list.
-
 ## Download
 Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases/latest)
 
