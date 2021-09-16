@@ -10,17 +10,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="@dimen/margin_padding_300">
 
         <TextView
-            android:id="@+id/query_text"
+            android:id="@+id/query_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            app:layout_constraintBottom_toTopOf="@+id/language"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/lexical_category_textview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
@@ -28,22 +25,29 @@
             tools:text="query" />
 
         <TextView
-            android:id="@+id/language"
+            android:id="@+id/language_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:textAppearance="?attr/textAppearanceSubtitle2"
             android:textColor="?attr/suppressed_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/time_date_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/query_text"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@+id/lexical_category_textview"
             tools:text="language" />
 
         <TextView
-            android:id="@+id/time_date"
+            android:id="@+id/lexical_category_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/suppressed_text"
+            app:layout_constraintBottom_toTopOf="@+id/language_textview"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/query_textview"
+            tools:text="lexical category" />
+
+        <TextView
+            android:id="@+id/time_date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceCaption"
@@ -52,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/language"
+            app:layout_constraintTop_toBottomOf="@+id/lexical_category_textview"
             app:layout_constraintVertical_bias="1.0"
             tools:text="HH:MM YYYY MM SS" />
 
@@ -63,23 +67,23 @@
             android:background="@drawable/circle_button_with_ripple_on_surface_background"
             android:contentDescription="@string/delete_query_button_text"
             android:padding="@dimen/margin_padding_200"
-            app:layout_constraintBottom_toBottomOf="@+id/language"
+            app:layout_constraintBottom_toBottomOf="@+id/language_textview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/query_text"
-            app:layout_constraintTop_toTopOf="@+id/query_text"
+            app:layout_constraintStart_toEndOf="@+id/query_textview"
+            app:layout_constraintTop_toTopOf="@+id/query_textview"
             app:srcCompat="@drawable/ic_delete" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/margin_padding_300"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="@dimen/margin_padding_300"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toTopOf="@id/time_date"
+            app:layout_constraintBottom_toTopOf="@id/time_date_textview"
             app:layout_constraintEnd_toStartOf="@id/delete_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/language" />
+            app:layout_constraintTop_toBottomOf="@+id/language_textview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

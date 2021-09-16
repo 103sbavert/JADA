@@ -10,7 +10,7 @@ class SharedPreferencesUtilImpl
 @Inject
 constructor(private val sharedPreferences: SharedPreferences) : SharedPreferencesUtil {
     
-    private val _selectedLanguage = MutableLiveData(Constants.supportedLanguages.names[getLanguageSetting()])
+    private val _selectedLanguage = MutableLiveData(Constants.supportedDictionaries[getLanguageSetting()].languageName)
     override val selectedLanguage: LiveData<String>
         get() = _selectedLanguage
     
@@ -27,7 +27,7 @@ constructor(private val sharedPreferences: SharedPreferences) : SharedPreference
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             Constants.LANGUAGE_SETTING_KEY -> {
-                _selectedLanguage.value = Constants.supportedLanguages.names[getLanguageSetting()]
+                _selectedLanguage.value = Constants.supportedDictionaries[getLanguageSetting()].languageName
             }
         }
     }

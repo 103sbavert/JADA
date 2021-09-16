@@ -59,7 +59,7 @@ class SharedPreferencesUtilImplTest {
         sharedPreferencesUtilImpl.updateLanguageSetting(0)
         
         val result = sharedPreferencesUtilImpl.selectedLanguage.getOrAwaitValue()
-        assertEquals(Constants.supportedLanguages.names[0], result)
+        assertEquals(Constants.supportedDictionaries[0].languageName, result)
     }
     
     @Test

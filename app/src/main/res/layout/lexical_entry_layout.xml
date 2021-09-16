@@ -7,18 +7,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/partofspeech_textview"
+        android:id="@+id/lexical_category_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceHeadline7"
         tools:text="Noun" />
 
-    <TextView
-        android:id="@+id/definitions_textview"
+    <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_300"
-        android:textAppearance="?attr/textAppearanceBody2"
-        android:textIsSelectable="true"
-        tools:text="a single distinct meaningful element of speech or writing, used with others (or sometimes alone) to form a sentence and typically shown with a space on either side when written or printed." />
+        android:orientation="vertical" />
 </LinearLayout>
+

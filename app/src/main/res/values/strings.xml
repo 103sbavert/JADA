@@ -4,7 +4,7 @@
     <string name="call_failed">A request to the server could not be made. Please, check your internet connection.</string>
     <string name="origin_info">ORIGIN: %s</string>
     <string name="main_fragment_small_header">Search for words in</string>
-    <string name="query_hint">"Try \"эффект\", \"colonel\" or \"घर\""</string>
+    <string name="query_hint">"Try \"como\", \"colonel\" or \"घर\""</string>
     <string name="definition_text">
         &lt;b>
             %1$d.

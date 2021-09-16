@@ -4,6 +4,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.inputmethod.InputMethodManager
@@ -15,9 +16,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sbeve.jada.R
 import com.sbeve.jada.databinding.FragmentMainBinding
+import com.sbeve.jada.models.Ids
 import com.sbeve.jada.models.RecentQuery
-import com.sbeve.jada.ui.recyclerview.RecentQueriesAdapter
+import com.sbeve.jada.ui.recyclerview.adapters.RecentQueriesAdapter
 import com.sbeve.jada.utils.Constants
+import com.sbeve.jada.utils.getLanguageNames
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,10 +36,10 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
-        navController = this.findNavController()
+    
+        navController = findNavController()
         binding = FragmentMainBinding.bind(view)
-        
+    
         binding.changeLanguageGearIcon.setOnClickListener {
             createChangeLanguageDialog().show()
         }
@@ -49,25 +52,28 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         }
     
         //set up an observer to update the recycler view whenever the database is updated
-        viewModel.allQueries.observe(viewLifecycleOwner) {
-        
+        viewModel.recentQueriesList.observe(viewLifecycleOwner) { list ->
             //making the error message visible if the list empty, hiding it again if it is not empty
-            if (it.isNotEmpty()) {
-                binding.noRecentQueries.visibility = View.GONE
-                binding.clearAllButton.visibility = View.VISIBLE
-            } else {
+            if (list.isNullOrEmpty()) {
                 binding.noRecentQueries.visibility = View.VISIBLE
                 binding.clearAllButton.visibility = View.GONE
+            } else {
+                binding.noRecentQueries.visibility = View.GONE
+                binding.clearAllButton.visibility = View.VISIBLE
             }
         
-            adapter.submitList(it) {
+            adapter.submitList(
+                list.filter {
+                    it.ids.wordId.contains(binding.searchView.query)
+                }
+            ) {
                 binding.queriesRecyclerView.scrollToPosition(0)
             }
+        
         }
     
         binding.queriesRecyclerView.setHasFixedSize(true)
         binding.queriesRecyclerView.adapter = adapter
-    
     
         if (requireActivity().intent.action == Intent.ACTION_SEND) {
             handleSharedText(requireActivity().intent.getStringExtra(Intent.EXTRA_TEXT)!!)
@@ -86,7 +92,7 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     private fun createChangeLanguageDialog(action: (() -> Unit) = {}) =
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(getString(R.string.choose_a_language))
-            .setSingleChoiceItems(Constants.supportedLanguages.names, viewModel.getSavedLanguageIndex())
+            .setSingleChoiceItems(Constants.supportedDictionaries.getLanguageNames(), viewModel.getSavedLanguageIndex())
             { dialogInterface, item ->
                 viewModel.updateLanguageSettingKey(item)
                 dialogInterface.dismiss()
@@ -105,9 +111,9 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     
     
     //show a language selection dialog everytime a word is shared to the app. Navigate to the results fragment as soon as a language is selected
-    private fun handleSharedText(sharedText: String) {
+    private fun handleSharedText(query: String) {
         createChangeLanguageDialog {
-            navigateToResultsFragment(sharedText, viewModel.getSavedLanguageIndex(), true)
+            openBottomSheet(query, viewModel.getSavedLanguageIndex())
         }.show()
     }
     
@@ -118,28 +124,42 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     }
     
     //navigate to the results fragment and save the query that is being passed to the results fragment. Also hide the soft keyboard.
-    private fun navigateToResultsFragment(query: String, languageIndex: Int, isQueryToBeSaved: Boolean) {
-        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(query, languageIndex))
-        if (isQueryToBeSaved) viewModel.addQuery(RecentQuery(query, languageIndex))
+    private fun openBottomSheet(query: String, languageIndex: Int) {
         binding.root.hideSoftKeyboard()
+        navController.navigate(MainFragmentDirections.actionMainFragmentToLemmaListDialogFragment(query, languageIndex))
+    }
+    
+    private fun navigateToResultsFragment(wordId: String, languageIndex: Int, lexicalCategoryId: String) {
+        binding.root.hideSoftKeyboard()
+        navController.navigate(MainFragmentDirections.actionMainFragmentToResultFragment(wordId, languageIndex, lexicalCategoryId))
     }
     
     //implement on onItemClick which opens the result fragment with the saved recent query and the provided language
-    override fun onItemClick(query: String, queryLanguageIndex: Int) {
-        navigateToResultsFragment(query, queryLanguageIndex, false)
+    override fun onItemClick(wordId: String, languageIndex: Int, lexicalCategoryId: String) {
+        navigateToResultsFragment(wordId, languageIndex, lexicalCategoryId)
     }
     
     //implement onDeleteButtonClick to delete the saved query the button of which is pressed
-    override fun onDeleteButtonClick(query: String, queryLanguageIndex: Int) {
-        viewModel.deleteQuery(RecentQuery(query, queryLanguageIndex))
+    override fun onDeleteButtonClick(wordId: String, word: String, queryLanguageIndex: Int, lexicalCategoryId: String, lexicalCategory: String) {
+        Log.e("TAG", "onDeleteButtonClick: $wordId")
+        viewModel.deleteQuery(RecentQuery(Ids(wordId, lexicalCategoryId), word, queryLanguageIndex, lexicalCategory))
     }
     
     //navigate to the result fragment and show the results for submitted query. Asynchronously update the database.
     override fun onQueryTextSubmit(query: String): Boolean {
-        navigateToResultsFragment(query, viewModel.getSavedLanguageIndex(), true)
+        openBottomSheet(query, viewModel.getSavedLanguageIndex())
         return true
     }
     
-    //nothing to implement
-    override fun onQueryTextChange(newText: String?) = false
+    override fun onQueryTextChange(newText: String): Boolean {
+        adapter.submitList(
+            viewModel.recentQueriesList.value?.filter { it ->
+                it.ids.wordId.contains(newText)
+            }
+        ) {
+            binding.queriesRecyclerView.scrollToPosition(0)
+        }
+        
+        return true
+    }
 }

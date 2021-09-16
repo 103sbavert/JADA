@@ -10,21 +10,46 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_mainFragment_to_resultFragment"
+            android:id="@+id/action_main_fragment_to_result_fragment"
             app:destination="@id/result_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_main_fragment_to_lemma_list_dialog_fragment"
+            app:destination="@id/lemma_list_dialog_fragment"
             app:enterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/result_fragment"
-        android:name="com.sbeve.jada.ui.fragments.ResultFragment"
+        android:name="com.sbeve.jada.ui.fragments.DefinitionsFragment"
         android:label="Result"
-        tools:layout="@layout/fragment_result">
+        tools:layout="@layout/fragment_definitions">
         <argument
-            android:name="queryText"
+            android:name="wordId"
             app:argType="string" />
         <argument
-            android:name="queryLanguage"
+            android:name="languageIndex"
             app:argType="integer" />
+        <argument
+            android:name="lexicalCategoryId"
+            app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/lemma_list_dialog_fragment"
+        android:name="com.sbeve.jada.ui.fragments.LemmaDialogFragment"
+        android:label="lemma_list_dialog_fragment"
+        tools:layout="@layout/dialog_fragment_lemma">
+        <action
+            android:id="@+id/action_lemmaListDialogFragment_to_result_fragment"
+            app:destination="@id/result_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="query_word"
+            app:argType="string" />
+        <argument
+            android:name="language_index"
+            app:argType="integer" />
+    </dialog>
 </navigation>

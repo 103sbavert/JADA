@@ -1,25 +1,32 @@
 package com.sbeve.jada.utils
 
-data class Languages(
-    val names: Array<String>,
-    val codes: Array<String>
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        
-        other as Languages
-        
-        if (!names.contentEquals(other.names)) return false
-        if (!codes.contentEquals(other.codes)) return false
-        
-        return true
+import android.content.res.Resources
+import android.util.TypedValue
+
+data class Language(
+    val languageName: String,
+    val languageCode: String
+)
+
+fun Array<Language>.getLanguageNames(): Array<String> {
+    val list = Array(size) {
+        it.toString()
     }
     
-    override fun hashCode(): Int {
-        var result = names.contentHashCode()
-        result = 31 * result + codes.contentHashCode()
-        return result
+    for (each in indices) {
+        list[each] = this[each].languageName
     }
+    
+    return list
 }
+
+fun Float.dpToPixels() = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    this,
+    Resources.getSystem().displayMetrics
+).toInt()
+
+fun getScreenWidth() = Resources.getSystem().displayMetrics.widthPixels
+
+
 

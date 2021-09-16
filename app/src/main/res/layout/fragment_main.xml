@@ -129,6 +129,6 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/recent_searches_title"
         app:layout_constraintTop_toTopOf="@id/recent_searches_title"
-        app:srcCompat="@drawable/ic_clear_button" />
+        app:srcCompat="@drawable/ic_clear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
