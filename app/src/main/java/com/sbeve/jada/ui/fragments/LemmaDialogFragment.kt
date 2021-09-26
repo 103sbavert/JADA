@@ -1,7 +1,6 @@
 package com.sbeve.jada.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +56,6 @@ class LemmaDialogFragment : BottomSheetDialogFragment(), LemmasAdapter.ViewHolde
                 }
                 is Success -> showResults(it as Success)
             }
-            
         }
     }
     
@@ -85,8 +83,6 @@ class LemmaDialogFragment : BottomSheetDialogFragment(), LemmasAdapter.ViewHolde
             currentItem.lexicalCategory.text
         )
         
-        Log.e("TAG", "onItemClick: ${recentQuery.ids}")
-        
         findNavController().navigate(
             LemmaDialogFragmentDirections.actionLemmaListDialogFragmentToResultFragment(
                 recentQuery.ids.wordId,
@@ -97,5 +93,4 @@ class LemmaDialogFragment : BottomSheetDialogFragment(), LemmasAdapter.ViewHolde
         
         viewModel.addQuery(recentQuery)
     }
-    
 }

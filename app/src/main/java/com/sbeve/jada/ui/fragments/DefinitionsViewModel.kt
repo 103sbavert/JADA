@@ -1,6 +1,5 @@
 package com.sbeve.jada.ui.fragments
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,11 +44,9 @@ constructor(private var retrofitAccessApi: RetrofitAccessApi) : ViewModel() {
                 if (response.isSuccessful) {
                     _callResult.value = Success(response.body()!!)
                 } else {
-                    Log.e("TAG", "fetchWordInfo:" + response.errorBody() + ": " + response.code())
                     _callResult.value = Error(ErrorType.NoMatch)
                 }
             } catch (e: Exception) {
-                Log.e("TAG", "fetchWordInfo:", e)
                 _callResult.value = Error(ErrorType.CallFailed)
             }
         }

@@ -61,7 +61,7 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
                 binding.noRecentQueries.visibility = View.GONE
                 binding.clearAllButton.visibility = View.VISIBLE
             }
-        
+    
             adapter.submitList(
                 list.filter {
                     it.ids.wordId.contains(binding.searchView.query)
@@ -69,7 +69,7 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
             ) {
                 binding.queriesRecyclerView.scrollToPosition(0)
             }
-        
+    
         }
     
         binding.queriesRecyclerView.setHasFixedSize(true)
@@ -123,7 +123,6 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
     
-    //navigate to the results fragment and save the query that is being passed to the results fragment. Also hide the soft keyboard.
     private fun openBottomSheet(query: String, languageIndex: Int) {
         binding.root.hideSoftKeyboard()
         navController.navigate(MainFragmentDirections.actionMainFragmentToLemmaListDialogFragment(query, languageIndex))
@@ -135,8 +134,8 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
     }
     
     //implement on onItemClick which opens the result fragment with the saved recent query and the provided language
-    override fun onItemClick(wordId: String, languageIndex: Int, lexicalCategoryId: String) {
-        navigateToResultsFragment(wordId, languageIndex, lexicalCategoryId)
+    override fun onItemClick(wordId: String, queryLanguageIndex: Int, lexicalCategoryId: String) {
+        navigateToResultsFragment(wordId, queryLanguageIndex, lexicalCategoryId)
     }
     
     //implement onDeleteButtonClick to delete the saved query the button of which is pressed
@@ -159,7 +158,6 @@ class MainFragment : Fragment(R.layout.fragment_main), SearchView.OnQueryTextLis
         ) {
             binding.queriesRecyclerView.scrollToPosition(0)
         }
-        
         return true
     }
 }

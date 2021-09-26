@@ -55,12 +55,16 @@ class DefinitionsFragment : Fragment(R.layout.fragment_definitions) {
         }
     }
     
+    //show the results
     private fun showResults(success: Success) {
         val word = success.word
         
+        //make the loading error message invisible
         binding.loadingErrorMessage.visibility = View.GONE
+        //make the loading animation gone
         binding.loadingAnim.visibility = View.GONE
         
+        //inflate each layout and show the results
         for (i in word.results) {
             val wordLayoutBinding = WordLayoutBinding.inflate(layoutInflater)
             wordLayoutBinding.wordTextview.text = i.word

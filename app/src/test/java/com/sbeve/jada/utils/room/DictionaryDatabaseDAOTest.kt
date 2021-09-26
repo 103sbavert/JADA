@@ -25,7 +25,7 @@ class DictionaryDatabaseDAOTest {
     
     private lateinit var dictionaryDatabase: DictionaryDatabase
     private lateinit var dictionaryDatabaseDAO: DictionaryDatabaseDAO
-    private lateinit var typeConverters: TypeConverters
+    private val typeConverters = TypeConverters()
     
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -37,29 +37,52 @@ class DictionaryDatabaseDAOTest {
             .fallbackToDestructiveMigration()
             .build()
         dictionaryDatabaseDAO = dictionaryDatabase.getDao()
-        typeConverters = TypeConverters()
     }
     
     @Test
-    fun addQuery_sampleRecentQuery_addsRecentQueryToTheDatabase() = runBlockingTest {
+    fun addQuery_uniqueSampleRecentQuery_addsRecentQueryToTheDatabase() = runBlockingTest {
         val sampleRecentQuery = getSampleRecentQuery()
         dictionaryDatabaseDAO.addQuery(sampleRecentQuery)
+        
+        val selectAllSqliteQuery = SupportSQLiteQueryBuilder.builder("recent_query")
+            .orderBy("time_date")
+            .create()
+        val cursor = dictionaryDatabase.query(selectAllSqliteQuery)
+        cursor.moveToFirst()
+        val idsJson = cursor.getString(cursor.getColumnIndexOrThrow("ids"))
+        val ids = typeConverters.toIds(idsJson)
+        val word = cursor.getString(cursor.getColumnIndexOrThrow("word"))
+        val languageIndex = cursor.getInt(cursor.getColumnIndexOrThrow("language_index"))
+        val lexicalCategory = cursor.getString(cursor.getColumnIndexOrThrow("lexical_category"))
+        val time = cursor.getLong(cursor.getColumnIndexOrThrow("time_date"))
+        val returnedRecentQuery = RecentQuery(ids, word, languageIndex, lexicalCategory, time)
+        assertEquals(sampleRecentQuery, returnedRecentQuery)
+        
+        cursor.close()
+    }
     
+    @Test
+    fun addQuery_twoRecentQueryWithSamePrimaryKey_oneReplacesTheOther() = runBlockingTest {
+        val sampleRecentQuery1 = getSampleRecentQuery(Ids("wordId", "lexicalCategoryId"))
+        val sampleRecentQuery2 = getSampleRecentQuery(Ids("wordId", "lexicalCategoryId"))
+        dictionaryDatabaseDAO.addQuery(sampleRecentQuery1)
+        dictionaryDatabaseDAO.addQuery(sampleRecentQuery2)
+        
         val selectAllSqliteQuery = SupportSQLiteQueryBuilder.builder("recent_query")
             .orderBy("time_date")
             .create()
         val cursor = dictionaryDatabase.query(selectAllSqliteQuery)
         cursor.moveToFirst()
         val ids = cursor.getString(cursor.getColumnIndexOrThrow("ids"))
-        val idPair = typeConverters.toStringPair(ids)
+        val idPair = typeConverters.toIds(ids)
         val word = cursor.getString(cursor.getColumnIndexOrThrow("word"))
         val languageIndex = cursor.getInt(cursor.getColumnIndexOrThrow("language_index"))
         val lexicalCategory = cursor.getString(cursor.getColumnIndexOrThrow("lexical_category"))
         val time = cursor.getLong(cursor.getColumnIndexOrThrow("time_date"))
         val returnedRecentQuery = RecentQuery(idPair, word, languageIndex, lexicalCategory, time)
-    
-        assertEquals(sampleRecentQuery, returnedRecentQuery)
-    
+        assertEquals(cursor.count, 1)
+        assertEquals(sampleRecentQuery2, returnedRecentQuery)
+        
         cursor.close()
     }
     

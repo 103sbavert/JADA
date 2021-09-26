@@ -33,24 +33,31 @@ object AppModule {
     @Provides
     fun providesDatabaseDAO(dictionaryDatabase: DictionaryDatabase) = dictionaryDatabase.getDao()
     
-    
     @Singleton
     @Provides
     fun providesRetrofitAccessApi(): RetrofitAccessApi {
+    
+        //add headers to the http request
         val headers = Headers.Builder()
             .add("Accept", "application/json")
             .add("app_id", "dec33f76")
             .add("app_key", "a339ad038db622f0af596df68670c2ff")
             .build()
+    
+        //make and okhttpclient to be used by retrofit
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor {
                 it.proceed(it.request().newBuilder().headers(headers).build())
             }
             .build()
-        
+    
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
+        
+            //add the okhttpclient
             .client(okHttpClient)
+        
+            //use moshi for conversion
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(RetrofitAccessApi::class.java)

@@ -43,7 +43,7 @@ class SharedPreferencesUtilImplTest {
     fun init_newSharedPreference_liveDataShouldHaveSavedValue() {
         val result = sharedPreferencesUtilImpl.selectedLanguage.getOrAwaitValue()
         
-        assertEquals("Hindi", result)
+        assertEquals("English US", result)
     }
     
     @Test

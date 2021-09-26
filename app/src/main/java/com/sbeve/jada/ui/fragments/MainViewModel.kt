@@ -30,11 +30,6 @@ constructor(
     fun deleteQuery(recentQuery: RecentQuery) = viewModelScope.launch {
         databaseDao.deleteQuery(recentQuery)
     }
-
-//    //add a query whenever a new word is searched
-//    fun addQuery(recentQuery: RecentQuery) = viewModelScope.launch {
-//        databaseDao.addQuery(recentQuery)
-//    }
     
     fun getSavedLanguageIndex() = sharedPreferencesUtil.getLanguageSetting()
     

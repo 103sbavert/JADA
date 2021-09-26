@@ -39,12 +39,16 @@ class MainViewModelTest {
         MockitoAnnotations.openMocks(this)
         mainViewModel = MainViewModel(dictionaryDatabaseDAO, sharedPreferencesUtil)
     }
-
-//    @Test
-//    fun addQuery_dictionaryDatabaseDao_callsAddQueryMethod(): Unit = runBlockingTest {
-//        mainViewModel.addQuery(recentQuery)
-//        verify(dictionaryDatabaseDAO).addQuery(recentQuery)
-//    }
+    
+    @Test
+    fun init_dictionaryDatabaseDao_callsGetAllQueries() {
+        verify(dictionaryDatabaseDAO).getAllQueries()
+    }
+    
+    @Test
+    fun init_sharedPreferencesUtil_acquiresSelectedLanguage() {
+        verify(sharedPreferencesUtil).selectedLanguage
+    }
     
     @Test
     fun clear_dictionaryDatabaseDao_callsClearMethod(): Unit = runBlockingTest {

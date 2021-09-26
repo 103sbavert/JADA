@@ -19,13 +19,13 @@ class MainActivity : AppCompatActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+    
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    
         navHostFragment = supportFragmentManager.findFragmentById(binding.mainNavhost.id) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
-        
-        setContentView(binding.root)
     }
     
     override fun onSupportNavigateUp(): Boolean {
