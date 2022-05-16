@@ -3,7 +3,6 @@ package com.sbeve.jada.models.lemma
 import com.sbeve.jada.models.LexicalCategory
 import com.squareup.moshi.JsonClass
 
-
 @JsonClass(generateAdapter = true)
 data class Lemma(
     val results: List<Result>
