@@ -14,7 +14,7 @@ JADA is no longer work under progress or being maintained. You are free to send 
 * [Patricia B.](https://github.com/pborlongan): The designer of the app's new UI overhaul. Most of the design was designed by her, I am highly thankful to her for helping me out.
 
 ## Download
-Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases/latest)
+~~Currently the app is only available on Github releases due to some compilcated personal reasons. You can [download the app from Github releases here.](https://github.com/sbeve72/JADA/releases/latest)~~. JADA no longer works. You can still download the apk from Github releases if you need it for other purposes.
 
 ## Multi-language Support
 
