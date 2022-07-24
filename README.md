@@ -3,9 +3,10 @@
 
 <img src="./assets/icon.png" alt="drawing" width="125"/>
 
-~~A simple free and open-source dictionary app that uses the API created by [Meet Developer](https://github.com/meetDeveloper) which you can check out [here](https://github.com/meetDeveloper/googleDictionaryAPI). This dictionary app uses that API to show definitions for the words entered by the user. It supports multiple languages and best of all it has dark mode.~~
+### Update as of Monday, 25th of July, 2022
+JADA is no longer work under progress or being maintained. You are free to send fork, send pull requests to, clone or maintain this project. The reason for this termination is the change in Oxford's pricing model (and the end of the Protoype plan which allowed JADA 1000 calls per month) and the lifting of support for other languages by the API developed by MeetDeveloper (@meetDeveloper).
 
-JADA **NO** longer uses meet developer's api but instead now it has switched to the [oxford dictionary's api](https://developer.oxforddictionaries.com/). It is still open-source and free.
+---
 
 **Keep in mind that JADA is not a translator app. Nothing does a better job of being a translator app than Google Translate. JADA provides you definitions of a word in the same language as the one the word is from.**
 
